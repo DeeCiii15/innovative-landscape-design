@@ -55,12 +55,14 @@ export function SiteHeader() {
   const overHeroPages = pathUsesHeroOverlay(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<number | null>(null);
 
   useEffect(() => {
     setMenuOpen(false);
     setServicesOpen(false);
+    setMobileServicesOpen(false);
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
@@ -115,7 +117,8 @@ export function SiteHeader() {
   const overHero = overHeroPages && !scrolled && !menuOpen;
 
   return (
-    <header className={`site-header ${overHeroPages ? "site-header--overlay" : ""} ${overHero ? "site-header--over-hero" : ""}`}>
+    <>
+    <header className={`site-header ${overHeroPages ? "site-header--overlay" : ""} ${overHero ? "site-header--over-hero" : ""} ${menuOpen ? "site-header--menu-open" : ""}`}>
       <div className="container-main flex items-center justify-between gap-6" style={{ height: "var(--header-height)" }}>
         <LogoHomeLink />
 
@@ -204,6 +207,8 @@ export function SiteHeader() {
         </button>
       </div>
 
+    </header>
+
       {menuOpen && (
         <div id="mobile-nav" className="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu">
           <button type="button" className="mobile-nav__backdrop" aria-label="Close menu" onClick={() => setMenuOpen(false)} />
@@ -219,23 +224,39 @@ export function SiteHeader() {
               {navLinks.map((link) => {
                 const children = "children" in link ? link.children : undefined;
                 if (children) {
+                  const servicesActive = servicesNavIsActive(pathname);
                   return (
-                    <div key={link.label}>
-                      <p className={`mobile-nav__link ${servicesNavIsActive(pathname) ? "mobile-nav__link--active" : ""}`}>
+                    <div key={link.label} className="mobile-nav__group">
+                      <button
+                        type="button"
+                        className={`mobile-nav__link mobile-nav__link--toggle ${servicesActive ? "mobile-nav__link--active" : ""}`}
+                        aria-expanded={mobileServicesOpen}
+                        onClick={() => setMobileServicesOpen((open) => !open)}
+                      >
                         {link.label}
-                      </p>
-                      <div className="mobile-nav__sublinks">
-                        {children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={`mobile-nav__sublink ${pathname === child.href ? "mobile-nav__sublink--active" : ""}`}
-                            onClick={() => setMenuOpen(false)}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
+                        <svg
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className={`mobile-nav__chevron ${mobileServicesOpen ? "mobile-nav__chevron--open" : ""}`}
+                          aria-hidden
+                        >
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      {mobileServicesOpen && (
+                        <div className="mobile-nav__sublinks">
+                          {children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`mobile-nav__sublink ${pathname === child.href ? "mobile-nav__sublink--active" : ""}`}
+                              onClick={() => setMenuOpen(false)}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 }
@@ -266,6 +287,6 @@ export function SiteHeader() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

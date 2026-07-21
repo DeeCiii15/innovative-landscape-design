@@ -27,7 +27,17 @@ export default function ContactPage() {
 
       <section className="py-16 sm:py-24">
         <div className="container-main grid gap-12 lg:grid-cols-2 lg:gap-20 xl:gap-24">
-          <div>
+          <div className="surface-card p-7 sm:p-9 lg:order-2">
+            <h2 className="text-2xl font-bold text-[var(--color-ink)]">Send a message</h2>
+            <p className="mt-2 text-sm text-[var(--color-muted)]">
+              Fill out the form and we&apos;ll open your email app so you can send it directly.
+            </p>
+            <div className="mt-8">
+              <ContactForm />
+            </div>
+          </div>
+
+          <div className="lg:order-1">
             <h2 className="heading-section">How to reach us</h2>
             <address className="mt-8 space-y-6 not-italic">
               <div>
@@ -73,16 +83,6 @@ export default function ContactPage() {
               </Link>
               .
             </p>
-          </div>
-
-          <div className="surface-card p-7 sm:p-9">
-            <h2 className="text-2xl font-bold text-[var(--color-ink)]">Send a message</h2>
-            <p className="mt-2 text-sm text-[var(--color-muted)]">
-              Fill out the form and we&apos;ll open your email app so you can send it directly.
-            </p>
-            <div className="mt-8">
-              <ContactForm />
-            </div>
           </div>
         </div>
       </section>

@@ -88,10 +88,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
       <section className="bg-white py-16 sm:py-24">
         <div className="container-main grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
+          <div className="order-1">
             <p className="text-lg font-medium text-[var(--color-green)]">{service.tagline}</p>
             <p className="mt-5 leading-relaxed text-[var(--color-muted)]">{service.body}</p>
-            <ul className="mt-6 space-y-2.5">
+            <ul className="mt-6 hidden space-y-2.5 lg:block">
               {service.bullets.map((bullet) => (
                 <li key={bullet} className="flex gap-3 text-sm text-[var(--color-ink-soft)]">
                   <svg viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 size-4 shrink-0 text-[var(--color-green)]" aria-hidden>
@@ -103,14 +103,14 @@ export default async function ServicePage({ params }: ServicePageProps) {
             </ul>
             <Link
               href="/contact"
-              className="btn-primary mt-8 inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2"
+              className="btn-primary mt-8 hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2 lg:inline-flex"
             >
               {service.ctaButton}
             </Link>
           </div>
 
           {featured && (
-            <div className="surface-card overflow-hidden">
+            <div className="surface-card order-2 overflow-hidden">
               <BeforeAfterReveal
                 before={featured.before}
                 after={featured.after}
@@ -121,6 +121,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
               />
             </div>
           )}
+
+          <div className="order-3 lg:hidden">
+            <Link
+              href="/contact"
+              className="btn-primary inline-flex w-full justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2"
+            >
+              {service.ctaButton}
+            </Link>
+          </div>
         </div>
       </section>
 
