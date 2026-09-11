@@ -32,21 +32,24 @@ export function ReviewsSection() {
             <h2 className="heading-section reviews__title">What our customers say</h2>
           </Reveal>
 
-          <div className="reviews__grid">
-            {siteConfig.reviews.map((review, index) => (
-              <Reveal key={review.id} delay={index * 60}>
-                <figure className="review">
-                  <Stars count={review.rating} />
-                  <blockquote className="review__text">&ldquo;{review.text}&rdquo;</blockquote>
-                  <figcaption className="review__cite">
-                    <p className="review__name">{review.name}</p>
-                    <p className="review__meta">
-                      {review.location} · {review.service}
-                    </p>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
+          <div className="reviews__scroller">
+            <div className="reviews__grid">
+              {siteConfig.reviews.map((review, index) => (
+                <Reveal key={review.id} delay={index * 60}>
+                  <figure className="review">
+                    <Stars count={review.rating} />
+                    <blockquote className="review__text">&ldquo;{review.text}&rdquo;</blockquote>
+                    <figcaption className="review__cite">
+                      <p className="review__name">{review.name}</p>
+                      <p className="review__meta">
+                        {review.location} · {review.service}
+                      </p>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+            <p className="reviews__swipe-hint">Swipe for more reviews</p>
           </div>
 
           <div className="reviews__actions">

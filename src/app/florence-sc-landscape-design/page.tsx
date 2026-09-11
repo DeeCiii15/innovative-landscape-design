@@ -125,7 +125,7 @@ export default async function FlorenceLandscapeHub({ searchParams }: LocationHub
                 href={`${workItemPath(item.slug)}?from=${encodeURIComponent(FLORENCE_LANDSCAPE_PATH)}`}
                 className="surface-card group block overflow-hidden"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden photo-shadow">
                   {cover.src ? (
                     <Image
                       src={cover.src}
