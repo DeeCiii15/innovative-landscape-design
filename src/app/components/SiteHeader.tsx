@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { LogoHomeLink } from "./LogoHomeLink";
-import { navLinkClass, navLinkIsActive, navLinks, servicesNavIsActive } from "@/lib/nav";
+import { NavMegaMenu } from "./NavMegaMenu";
+import { navLinkClass, navLinkIsActive, navLinks } from "@/lib/nav";
 import { siteConfig } from "@/lib/siteConfig";
-import { FLORENCE_LANDSCAPE_PATH, WORK_PATH } from "@/lib/siteConstants";
+import { CAREERS_PATH, FLORENCE_LANDSCAPE_PATH, LOGIN_PATH, WORK_PATH } from "@/lib/siteConstants";
 
 const phoneDigits = siteConfig.phone.replace(/\D/g, "");
 
@@ -14,7 +15,11 @@ function pathUsesHeroOverlay(pathname: string): boolean {
   return (
     pathname === "/" ||
     pathname.startsWith("/services/") ||
+    pathname.startsWith("/residential/") ||
+    pathname.startsWith("/commercial/") ||
     pathname === "/contact" ||
+    pathname === CAREERS_PATH ||
+    pathname.startsWith(`${CAREERS_PATH}/`) ||
     pathname === WORK_PATH ||
     pathname.startsWith(`${WORK_PATH}/`) ||
     pathname === FLORENCE_LANDSCAPE_PATH ||
@@ -38,6 +43,18 @@ function CloseIcon() {
   );
 }
 
+function AccountIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-5" aria-hidden>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.5a7.5 7.5 0 0115 0"
+      />
+    </svg>
+  );
+}
+
 function PhoneIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4 shrink-0" aria-hidden>
@@ -54,15 +71,15 @@ export function SiteHeader() {
   const pathname = usePathname();
   const overHeroPages = pathUsesHeroOverlay(pathname);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<number | null>(null);
 
   useEffect(() => {
     setMenuOpen(false);
-    setServicesOpen(false);
-    setMobileServicesOpen(false);
+    setOpenMenu(null);
+    setOpenMobileGroup(null);
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
@@ -72,28 +89,28 @@ export function SiteHeader() {
     }
   }, [pathname]);
 
-  const openServices = () => {
+  const openDropdown = (label: string) => {
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
     }
-    setServicesOpen(true);
+    setOpenMenu(label);
   };
 
-  const closeServicesSoon = () => {
+  const closeDropdownSoon = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(() => {
-      setServicesOpen(false);
+      setOpenMenu(null);
       closeTimer.current = null;
     }, 180);
   };
 
-  const closeServicesNow = () => {
+  const closeDropdownNow = () => {
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
     }
-    setServicesOpen(false);
+    setOpenMenu(null);
   };
 
   useEffect(() => {
@@ -114,53 +131,66 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [overHeroPages]);
 
+  useEffect(() => {
+    if (!openMenu) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeDropdownNow();
+    };
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (target instanceof Element && target.closest(".nav-dropdown--mega")) return;
+      closeDropdownNow();
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointer);
+    window.addEventListener("scroll", closeDropdownNow, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointer);
+      window.removeEventListener("scroll", closeDropdownNow);
+    };
+  }, [openMenu]);
+
   const overHero = overHeroPages && !scrolled && !menuOpen;
 
   return (
     <>
     <header className={`site-header ${overHeroPages ? "site-header--overlay" : ""} ${overHero ? "site-header--over-hero" : ""} ${menuOpen ? "site-header--menu-open" : ""}`}>
-      <div className="container-main flex items-center justify-between gap-6" style={{ height: "var(--header-height)" }}>
+      <div className="container-main site-header__bar">
         <LogoHomeLink />
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+        <nav className="site-header__nav" aria-label="Main">
           {navLinks.map((link) => {
-            const children = "children" in link ? link.children : undefined;
-            if (children) {
-              const servicesActive = servicesNavIsActive(pathname);
+            if (link.children) {
+              const isOpen = openMenu === link.label;
+              const isActive = link.isActive(pathname);
               return (
                 <div
                   key={link.label}
-                  className={`nav-dropdown ${servicesOpen ? "nav-dropdown--open" : ""}`}
-                  onMouseEnter={openServices}
-                  onMouseLeave={closeServicesSoon}
+                  className={`nav-dropdown nav-dropdown--mega ${isOpen ? "nav-dropdown--open" : ""}`}
+                  onMouseEnter={() => openDropdown(link.label)}
+                  onMouseLeave={closeDropdownSoon}
                 >
                   <button
                     type="button"
-                    className={navLinkClass(servicesActive)}
-                    aria-expanded={servicesOpen}
-                    aria-haspopup="listbox"
-                    onClick={() => (servicesOpen ? closeServicesNow() : openServices())}
+                    className={navLinkClass(isActive)}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    onClick={() => (isOpen ? closeDropdownNow() : openDropdown(link.label))}
                   >
                     {link.label}
                     <svg viewBox="0 0 20 20" fill="currentColor" className="size-3.5 opacity-70" aria-hidden>
                       <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                     </svg>
                   </button>
-                  <div className="nav-dropdown__menu" role="listbox" aria-label="Services">
-                    <div className="nav-dropdown__panel">
-                      {children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          role="option"
-                          aria-selected={pathname === child.href}
-                          className={`nav-dropdown__item ${pathname === child.href ? "nav-dropdown__item--active" : ""}`}
-                          onClick={closeServicesNow}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
+                  <div
+                    className="nav-dropdown__menu"
+                    role="menu"
+                    aria-label={link.label}
+                    hidden={!isOpen}
+                  >
+                    <NavMegaMenu audience={link.audience} onNavigate={closeDropdownNow} />
                   </div>
                 </div>
               );
@@ -168,10 +198,10 @@ export function SiteHeader() {
 
             return (
               <Link
-                key={"href" in link ? link.href : link.label}
-                href={"href" in link ? link.href : "/"}
-                className={navLinkClass("href" in link ? navLinkIsActive(pathname, link.href) : false)}
-                aria-current={"href" in link && navLinkIsActive(pathname, link.href) ? "page" : undefined}
+                key={link.href}
+                href={link.href}
+                className={navLinkClass(navLinkIsActive(pathname, link.href))}
+                aria-current={navLinkIsActive(pathname, link.href) ? "page" : undefined}
               >
                 {link.label}
               </Link>
@@ -179,32 +209,45 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="site-header__actions">
           <a
-            href={`tel:${phoneDigits}`}
-            className="nav-phone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+            href={LOGIN_PATH}
+            className="nav-account"
+            aria-label="Log in"
+            title="Log in"
+            rel="noopener noreferrer"
           >
-            <PhoneIcon />
-            {siteConfig.phone}
+            <AccountIcon />
           </a>
           <Link
             href="/contact"
-            className="btn-primary px-5 py-2.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+            className="btn-primary site-header__cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
           >
             Free estimate
           </Link>
         </div>
 
-        <button
-          type="button"
-          className="nav-menu-btn lg:hidden"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          {menuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
+        <div className="site-header__mobile">
+          <a
+            href={LOGIN_PATH}
+            className="nav-account"
+            aria-label="Log in"
+            title="Log in"
+            rel="noopener noreferrer"
+          >
+            <AccountIcon />
+          </a>
+          <button
+            type="button"
+            className="nav-menu-btn"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        </div>
       </div>
 
     </header>
@@ -222,39 +265,30 @@ export function SiteHeader() {
 
             <nav className="mobile-nav__links" aria-label="Mobile">
               {navLinks.map((link) => {
-                const children = "children" in link ? link.children : undefined;
-                if (children) {
-                  const servicesActive = servicesNavIsActive(pathname);
+                if (link.children) {
+                  const isOpen = openMobileGroup === link.label;
+                  const isActive = link.isActive(pathname);
                   return (
                     <div key={link.label} className="mobile-nav__group">
                       <button
                         type="button"
-                        className={`mobile-nav__link mobile-nav__link--toggle ${servicesActive ? "mobile-nav__link--active" : ""}`}
-                        aria-expanded={mobileServicesOpen}
-                        onClick={() => setMobileServicesOpen((open) => !open)}
+                        className={`mobile-nav__link mobile-nav__link--toggle ${isActive ? "mobile-nav__link--active" : ""}`}
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenMobileGroup(isOpen ? null : link.label)}
                       >
                         {link.label}
                         <svg
                           viewBox="0 0 20 20"
                           fill="currentColor"
-                          className={`mobile-nav__chevron ${mobileServicesOpen ? "mobile-nav__chevron--open" : ""}`}
+                          className={`mobile-nav__chevron ${isOpen ? "mobile-nav__chevron--open" : ""}`}
                           aria-hidden
                         >
                           <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                         </svg>
                       </button>
-                      {mobileServicesOpen && (
+                      {isOpen && (
                         <div className="mobile-nav__sublinks">
-                          {children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className={`mobile-nav__sublink ${pathname === child.href ? "mobile-nav__sublink--active" : ""}`}
-                              onClick={() => setMenuOpen(false)}
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
+                          <NavMegaMenu audience={link.audience} onNavigate={() => setMenuOpen(false)} />
                         </div>
                       )}
                     </div>
@@ -262,10 +296,10 @@ export function SiteHeader() {
                 }
 
                 return (
-                  <div key={"href" in link ? link.href : link.label}>
+                  <div key={link.href}>
                     <Link
-                      href={"href" in link ? link.href : "/"}
-                      className={`mobile-nav__link ${"href" in link && navLinkIsActive(pathname, link.href) ? "mobile-nav__link--active" : ""}`}
+                      href={link.href}
+                      className={`mobile-nav__link ${navLinkIsActive(pathname, link.href) ? "mobile-nav__link--active" : ""}`}
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}

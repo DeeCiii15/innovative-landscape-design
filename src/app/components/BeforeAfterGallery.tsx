@@ -11,6 +11,7 @@ import {
   type TransformationFilterId,
 } from "@/lib/projects";
 import { siteConfig } from "@/lib/siteConfig";
+import { WORK_PATH } from "@/lib/siteConstants";
 
 type BeforeAfterGalleryProps = {
   projects?: BeforeAfterProject[];
@@ -61,18 +62,18 @@ export function BeforeAfterGallery({
         {showHeader && (
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <span className="label-tag">Before & after</span>
+              <span className="label-tag">Recent work</span>
               <h2 className="heading-section mt-3">See the transformation</h2>
               <p className="mt-4 text-[var(--color-muted)]">
-                Drag the slider to compare results — each project matches landscape design, irrigation, hardscapes, or lighting.
+                Browse landscape design, irrigation, hardscape, and lighting projects from around the Florence area.
               </p>
             </div>
             {showViewAll && (
               <Link
-                href="/projects"
+                href={WORK_PATH}
                 className="btn-secondary shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2"
               >
-                View all projects
+                View portfolio
               </Link>
             )}
           </div>

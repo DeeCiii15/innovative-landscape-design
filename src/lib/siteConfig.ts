@@ -1,4 +1,5 @@
 import { services } from "./servicesData";
+import { siteImages } from "./siteImages";
 import {
   SITE_NAME,
   CANONICAL_SITE_URL,
@@ -9,7 +10,6 @@ import {
   WORK_PATH,
   FLORENCE_LANDSCAPE_PATH,
 } from "./siteConstants";
-import { workItems } from "./workData";
 
 export {
   SITE_NAME,
@@ -27,23 +27,30 @@ export const siteConfig = {
   shortName: "ILD",
   tagline: "Beautiful, functional landscapes in Florence, SC",
   description:
-    "Florence, SC landscape company specializing in landscape design, irrigation, hardscapes, and outdoor lighting. Serving the Florence area for almost 20 years.",
+    "Florence, SC landscape company for landscape design, installation, and maintenance—plus landscaping, hardscapes, outdoor lighting, water features, and irrigation. Serving the Florence area for almost 20 years.",
   url: CANONICAL_SITE_URL,
-  logo: "/images/grass-mark.png",
-  heroImage: "/images/hero-aerial.jpg",
-  heroImageAlt: "Aerial drone view of a landscaped residential yard",
+  logo: "/images/logo-ild-icon.png",
+  heroImage: siteImages.heroFrontYard,
+  heroImageAlt: "Aerial view of a striped front lawn framed by colorful planting beds and a brick home",
   phone: "(843) 230-1036",
   email: "Scott@ildsc.com",
   address: "2027 Rosedale St, Florence, SC 29501",
+  social: [
+    { name: "Instagram", href: "https://www.instagram.com/ild_innovativelandscapedesign/" },
+    { name: "Facebook", href: "https://www.facebook.com/InnovativeLandscapeDesignLLC/" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/innovative-landscape-design" },
+  ],
   location: "Florence, SC",
   yearsServing: "almost 20",
   openingHours: "Mon–Sun, 9:00 AM – 5:00 PM",
-  heroHeadline: "Beautiful landscapes, built for Florence",
+  heroHeadline: "Landscapes built for Florence",
   heroSubheadline:
-    "Landscape design, irrigation, hardscapes, and outdoor lighting for homeowners across the Florence area.",
+    "We design, install, and maintain landscapes in Florence—planting, hardscapes, lighting, water features, and irrigation.",
   featuredBeforeAfterId: "yard-redesign",
+  aboutWelcome: "Florence's premier landscape design company",
+  aboutLead: "Who we are",
   aboutIntro:
-    "Our team helps homeowners throughout the Florence area plan, build, and enhance outdoor spaces through landscape design, irrigation, hardscapes, and lighting—you bring the vision and we bring the execution.",
+    "For nearly 20 years, we've helped homeowners and businesses throughout the Florence area plan, build, and care for outdoor spaces—from the first design through planting, hardscapes, lighting, and water features.",
   aboutBody:
     "We design and build beautiful, functional landscapes with creative solutions and high-quality work. A professional, personal approach grounded in integrity and reliability is how we earn the privilege to be the landscape company you trust—and we aim for results that exceed expectations every time.",
   aboutValues:
@@ -77,7 +84,7 @@ export const siteConfig = {
     },
   ],
   servicesIntro:
-    "Innovative Landscape Design is a Florence, SC company focused on landscape design, irrigation, hardscapes, and outdoor lighting. We have served the Florence area for almost 20 years.",
+    "Innovative Landscape Design is a Florence, SC company that designs, installs, and maintains landscapes—planting, irrigation, hardscapes, outdoor lighting, and water features. We have served the Florence area for almost 20 years.",
   /** Compatibility shape for existing UI — prefer `services` from servicesData for new pages */
   services: services.map((s) => ({
     id: s.slug,
@@ -91,10 +98,10 @@ export const siteConfig = {
     galleryImageAlt: s.galleryImageAlt,
   })),
   teamPhoto: {
-    src: "/images/about-consultation.jpg",
+    src: siteImages.aboutConsultation,
     alt: "Landscape designer discussing yard plans with homeowners in their backyard",
   },
-  aboutBg: "/images/about-bg.jpg",
+  aboutBg: siteImages.aboutBg,
   serviceAreas: [...SERVICE_AREAS],
   reviews: [
     {
@@ -104,7 +111,7 @@ export const siteConfig = {
       rating: 5,
       text: "They transformed our front yard completely. The design process was easy to follow and the crew was professional from start to finish.",
       service: "Landscape Design",
-      serviceSlug: "landscape-design",
+      serviceSlug: "landscape-enhancements",
     },
     {
       id: "review-2",
@@ -134,40 +141,7 @@ export const siteConfig = {
       serviceSlug: "outdoor-lighting",
     },
   ],
-  faqs: [
-    {
-      question: "What areas do you serve?",
-      answer:
-        "We serve Florence and surrounding communities including Quinby, Effingham, Timmonsville, Darlington, and Lake City. Contact us to confirm availability for your address.",
-    },
-    {
-      question: "Do you offer free estimates?",
-      answer:
-        "Yes. We provide free on-site consultations and estimates for landscape design, irrigation, hardscapes, and outdoor lighting projects.",
-    },
-    {
-      question: "How long does a typical project take?",
-      answer:
-        "Timelines vary by scope. Focused upgrades like lighting or irrigation may take a few days to a week. Full redesigns and hardscape projects typically run two to four weeks depending on weather and materials.",
-    },
-    {
-      question: "Can I see my design before work begins?",
-      answer:
-        "Absolutely. For landscape design projects we use interactive software so you can preview your future yard before any work starts on your property.",
-    },
-    {
-      question: "Are you a certified lighting installer?",
-      answer:
-        "Yes. We are a certified Cast Lighting installer, trained to design and install professional outdoor lighting systems.",
-    },
-    {
-      question: "What irrigation system do you use?",
-      answer:
-        "We install the latest Orbit B-hyve smart irrigation controllers with WeatherSense technology, so each zone of your yard gets the right amount of water.",
-    },
-  ],
-  ctaHeadline: "Want to have your dream landscape?",
+  ctaHeadline: "Ready to have your dream landscape?",
   ctaSubheadline: "We can help!",
-  /** Featured work for home/OG */
-  featuredWork: workItems.find((w) => w.slug === "yard-redesign") ?? workItems[0],
+  featuredWorkSlug: "yard-redesign",
 } as const;

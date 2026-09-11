@@ -9,12 +9,12 @@ export function LogoHomeLink() {
       className="site-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
       aria-label={`${siteConfig.name} home`}
     >
-      <span className="site-logo__mark" aria-hidden>
+      <span className="site-logo__mark" aria-hidden style={{ filter: "none" }}>
         <Image
-          src="/images/grass-mark.png"
+          src="/images/logo-ild-oval.png"
           alt=""
-          width={360}
-          height={360}
+          width={1472}
+          height={848}
           priority
         />
       </span>

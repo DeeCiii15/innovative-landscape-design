@@ -1,108 +1,99 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { Reveal } from "./Reveal";
-import { workCategories, workCategoryPath } from "@/lib/workData";
 import { WORK_PATH } from "@/lib/siteConstants";
+import { getServiceBySlug, services, type ServiceDef } from "@/lib/servicesData";
+
+type ServiceGroup = {
+  heading: string;
+  slugs: readonly string[];
+  featured?: boolean;
+};
 
 type ServiceGalleryGridProps = {
   id?: string;
+  heading?: string;
+  lead?: string;
+  slugs?: readonly string[];
+  groups?: readonly ServiceGroup[];
   showHeader?: boolean;
   showViewAll?: boolean;
-  /** Short line shown above the gallery cards */
-  intro?: string;
-  /** When false, cards render immediately (no scroll-triggered fade-in). */
-  reveal?: boolean;
   className?: string;
 };
 
-function MaybeReveal({
-  enabled,
-  delay,
-  children,
-  className,
-}: {
-  enabled: boolean;
-  delay?: number;
-  children: ReactNode;
-  className?: string;
-}) {
-  if (!enabled) {
-    return <div className={className}>{children}</div>;
-  }
+function cardsFromSlugs(slugs: readonly string[]): ServiceDef[] {
+  return slugs.map((slug) => getServiceBySlug(slug)).filter((service): service is ServiceDef => Boolean(service));
+}
+
+function ServiceTile({ service }: { service: ServiceDef }) {
   return (
-    <Reveal delay={delay} className={className}>
-      {children}
-    </Reveal>
+    <Link
+      href={`/services/${service.slug}`}
+      className="project-tile focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+    >
+      <Image
+        src={service.galleryImage}
+        alt=""
+        fill
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        className="project-tile__image object-cover"
+      />
+      <span className="project-tile__name">{service.name}</span>
+    </Link>
   );
 }
 
 export function ServiceGalleryGrid({
-  id = "projects",
+  id = "services",
+  heading = "Browse work by service",
+  lead,
+  slugs,
+  groups,
   showHeader = true,
   showViewAll = true,
-  intro,
-  reveal = true,
   className = "",
 }: ServiceGalleryGridProps) {
+  const seen = new Set<string>();
+  const cards: ServiceDef[] = [];
+  const orderedSlugs = groups?.length
+    ? groups.flatMap((group) => group.slugs)
+    : (slugs ?? services.map((service) => service.slug));
+
+  for (const service of cardsFromSlugs(orderedSlugs)) {
+    if (seen.has(service.slug)) continue;
+    seen.add(service.slug);
+    cards.push(service);
+  }
+
   return (
-    <section id={id || undefined} className={`work section scroll-mt-24 ${className}`.trim()}>
+    <section id={id || undefined} className={`hub-services scroll-mt-24 ${className}`.trim()}>
       <div className="container-main">
-        {showHeader && (
-          <div className="work__head">
-            <MaybeReveal enabled={reveal} className="section-head">
-              <h2 className="heading-section section-head__title">Browse work by service</h2>
-              <p className="lead">
-                Select a category to view before-and-after projects for landscape design, irrigation, hardscapes, or
-                lighting.
-              </p>
-            </MaybeReveal>
-            {showViewAll && (
-              <MaybeReveal enabled={reveal} delay={100}>
-                <Link
-                  href={WORK_PATH}
-                  className="link-arrow hidden shrink-0 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
-                >
-                  All projects
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </Link>
-              </MaybeReveal>
-            )}
-          </div>
-        )}
-
-        {intro && <p className={`lead max-w-2xl ${showHeader ? "mt-2 mb-10" : "mb-10"}`}>{intro}</p>}
-
-        <div className="work__grid">
-          {workCategories.map((category, index) => (
-            <MaybeReveal key={category.slug} enabled={reveal} delay={(index % 2) * 90}>
-              <Link href={workCategoryPath(category.slug)} className="work-card">
-                <div className="work-card__media">
-                  <Image
-                    src={category.image}
-                    alt={category.imageAlt}
-                    fill
-                    sizes="(min-width: 700px) 44vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="work-card__body">
-                  <div>
-                    <h3 className="work-card__title">{category.name}</h3>
-                    <p className="work-card__tagline">{category.description}</p>
-                  </div>
-                  <span className="work-card__arrow" aria-hidden>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7v8" />
-                    </svg>
-                  </span>
-                </div>
+        {showHeader ? (
+          <div className="hub-services__head">
+            <div>
+              <h2 className="heading-section">{heading}</h2>
+              {lead ? <p className="lead mt-4 max-w-2xl">{lead}</p> : null}
+            </div>
+            {showViewAll ? (
+              <Link
+                href={WORK_PATH}
+                className="link-arrow hidden shrink-0 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+              >
+                View the portfolio
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
               </Link>
-            </MaybeReveal>
+            ) : null}
+          </div>
+        ) : null}
+
+        <ul className="portfolio-index__grid">
+          {cards.map((service) => (
+            <li key={service.slug}>
+              <ServiceTile service={service} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

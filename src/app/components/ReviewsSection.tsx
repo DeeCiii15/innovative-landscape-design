@@ -1,4 +1,6 @@
 import { Reveal } from "./Reveal";
+import { TrustedBy } from "./TrustedBy";
+import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/siteConstants";
 import { siteConfig } from "@/lib/siteConfig";
 
 function Stars({ count }: { count: number }) {
@@ -23,29 +25,52 @@ function Stars({ count }: { count: number }) {
 
 export function ReviewsSection() {
   return (
-    <section className="reviews section--tight">
-      <div className="container-main">
-        <Reveal className="reviews__head">
-          <h2 className="heading-section reviews__title">What our customers say</h2>
-        </Reveal>
+    <section className="reviews reviews--aerial section--tight">
+      <div className="reviews__window">
+        <div className="container-main">
+          <Reveal className="reviews__head">
+            <h2 className="heading-section reviews__title">What our customers say</h2>
+          </Reveal>
 
-        <div className="reviews__grid">
-          {siteConfig.reviews.map((review, index) => (
-            <Reveal key={review.id} delay={index * 60}>
-              <figure className="review">
-                <Stars count={review.rating} />
-                <blockquote className="review__text">&ldquo;{review.text}&rdquo;</blockquote>
-                <figcaption className="review__cite">
-                  <p className="review__name">{review.name}</p>
-                  <p className="review__meta">
-                    {review.location} · {review.service}
-                  </p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+          <div className="reviews__grid">
+            {siteConfig.reviews.map((review, index) => (
+              <Reveal key={review.id} delay={index * 60}>
+                <figure className="review">
+                  <Stars count={review.rating} />
+                  <blockquote className="review__text">&ldquo;{review.text}&rdquo;</blockquote>
+                  <figcaption className="review__cite">
+                    <p className="review__name">{review.name}</p>
+                    <p className="review__meta">
+                      {review.location} · {review.service}
+                    </p>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="reviews__actions">
+            <a
+              href={GOOGLE_WRITE_REVIEW_URL}
+              className="btn-primary reviews__btn-write focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-brand-dark)]"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Leave a Google review
+            </a>
+            <a
+              href={GOOGLE_REVIEWS_URL}
+              className="btn-ghost-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View more reviews
+            </a>
+          </div>
         </div>
       </div>
+
+      <TrustedBy />
     </section>
   );
 }

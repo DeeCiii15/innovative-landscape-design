@@ -1,0 +1,16 @@
+{
+  "slug": "example-west-florence-yard",
+  "name": "Front Yard Renovation",
+  "propertyType": "residential",
+  "neighborhood": "West Florence",
+  "city": "Florence",
+  "serviceSlugs": [
+    "turf-renovation-installation",
+    "mulch-and-pine-straw",
+    "landscape-enhancements",
+    "hardscapes"
+  ],
+  "description": "Short summary shown on portfolio cards.",
+  "story": "Optional longer writeup for the project page."
+}
+

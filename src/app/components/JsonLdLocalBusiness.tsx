@@ -1,3 +1,4 @@
+import { audienceHubs } from "@/lib/audienceHubs";
 import { siteConfig } from "@/lib/siteConfig";
 import { getSiteUrl, SERVICE_AREAS } from "@/lib/siteConstants";
 import { services } from "@/lib/servicesData";
@@ -24,17 +25,28 @@ export function JsonLdLocalBusiness() {
       name: city,
     })),
     openingHours: "Mo-Su 09:00-17:00",
+    sameAs: siteConfig.social.map((profile) => profile.href),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Landscaping services",
-      itemListElement: services.map((service) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: service.name,
-          url: `${getSiteUrl()}/services/${service.slug}`,
-        },
-      })),
+      itemListElement: [
+        ...services.map((service) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: service.name,
+            url: `${getSiteUrl()}/services/${service.slug}`,
+          },
+        })),
+        ...audienceHubs.map((hub) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: hub.name,
+            url: `${getSiteUrl()}${hub.path}`,
+          },
+        })),
+      ],
     },
   };
 

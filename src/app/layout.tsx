@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { DM_Sans, Bricolage_Grotesque } from "next/font/google";
+import { Jost, Newsreader } from "next/font/google";
 import { MobileCallBar } from "./components/MobileCallBar";
+import { ScrollRise } from "./components/ScrollRise";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { SkipToContent } from "./components/SkipToContent";
@@ -8,16 +9,16 @@ import { JsonLdLocalBusiness } from "./components/JsonLdLocalBusiness";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
-const sans = DM_Sans({
+const jost = Jost({
   variable: "--font-sans-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
-const display = Bricolage_Grotesque({
-  variable: "--font-display-face",
+const newsreader = Newsreader({
+  variable: "--font-serif-body",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  axes: ["opsz"],
+  style: ["normal", "italic"],
 });
 
 export const viewport = {
@@ -55,12 +56,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} antialiased`}>
-      <body className="flex min-h-screen flex-col bg-[var(--color-canvas)] pb-[calc(4rem+env(safe-area-inset-bottom,0px))] text-[var(--foreground)] md:pb-0">
+    <html lang="en" className={`${jost.variable} ${newsreader.variable} antialiased`}>
+      <body className="flex min-h-screen flex-col bg-white pb-[calc(4rem+env(safe-area-inset-bottom,0px))] text-[var(--foreground)] md:pb-0">
         <JsonLdLocalBusiness />
         <SkipToContent />
         <SiteHeader />
         <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+          <ScrollRise />
           {children}
         </main>
         <SiteFooter />

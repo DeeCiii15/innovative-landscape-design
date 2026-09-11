@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { BeforeAfterReveal } from "./BeforeAfterReveal";
+import { ProjectGallery } from "./ProjectGallery";
 import type { BeforeAfterProject } from "@/lib/projects";
+import Link from "next/link";
 
 type TransformationProjectCardProps = {
   project: BeforeAfterProject;
@@ -13,25 +13,29 @@ type TransformationProjectCardProps = {
 export function TransformationProjectCard({
   project,
   featured = false,
-  autoReveal = false,
   showStory = false,
   showCta = false,
 }: TransformationProjectCardProps) {
+  const images = [
+    { src: project.after, alt: project.afterAlt },
+    { src: project.before, alt: project.beforeAlt },
+  ].filter((image) => image.src);
+
   return (
     <article className="surface-card">
-      <BeforeAfterReveal
-        before={project.before}
-        after={project.after}
-        beforeAlt={project.beforeAlt}
-        afterAlt={project.afterAlt}
+      <ProjectGallery
+        images={images}
+        name={project.title}
         priority={featured}
-        autoReveal={autoReveal}
         aspectClassName={featured ? "aspect-[16/10] sm:aspect-[2/1]" : "aspect-[4/3]"}
-        className="rounded-b-none"
+        className="rounded-none"
       />
       <div className={`${featured ? "px-6 py-6 sm:px-8" : "px-5 py-5 sm:px-6"}`}>
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-brand-dark)]">
+          {project.location} · {project.service}
+        </p>
         <h3
-          className={`font-bold tracking-tight text-[var(--color-ink)] ${featured ? "text-xl sm:text-2xl" : "text-lg"}`}
+          className={`mt-2 font-medium tracking-tight text-[var(--color-ink)] ${featured ? "text-xl sm:text-2xl" : "text-lg"}`}
         >
           {project.title}
         </h3>
