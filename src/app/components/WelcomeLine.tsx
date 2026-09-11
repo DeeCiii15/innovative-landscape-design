@@ -8,17 +8,38 @@ const LETTER_STAGGER_MS = 42;
 const SINCE_TEXT = "Since 2007";
 
 function WriteInChars({ text, delay = 0 }: { text: string; delay?: number }) {
+  let index = 0;
+
   return (
     <span aria-hidden>
-      {text.split("").map((char, index) => (
-        <span
-          key={`${char}-${index}`}
-          className={char === " " ? "welcome-line__letter welcome-line__space" : "welcome-line__letter"}
-          style={{ animationDelay: `${delay + index * LETTER_STAGGER_MS}ms` }}
-        >
-          {char === " " ? "\u00a0" : char}
-        </span>
-      ))}
+      {text.split(/(\s+)/).map((part, partIndex) => {
+        if (/^\s+$/.test(part)) {
+          index += part.length;
+          return (
+            <span key={`space-${partIndex}`} className="welcome-line__letter welcome-line__space">
+              &nbsp;
+            </span>
+          );
+        }
+
+        const start = index;
+        const letters = part.split("").map((char, charIndex) => (
+          <span
+            key={`${char}-${start + charIndex}`}
+            className="welcome-line__letter"
+            style={{ animationDelay: `${delay + (start + charIndex) * LETTER_STAGGER_MS}ms` }}
+          >
+            {char}
+          </span>
+        ));
+        index += part.length;
+
+        return (
+          <span key={`word-${partIndex}`} className="welcome-line__word">
+            {letters}
+          </span>
+        );
+      })}
     </span>
   );
 }

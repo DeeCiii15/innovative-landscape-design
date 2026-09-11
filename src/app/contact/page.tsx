@@ -22,8 +22,8 @@ export default function ContactPage() {
         <PageHero
           title="Let's talk about your"
           accent="project"
-          image={siteConfig.aboutBg}
-          imageAlt="Landscape project in Florence, SC"
+          image={siteConfig.heroImage}
+          imageAlt={siteConfig.heroImageAlt}
         />
       }
     >

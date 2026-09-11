@@ -27,8 +27,8 @@ export default function CareersPage() {
         <PageHero
           title="Work with"
           accent="us"
-          image={siteConfig.aboutBg}
-          imageAlt="Landscape crew work in Florence, SC"
+          image={siteConfig.heroImage}
+          imageAlt={siteConfig.heroImageAlt}
         />
       }
     >

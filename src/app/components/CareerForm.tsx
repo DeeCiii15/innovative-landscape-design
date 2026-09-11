@@ -4,7 +4,7 @@ import { type FormEvent } from "react";
 import { siteConfig } from "@/lib/siteConfig";
 
 const inputClass =
-  "w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-sm outline-none transition focus:border-[var(--color-green)] focus:ring-2 focus:ring-[var(--color-green)]/15";
+  "w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-base outline-none transition focus:border-[var(--color-green)] focus:ring-2 focus:ring-[var(--color-green)]/15 sm:text-sm";
 
 export function CareerForm() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
