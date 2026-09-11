@@ -25,7 +25,7 @@ export function HubWorkRow({ items, heading, lead, serviceSlug }: HubWorkRowProp
           </div>
           <Link
             href={WORK_PATH}
-            className="link-arrow shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+            className="link-arrow hub-work__head-link shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
           >
             View all projects
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
@@ -41,6 +41,16 @@ export function HubWorkRow({ items, heading, lead, serviceSlug }: HubWorkRowProp
             </li>
           ))}
         </ul>
+
+        <Link
+          href={WORK_PATH}
+          className="link-arrow hub-work__more focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+        >
+          View all projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
       </div>
     </section>
   );

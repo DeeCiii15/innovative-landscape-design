@@ -165,7 +165,9 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
         }
 
         if (lastProgressRef.current >= 0.999) {
-          releaseWithoutJump();
+          if (!window.matchMedia("(max-width: 767px)").matches) {
+            releaseWithoutJump();
+          }
           measureRail();
           return;
         }
@@ -186,7 +188,11 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       }
 
       applyProgress(intoLock() / travelPx());
-      if (lastProgressRef.current >= 0.999 && extraBelow() <= 32) {
+      if (
+        lastProgressRef.current >= 0.999 &&
+        extraBelow() <= 32 &&
+        !window.matchMedia("(max-width: 767px)").matches
+      ) {
         releaseWithoutJump();
       }
       measureRail();
@@ -271,6 +277,7 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
             </div>
           </div>
         </div>
+        <div className="process-story__travel" aria-hidden />
       </div>
     </section>
   );

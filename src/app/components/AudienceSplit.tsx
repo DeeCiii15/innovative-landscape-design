@@ -47,22 +47,80 @@ export function AudienceSplit({
 } = {}) {
   const [open, setOpen] = useState<Audience | null>(null);
   const [arrived, setArrived] = useState(false);
-  const [waiting, setWaiting] = useState(false);
+  const [waiting, setWaiting] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || elementVisible(section)) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setWaiting(false);
       setArrived(true);
       return;
     }
 
-    setWaiting(true);
-    return watchEnter(section, () => {
+    const stage = section.querySelector<HTMLElement>(".service-split__stage") ?? section;
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+
+    const entered = () => {
+      const rect = stage.getBoundingClientRect();
+      const view = window.innerHeight || 0;
+      if (view <= 0 || rect.height < 80) return false;
+      if (mobile) {
+        const visible = Math.min(rect.bottom, view) - Math.max(rect.top, 0);
+        return rect.top < view * 0.2 && visible > view * 0.42;
+      }
+      return elementVisible(section);
+    };
+
+    const arrive = () => {
       setWaiting(false);
       setArrived(true);
+    };
+
+    if (!mobile) {
+      if (entered()) {
+        arrive();
+        return;
+      }
+      return watchEnter(section, arrive);
+    }
+
+    const observer = new IntersectionObserver(
+      () => {
+        if (entered()) {
+          arrive();
+          cleanup();
+        }
+      },
+      { threshold: [0.35, 0.5, 0.65], rootMargin: "0px" },
+    );
+
+    const onScroll = () => {
+      if (!entered()) return;
+      arrive();
+      cleanup();
+    };
+
+    let frame = 0;
+
+    function cleanup() {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.cancelAnimationFrame(frame);
+    }
+
+    frame = window.requestAnimationFrame(() => {
+      if (entered()) {
+        arrive();
+        cleanup();
+        return;
+      }
+      observer.observe(stage);
+      window.addEventListener("scroll", onScroll, { passive: true });
     });
+
+    return cleanup;
   }, []);
 
   return (
@@ -91,6 +149,16 @@ export function AudienceSplit({
             <div
               key={pane.audience}
               className={`service-split__pane${isOpen ? " is-open" : ""}`}
+              style={{
+                transform:
+                  pane.audience === "residential"
+                    ? arrived
+                      ? "translate3d(0, 0, 0)"
+                      : "translate3d(-100%, 0, 0)"
+                    : arrived
+                      ? "translate3d(0, 0, 0)"
+                      : "translate3d(100%, 0, 0)",
+              }}
               onMouseEnter={() => {
                 if (canHoverOpen()) setOpen(pane.audience);
               }}

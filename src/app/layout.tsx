@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Jost, Newsreader } from "next/font/google";
+import { HomeAerial } from "./components/HomeAerial";
 import { MobileCallBar } from "./components/MobileCallBar";
 import { ScrollRise } from "./components/ScrollRise";
 import { SiteFooter } from "./components/SiteFooter";
@@ -60,8 +61,9 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col bg-white pb-[calc(4rem+env(safe-area-inset-bottom,0px))] text-[var(--foreground)] md:pb-0">
         <JsonLdLocalBusiness />
         <SkipToContent />
+        <HomeAerial />
         <SiteHeader />
-        <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+        <main id="main-content" tabIndex={-1} className="relative z-[1] flex-1 outline-none">
           <ScrollRise />
           {children}
         </main>

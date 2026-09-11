@@ -48,7 +48,7 @@ export async function PortfolioMarquee() {
               <h2 className="heading-section">Get inspired</h2>
               <h2 className="portfolio-marquee__subhead">Some projects we're proud of</h2>
             </div>
-            <Link href={WORK_PATH} className="link-arrow shrink-0">
+            <Link href={WORK_PATH} className="link-arrow portfolio-marquee__head-link shrink-0">
               View the {WORK_LABEL.toLowerCase()}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
@@ -76,6 +76,15 @@ export async function PortfolioMarquee() {
           </div>
         </div>
       </Link>
+
+      <div className="container-main">
+        <Link href={WORK_PATH} className="link-arrow portfolio-marquee__more">
+          View the {WORK_LABEL.toLowerCase()}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+      </div>
     </section>
   );
 }

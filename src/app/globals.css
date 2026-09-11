@@ -1299,7 +1299,7 @@ body {
   .home-aerial {
     position: fixed;
     inset: 0;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
   }
 
@@ -2022,6 +2022,10 @@ body {
     min-width: 0;
   }
 
+  .hub-work__more {
+    display: none;
+  }
+
   .hub-logos {
     border-top: 1px solid var(--color-border-light);
   }
@@ -2238,15 +2242,23 @@ body {
 
   @media (max-width: 767px) {
     .process-story .process-story__lock {
-      height: calc(
-        (100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px)) + 145vh
-      );
+      height: auto;
       padding-bottom: 0;
     }
 
     .process-story__sticky {
-      height: calc(100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
-      min-height: calc(100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
+      height: auto;
+      min-height: 0;
+    }
+
+    .process-story__travel {
+      display: block;
+      height: 145vh;
+      pointer-events: none;
+    }
+
+    .process-story--static .process-story__travel {
+      display: none;
     }
 
     .process-story--released .process-story__lock {
@@ -2272,16 +2284,24 @@ body {
       width: 100%;
       max-width: none;
       margin-inline: auto;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.45rem;
       text-align: center;
     }
 
     .process-story__stage {
-      justify-content: center;
+      justify-content: flex-start;
+      flex: 0 1 auto;
     }
 
     .process-story--released .process-story__stage {
       justify-content: flex-start;
+    }
+
+    .process-story__bar {
+      display: none;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
     }
 
     .process-story__track {
@@ -2519,6 +2539,10 @@ body {
     background: var(--color-brand-dark);
   }
 
+  .process-story__travel {
+    display: none;
+  }
+
   .process-story--static .process-story__lock,
   .process-story--static .process-story__sticky {
     height: auto;
@@ -2627,7 +2651,7 @@ body {
 
   .service-split.is-arrived .service-split__pane:first-child,
   .service-split.is-arrived .service-split__pane:last-child {
-    transform: none;
+    transform: translate3d(0, 0, 0);
   }
 
   .service-split__pane:last-child {
@@ -2990,6 +3014,10 @@ body {
 
   .portfolio-marquee__item img {
     object-fit: cover;
+  }
+
+  .portfolio-marquee__more {
+    display: none;
   }
 
   /* ================= REVIEWS ================= */
@@ -3819,8 +3847,10 @@ body {
     .hub-featured__photo--main {
       grid-column: 1 / -1;
       grid-row: 1;
+      width: 100%;
+      max-width: none;
       aspect-ratio: 4 / 3;
-      max-height: 14.5rem;
+      max-height: none;
     }
 
     .hub-featured__photo:not(.hub-featured__photo--main) {
@@ -3870,36 +3900,47 @@ body {
       margin-inline: auto;
     }
 
+    .inner-page__stack {
+      background: transparent;
+    }
+
     .footer {
-      background-color: transparent;
-      background-image:
-        linear-gradient(
-          to bottom,
-          rgba(var(--color-overlay-rgb), 0.48) 0%,
-          rgba(4, 21, 8, 0.7) 100%
-        ),
-        url("/images/site/cta-aerial.jpg");
-      background-size: 100% 100%, cover;
-      background-position: center, center;
-      background-repeat: no-repeat;
-      background-attachment: scroll, scroll;
+      z-index: auto;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(var(--color-overlay-rgb), 0.46) 0%,
+        rgba(var(--color-overlay-rgb), 0.58) 100%
+      );
+    }
+
+    .footer__inner {
+      position: relative;
+      z-index: 1;
     }
 
     .cta-section {
       overflow: hidden;
-      background: var(--color-canvas);
+      background: transparent;
     }
 
     .cta__panel.cta__panel--window {
-      overflow: hidden;
+      overflow: visible;
       background-color: transparent;
-      background-image:
-        linear-gradient(transparent, transparent),
-        url("/images/site/cta-aerial.jpg");
-      background-size: 100% 100%, cover;
-      background-position: center, center;
-      background-repeat: no-repeat;
-      background-attachment: scroll, scroll;
+      background-image: none;
+      box-shadow:
+        0 0 0 100vmax var(--color-canvas),
+        0 28px 56px -20px rgba(16, 40, 18, 0.5),
+        0 12px 24px -12px rgba(0, 0, 0, 0.28);
     }
 
     .reviews__scroller {
@@ -3968,7 +4009,7 @@ body {
       min-width: 0;
       overflow: visible;
       padding: 0.35rem 1.5rem 0.45rem;
-      animation: marquee 36s linear infinite;
+      animation: marquee 11s linear infinite;
     }
 
     .trusted-by__item,
@@ -3992,10 +4033,57 @@ body {
     }
 
     .hub-work__head,
-    .portfolio-marquee__head,
     .hub-services__head {
       flex-direction: column;
       align-items: center;
+    }
+
+    .portfolio-marquee__head {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .portfolio-marquee__titles {
+      justify-items: start;
+      width: 100%;
+    }
+
+    .portfolio-marquee__subhead {
+      margin-left: 0;
+    }
+
+    .portfolio-marquee__head-link {
+      display: none;
+    }
+
+    .portfolio-marquee__more {
+      display: inline-flex;
+      margin-top: 0.15rem;
+    }
+
+    .hub-work__head {
+      margin-bottom: 0.55rem;
+      gap: 0;
+    }
+
+    .hub-work__head > div {
+      flex: none;
+      width: 100%;
+    }
+
+    .hub-work__head-link {
+      display: none;
+    }
+
+    .hub-work__more {
+      display: flex;
+      width: fit-content;
+      margin: 1.1rem auto 0;
+    }
+
+    .hub-services .project-tile {
+      aspect-ratio: 5 / 4;
     }
 
     .hub-work__head .link-arrow,
@@ -4022,16 +4110,32 @@ body {
     /* Later process rules (opacity 0.45 / scale) win over the earlier mobile
        block, so inactive photos ghost over the active one unless reset here. */
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__lock {
-      height: calc(
-        (100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px)) + 145vh
-      );
+      height: auto;
+      padding-bottom: 0;
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
       position: sticky;
       top: var(--header-height);
-      height: calc(100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
-      min-height: calc(100dvh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
+      height: auto;
+      min-height: 0;
+    }
+
+    .process-story:not(.process-story--static) .process-story__travel {
+      display: block;
+      height: 145vh;
+    }
+
+    .process-story__stage {
+      justify-content: flex-start;
+      flex: 0 1 auto;
+    }
+
+    .process-story__bar {
+      display: none;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
     }
 
     .process-story__intro {
@@ -4091,17 +4195,19 @@ body {
       overflow-x: hidden;
     }
 
+    .service-split:not(.is-arrived) .service-split__pane:first-child,
     .service-split.is-waiting .service-split__pane:first-child {
       transform: translate3d(-100%, 0, 0);
     }
 
+    .service-split:not(.is-arrived) .service-split__pane:last-child,
     .service-split.is-waiting .service-split__pane:last-child {
       transform: translate3d(100%, 0, 0);
     }
 
     .service-split.is-arrived .service-split__pane:first-child,
     .service-split.is-arrived .service-split__pane:last-child {
-      transform: none;
+      transform: translate3d(0, 0, 0);
     }
 
     .service-split__links {
