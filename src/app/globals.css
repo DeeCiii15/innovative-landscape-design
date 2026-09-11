@@ -2224,23 +2224,63 @@ body {
 
   @media (max-width: 767px) {
     .process-story .process-story__lock {
-      height: calc((100svh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px)) + 52vh);
+      height: auto;
+      padding-bottom: 42vh;
     }
 
     .process-story__sticky {
       height: calc(100svh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
-      min-height: calc(100svh - var(--header-height) - 4.75rem - env(safe-area-inset-bottom, 0px));
+      min-height: 0;
+    }
+
+    .process-story--released .process-story__lock {
+      padding-bottom: 0;
+    }
+
+    .process-story--released .process-story__sticky {
+      height: auto;
+    }
+
+    .process-story__sticky-inner {
+      padding-top: 0.85rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .process-story--released .process-story__sticky-inner {
+      padding-top: 1.25rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .process-story__intro {
+      width: 100%;
+      max-width: none;
+      margin-inline: auto;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .process-story__stage {
+      justify-content: center;
+    }
+
+    .process-story--released .process-story__stage {
+      justify-content: flex-start;
     }
 
     .process-story__track {
       grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-      grid-template-rows: minmax(12.5rem, 32vh) 1.25rem auto;
+      grid-template-rows: auto 1.15rem auto;
     }
 
     .process-story__media {
       grid-column: 1 / -1 !important;
       grid-row: 1;
-      min-height: 12.5rem;
+      width: min(19.5rem, 78%);
+      min-height: 0;
+      max-height: 26vh;
+      aspect-ratio: 4 / 3;
+      justify-self: center;
+      align-self: center;
       opacity: 0;
       pointer-events: none;
       z-index: 0;
@@ -2264,6 +2304,10 @@ body {
       font-size: 1.15rem;
     }
 
+    .process-story--static .process-story__lock {
+      padding-bottom: 0;
+    }
+
     .process-story--static .process-story__track {
       display: flex;
       flex-direction: column;
@@ -2280,6 +2324,8 @@ body {
     .process-story--static .process-story__media {
       grid-column: auto !important;
       grid-row: auto;
+      width: 100%;
+      max-height: none;
       opacity: 1;
       pointer-events: auto;
       min-height: 10rem;
@@ -3741,6 +3787,74 @@ body {
       background-attachment: scroll, scroll;
     }
 
+    /* Homepage: one fixed aerial (HomeAerial) behind reviews, CTA, and footer. */
+    body:has(.home-aerial) .cta-section {
+      background: transparent;
+    }
+
+    body:has(.home-aerial) .cta__panel.cta__panel--window {
+      background-color: transparent;
+      background-image: none;
+      background-attachment: scroll;
+    }
+
+    body:has(.home-aerial) .footer {
+      background-color: transparent;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(var(--color-overlay-rgb), 0.48) 0%,
+        rgba(4, 21, 8, 0.7) 100%
+      );
+      background-size: 100% 100%;
+      background-attachment: scroll;
+    }
+
+    .reviews__grid {
+      display: flex;
+      grid-template-columns: none;
+      gap: 0.85rem;
+      min-width: 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 0.15rem;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.2rem;
+    }
+
+    .reviews__grid > * {
+      flex: 0 0 100%;
+      min-width: 0;
+      scroll-snap-align: start;
+    }
+
+    .reviews__grid .reveal,
+    .reviews__grid .reveal.is-waiting {
+      opacity: 1;
+      transform: none;
+    }
+
+    .trusted-by__row {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 1.75rem 2.25rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.45rem;
+    }
+
+    .trusted-by__item {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      opacity: 1;
+      transform: none;
+    }
+
     .reviews__actions {
       flex-direction: column;
       align-items: stretch;
@@ -3783,7 +3897,20 @@ body {
 
     /* Later process rules (opacity 0.45 / scale) win over the earlier mobile
        block, so inactive photos ghost over the active one unless reset here. */
+    .process-story__intro {
+      width: 100%;
+      max-width: none;
+      margin-inline: auto;
+      text-align: center;
+    }
+
     .process-story__media {
+      width: min(19.5rem, 78%);
+      max-height: 26vh;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      justify-self: center;
+      align-self: center;
       opacity: 0;
       transform: none;
     }
@@ -3816,6 +3943,11 @@ body {
 
     .process-story--static .process-story__track {
       padding-bottom: 0;
+    }
+
+    .process-story--static .process-story__media {
+      width: 100%;
+      max-height: none;
     }
 
     .service-split.is-waiting .service-split__pane:first-child,

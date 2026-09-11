@@ -43,7 +43,7 @@ const BLOCK = [
 const CATCH = "#main-content .container-main > *, .inner-page__stack > section, .project-page__stack .container-main > *";
 
 const SKIP =
-  ".hero, .page-hero, .project-hero, .home-aerial, .site-header, .process-story, .photo-collage, .welcome-line-wrap, .service-split, .reveal, .nav-mega, .reviews__actions";
+  ".hero, .page-hero, .project-hero, .home-aerial, .site-header, .process-story, .photo-collage, .welcome-line-wrap, .service-split, .reveal, .nav-mega, .reviews__actions, .reviews__grid, .trusted-by__item, .trusted-by__row, .portfolio-marquee__band";
 
 const NO_TRANSFORM =
   ".cta__panel, .cta-section, .reviews__window, .footer, .reviews--aerial";

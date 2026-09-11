@@ -63,7 +63,14 @@ export async function PortfolioMarquee() {
           <div className="portfolio-marquee__track">
             {strip.map((photo, index) => (
               <span key={`${photo.src}-${index}`} className="portfolio-marquee__item">
-                <Image src={photo.src} alt="" fill sizes="280px" className="object-cover" />
+                <Image
+                  src={photo.src}
+                  alt=""
+                  fill
+                  sizes="280px"
+                  loading={index < photos.length ? "eager" : "lazy"}
+                  className="object-cover"
+                />
               </span>
             ))}
           </div>
