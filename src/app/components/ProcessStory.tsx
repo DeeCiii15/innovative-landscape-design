@@ -128,6 +128,11 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
         if (delta > 1) {
           window.scrollTo({ top: Math.max(0, yBefore - delta), behavior: "auto" });
         }
+        const top = lock.getBoundingClientRect().top;
+        const header = headerHeight();
+        if (top < header - 1) {
+          window.scrollTo({ top: Math.max(0, window.scrollY - (header - top)), behavior: "auto" });
+        }
         html.style.scrollBehavior = previousBehavior;
         lastScrollYRef.current = window.scrollY;
         ignoreScrollRef.current = false;
@@ -165,9 +170,7 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
         }
 
         if (lastProgressRef.current >= 0.999) {
-          if (!window.matchMedia("(max-width: 767px)").matches) {
-            releaseWithoutJump();
-          }
+          releaseWithoutJump();
           measureRail();
           return;
         }
@@ -188,11 +191,7 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       }
 
       applyProgress(intoLock() / travelPx());
-      if (
-        lastProgressRef.current >= 0.999 &&
-        extraBelow() <= 32 &&
-        !window.matchMedia("(max-width: 767px)").matches
-      ) {
+      if (lastProgressRef.current >= 0.999 && extraBelow() <= 8) {
         releaseWithoutJump();
       }
       measureRail();

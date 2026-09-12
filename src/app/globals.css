@@ -37,6 +37,7 @@
   --color-overlay-rgb: 4, 21, 8;
 
   --header-height: 4.75rem;
+  --process-travel: 145vh;
   --photo-shadow:
     0 22px 44px -16px rgba(16, 40, 18, 0.48),
     0 10px 18px -10px rgba(0, 0, 0, 0.28);
@@ -2209,6 +2210,7 @@ body {
   .process-story {
     --process-cols: 1.55fr 0.82fr 0.82fr 0.82fr;
     --process-progress: 0;
+    --process-travel: 145vh;
     position: relative;
     z-index: 1;
     background: var(--color-canvas);
@@ -2253,11 +2255,12 @@ body {
 
     .process-story__travel {
       display: block;
-      height: 145vh;
+      height: var(--process-travel);
       pointer-events: none;
     }
 
-    .process-story--static .process-story__travel {
+    .process-story--static .process-story__travel,
+    .process-story--released .process-story__travel {
       display: none;
     }
 
@@ -4109,21 +4112,49 @@ body {
 
     /* Later process rules (opacity 0.45 / scale) win over the earlier mobile
        block, so inactive photos ghost over the active one unless reset here. */
+    .process-story:not(.process-story--released):not(.process-story--static) {
+      z-index: auto;
+      overflow: visible;
+      background: transparent;
+    }
+
+    .inner-page .process-story:not(.process-story--released):not(.process-story--static) {
+      background: transparent;
+    }
+
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__lock {
       height: auto;
       padding-bottom: 0;
+      overflow: visible;
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
       position: sticky;
       top: var(--header-height);
+      z-index: 4;
       height: auto;
       min-height: 0;
+      background: var(--color-canvas);
     }
 
-    .process-story:not(.process-story--static) .process-story__travel {
+    .inner-page .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
+      background: var(--color-band);
+    }
+
+    .process-story:not(.process-story--released):not(.process-story--static) + * {
+      margin-top: calc(-1 * var(--process-travel));
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
       display: block;
-      height: 145vh;
+      height: var(--process-travel);
+    }
+
+    .process-story--released .process-story__travel,
+    .process-story--static .process-story__travel {
+      display: none;
     }
 
     .process-story__stage {

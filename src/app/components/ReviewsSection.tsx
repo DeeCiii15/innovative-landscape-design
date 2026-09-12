@@ -1,3 +1,6 @@
+"use client";
+
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { Reveal } from "./Reveal";
 import { TrustedBy } from "./TrustedBy";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/siteConstants";
@@ -23,6 +26,32 @@ function Stars({ count }: { count: number }) {
   );
 }
 
+function ReviewsTrack({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const grid = ref.current;
+    if (!grid || !window.matchMedia("(max-width: 767px)").matches) return;
+    const second = grid.children[1];
+    if (!(second instanceof HTMLElement)) return;
+
+    const centerSecond = () => {
+      const left = second.offsetLeft - (grid.clientWidth - second.offsetWidth) / 2;
+      grid.scrollTo({ left: Math.max(0, left), behavior: "auto" });
+    };
+
+    centerSecond();
+    const frame = window.requestAnimationFrame(centerSecond);
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  return (
+    <div ref={ref} className="reviews__grid">
+      {children}
+    </div>
+  );
+}
+
 export function ReviewsSection() {
   return (
     <section className="reviews reviews--aerial section--tight">
@@ -33,7 +62,7 @@ export function ReviewsSection() {
           </Reveal>
 
           <div className="reviews__scroller">
-            <div className="reviews__grid">
+            <ReviewsTrack>
               {siteConfig.reviews.map((review, index) => (
                 <Reveal key={review.id} delay={index * 60}>
                   <figure className="review">
@@ -48,7 +77,7 @@ export function ReviewsSection() {
                   </figure>
                 </Reveal>
               ))}
-            </div>
+            </ReviewsTrack>
             <p className="reviews__swipe-hint">Swipe for more reviews</p>
           </div>
 
