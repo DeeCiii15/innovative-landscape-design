@@ -68,7 +68,7 @@ export function AudienceSplit({
       if (view <= 0 || rect.height < 80) return false;
       if (mobile) {
         const visible = Math.min(rect.bottom, view) - Math.max(rect.top, 0);
-        return rect.top < view * 0.34 && visible > view * 0.3;
+        return rect.top < view * 0.52 && visible > view * 0.18;
       }
       return elementVisible(section);
     };
@@ -93,7 +93,7 @@ export function AudienceSplit({
           cleanup();
         }
       },
-      { threshold: [0.18, 0.32, 0.48], rootMargin: "0px 0px -12% 0px" },
+      { threshold: [0.08, 0.16, 0.28], rootMargin: "10% 0px 0px 0px" },
     );
 
     const onScroll = () => {

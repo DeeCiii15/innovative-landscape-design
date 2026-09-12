@@ -53,6 +53,12 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
     const end = last.left + last.width / 2 - origin.left;
     const top = first.top + first.height / 2 - origin.top;
     const span = Math.max(end - start, 0);
+    if (window.matchMedia("(max-width: 767px)").matches && stickyRef.current) {
+      document.documentElement.style.setProperty(
+        "--process-stuck-height",
+        `${Math.round(stickyRef.current.getBoundingClientRect().height)}px`,
+      );
+    }
     setRail((prev) => {
       if (Math.abs(prev.left - start) < 0.5 && Math.abs(prev.span - span) < 0.5 && Math.abs(prev.top - top) < 0.5) {
         return prev;
@@ -205,6 +211,7 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       media.removeEventListener("change", applyReduce);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      document.documentElement.style.removeProperty("--process-stuck-height");
     };
   }, [applyProgress, measureRail]);
 

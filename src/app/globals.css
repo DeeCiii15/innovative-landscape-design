@@ -1327,8 +1327,8 @@ body {
 
   .hero__drift {
     position: absolute;
-    inset: -8%;
-    animation: hero-drift 28s ease-in-out infinite alternate;
+    inset: -12%;
+    animation: hero-drift 26s ease-in-out infinite alternate;
   }
 
   .hero__media img,
@@ -3811,6 +3811,11 @@ body {
       font-size: clamp(2rem, 9vw, 2.75rem);
     }
 
+    .hero__drift {
+      inset: -14%;
+      animation-name: hero-drift-mobile;
+    }
+
     .heading-section,
     .heading-page {
       text-wrap: balance;
@@ -4114,18 +4119,11 @@ body {
        block, so inactive photos ghost over the active one unless reset here. */
     .process-story:not(.process-story--released):not(.process-story--static) {
       z-index: auto;
-      overflow: visible;
-      background: transparent;
-    }
-
-    .inner-page .process-story:not(.process-story--released):not(.process-story--static) {
-      background: transparent;
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__lock {
       height: auto;
       padding-bottom: 0;
-      overflow: visible;
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
@@ -4141,12 +4139,6 @@ body {
       background: var(--color-band);
     }
 
-    .process-story:not(.process-story--released):not(.process-story--static) + * {
-      margin-top: calc(-1 * var(--process-travel));
-      position: relative;
-      z-index: 1;
-    }
-
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
       display: block;
       height: var(--process-travel);
@@ -4155,6 +4147,30 @@ body {
     .process-story--released .process-story__travel,
     .process-story--static .process-story__travel {
       display: none;
+    }
+
+    /* Park Get Inspired in the leftover viewport under the locked process.
+       Reviews and everything after stay put until the process finishes. */
+    .process-story:not(.process-story--released):not(.process-story--static) + .portfolio-marquee {
+      margin-top: calc(-1 * var(--process-travel));
+      position: sticky;
+      top: calc(var(--header-height) + var(--process-stuck-height, 28rem));
+      z-index: 1;
+      max-height: calc(100svh - var(--header-height) - var(--process-stuck-height, 28rem) - 4.25rem);
+      overflow: hidden;
+      padding-top: 0.85rem;
+      padding-bottom: 0.5rem;
+      background: var(--color-canvas);
+    }
+
+    .process-story:not(.process-story--released):not(.process-story--static) + .portfolio-marquee + * {
+      padding-top: var(--process-travel);
+    }
+
+    .portfolio-marquee .reveal,
+    .portfolio-marquee .reveal.is-waiting {
+      opacity: 1;
+      transform: none;
     }
 
     .process-story__stage {
@@ -4293,10 +4309,19 @@ body {
 
   @keyframes hero-drift {
     from {
-      transform: translate3d(2.4%, 1.2%, 0);
+      transform: translate3d(3.5%, 1.8%, 0);
     }
     to {
-      transform: translate3d(-3.6%, -2.2%, 0);
+      transform: translate3d(-5.2%, -3.2%, 0);
+    }
+  }
+
+  @keyframes hero-drift-mobile {
+    from {
+      transform: translate3d(4.4%, 2.2%, 0);
+    }
+    to {
+      transform: translate3d(-6.4%, -4%, 0);
     }
   }
 
