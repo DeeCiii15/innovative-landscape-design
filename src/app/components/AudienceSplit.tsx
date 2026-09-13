@@ -176,7 +176,6 @@ export function AudienceSplit({
                     src={pane.image}
                     alt=""
                     fill
-                    unoptimized
                     sizes="(min-width: 900px) 70vw, 100vw"
                     className={`object-cover${pane.audience === "commercial" ? " object-[center_42%]" : " object-[center_35%]"}`}
                   />

@@ -53,12 +53,6 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
     const end = last.left + last.width / 2 - origin.left;
     const top = first.top + first.height / 2 - origin.top;
     const span = Math.max(end - start, 0);
-    if (window.matchMedia("(max-width: 767px)").matches && stickyRef.current) {
-      document.documentElement.style.setProperty(
-        "--process-stuck-height",
-        `${Math.round(stickyRef.current.getBoundingClientRect().height)}px`,
-      );
-    }
     setRail((prev) => {
       if (Math.abs(prev.left - start) < 0.5 && Math.abs(prev.span - span) < 0.5 && Math.abs(prev.top - top) < 0.5) {
         return prev;
@@ -119,8 +113,7 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
 
     const releaseWithoutJump = () => {
       if (releasedRef.current) return;
-      const yBefore = window.scrollY;
-      const beforeBottom = lock.getBoundingClientRect().bottom;
+      const stickyTop = sticky.getBoundingClientRect().top;
       ignoreScrollRef.current = true;
       const html = document.documentElement;
       const previousBehavior = html.style.scrollBehavior;
@@ -128,26 +121,14 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       setReleased(true);
       void lock.offsetHeight;
 
-      const settle = () => {
-        const afterBottom = lock.getBoundingClientRect().bottom;
-        const delta = beforeBottom - afterBottom;
-        if (delta > 1) {
-          window.scrollTo({ top: Math.max(0, yBefore - delta), behavior: "auto" });
-        }
-        const top = lock.getBoundingClientRect().top;
-        const header = headerHeight();
-        if (top < header - 1) {
-          window.scrollTo({ top: Math.max(0, window.scrollY - (header - top)), behavior: "auto" });
-        }
-        html.style.scrollBehavior = previousBehavior;
-        lastScrollYRef.current = window.scrollY;
-        ignoreScrollRef.current = false;
-      };
+      const stickDelta = sticky.getBoundingClientRect().top - stickyTop;
+      if (Math.abs(stickDelta) > 1) {
+        window.scrollTo({ top: Math.max(0, window.scrollY + stickDelta), behavior: "auto" });
+      }
 
-      requestAnimationFrame(() => {
-        void lock.offsetHeight;
-        settle();
-      });
+      html.style.scrollBehavior = previousBehavior;
+      lastScrollYRef.current = window.scrollY;
+      ignoreScrollRef.current = false;
     };
 
     lastScrollYRef.current = window.scrollY;
@@ -175,18 +156,16 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
           return;
         }
 
-        if (lastProgressRef.current >= 0.999) {
-          releaseWithoutJump();
-          measureRail();
-          return;
-        }
-
         applyProgress(intoLock() / travelPx());
         measureRail();
         return;
       }
 
       if (dy <= 0.5) {
+        if (!releasedRef.current && extraBelow() <= 8) {
+          applyProgress(1);
+          releaseWithoutJump();
+        }
         measureRail();
         return;
       }
@@ -197,7 +176,8 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       }
 
       applyProgress(intoLock() / travelPx());
-      if (lastProgressRef.current >= 0.999 && extraBelow() <= 8) {
+      if (extraBelow() <= 8) {
+        applyProgress(1);
         releaseWithoutJump();
       }
       measureRail();
@@ -211,7 +191,6 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
       media.removeEventListener("change", applyReduce);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      document.documentElement.style.removeProperty("--process-stuck-height");
     };
   }, [applyProgress, measureRail]);
 

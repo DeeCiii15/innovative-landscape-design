@@ -1,20 +1,42 @@
 /**
  * Job galleries. Add a project by creating `public/images/projects/{slug}/`:
  * 1. Copy `_template/project.json` into the new folder and rename `slug` to the folder name.
- * 2. Drop jpg/png/webp files (`01.jpg`, `02.jpg`, or `cover.jpg`).
+ * 2. Drop jpg/png/webp files (`01.jpg`, `02.jpg`, or `cover.jpg`). Large photos are
+ *    compressed automatically (`npm run optimize-images`, also on `npm run dev` / `npm run build`).
  * 3. Tag `serviceSlugs` with the service pages this job should appear on.
  *    Residential jobs need `neighborhood`. Commercial jobs need `businessName`.
  * Folders that start with `_` are ignored.
  */
-import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { isServiceSlug, services } from "./servicesData";
 import type { WorkItem } from "./workData";
 import type { ProjectPhoto, PropertyType } from "@/projects/types";
 
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"]);
+const PHOTO_COMPRESS_EXTENSIONS = new Set([".jpg", ".jpeg", ".webp"]);
+const LARGE_PHOTO_BYTES = 400_000;
 const PROJECTS_DIR = path.join(process.cwd(), "public", "images", "projects");
 const PUBLIC_PREFIX = "/images/projects";
+const OPTIMIZE_SCRIPT = path.join(process.cwd(), "scripts", "optimize-images.mjs");
+const compressedThisBoot = new Set<string>();
+
+function compressPhotos(filePaths: string[]) {
+  if (process.env.NODE_ENV === "production") return;
+  const pending = filePaths.filter((filePath) => {
+    if (compressedThisBoot.has(filePath)) return false;
+    if (!PHOTO_COMPRESS_EXTENSIONS.has(path.extname(filePath).toLowerCase())) return false;
+    try {
+      return statSync(filePath).size >= LARGE_PHOTO_BYTES;
+    } catch {
+      return false;
+    }
+  });
+  pending.forEach((filePath) => compressedThisBoot.add(filePath));
+  if (pending.length === 0) return;
+  spawnSync(process.execPath, [OPTIMIZE_SCRIPT, ...pending], { stdio: "inherit" });
+}
 
 type PhotoJson = {
   file: string;
@@ -201,6 +223,7 @@ function loadProjectFolder(folder: string): WorkItem {
   const json = parseProjectJson(JSON.parse(readFileSync(jsonPath, "utf8")) as unknown, folder);
   const placeLabel = placeLabelFor(json, folder);
   const scanned = listImageFiles(dir);
+  compressPhotos(scanned.map((file) => path.join(dir, file)));
 
   const listed = json.photos;
   const requested = listed ? listed.map((photo) => photo.file) : scanned;

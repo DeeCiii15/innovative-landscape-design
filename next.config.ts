@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   async redirects() {
     return [
       { source: "/login", destination: "https://portal.golmn.com/login/4RF8cNCxVzu5-7VdjQqAqg", permanent: false },

@@ -37,7 +37,7 @@
   --color-overlay-rgb: 4, 21, 8;
 
   --header-height: 4.75rem;
-  --process-travel: 145vh;
+  --process-travel: 80vh;
   --photo-shadow:
     0 22px 44px -16px rgba(16, 40, 18, 0.48),
     0 10px 18px -10px rgba(0, 0, 0, 0.28);
@@ -1316,7 +1316,7 @@ body {
     min-height: 100svh;
     display: flex;
     overflow: hidden;
-    background: #5c7a3a;
+    background: var(--color-hero-overlay);
   }
 
   .hero__media {
@@ -2210,7 +2210,7 @@ body {
   .process-story {
     --process-cols: 1.55fr 0.82fr 0.82fr 0.82fr;
     --process-progress: 0;
-    --process-travel: 145vh;
+    --process-travel: 80vh;
     position: relative;
     z-index: 1;
     background: var(--color-canvas);
@@ -2253,10 +2253,19 @@ body {
       min-height: 0;
     }
 
+    .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
+      min-height: calc(100svh - var(--header-height));
+    }
+
     .process-story__travel {
       display: block;
       height: var(--process-travel);
       pointer-events: none;
+      background: var(--color-canvas);
+    }
+
+    .inner-page .process-story__travel {
+      background: var(--color-band);
     }
 
     .process-story--static .process-story__travel,
@@ -4118,7 +4127,7 @@ body {
     /* Later process rules (opacity 0.45 / scale) win over the earlier mobile
        block, so inactive photos ghost over the active one unless reset here. */
     .process-story:not(.process-story--released):not(.process-story--static) {
-      z-index: auto;
+      z-index: 1;
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__lock {
@@ -4129,9 +4138,9 @@ body {
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
       position: sticky;
       top: var(--header-height);
-      z-index: 4;
+      z-index: 1;
       height: auto;
-      min-height: 0;
+      min-height: calc(100svh - var(--header-height));
       background: var(--color-canvas);
     }
 
@@ -4142,29 +4151,16 @@ body {
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
       display: block;
       height: var(--process-travel);
+      background: var(--color-canvas);
+    }
+
+    .inner-page .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
+      background: var(--color-band);
     }
 
     .process-story--released .process-story__travel,
     .process-story--static .process-story__travel {
       display: none;
-    }
-
-    /* Park Get Inspired in the leftover viewport under the locked process.
-       Reviews and everything after stay put until the process finishes. */
-    .process-story:not(.process-story--released):not(.process-story--static) + .portfolio-marquee {
-      margin-top: calc(-1 * var(--process-travel));
-      position: sticky;
-      top: calc(var(--header-height) + var(--process-stuck-height, 28rem));
-      z-index: 1;
-      max-height: calc(100svh - var(--header-height) - var(--process-stuck-height, 28rem) - 4.25rem);
-      overflow: hidden;
-      padding-top: 0.85rem;
-      padding-bottom: 0.5rem;
-      background: var(--color-canvas);
-    }
-
-    .process-story:not(.process-story--released):not(.process-story--static) + .portfolio-marquee + * {
-      padding-top: var(--process-travel);
     }
 
     .portfolio-marquee .reveal,
