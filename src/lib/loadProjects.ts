@@ -11,6 +11,7 @@ import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { isServiceSlug, services } from "./servicesData";
+import { siteImages } from "./siteImages";
 import type { WorkItem } from "./workData";
 import type { ProjectPhoto, PropertyType } from "@/projects/types";
 
@@ -363,5 +364,34 @@ export function getProjectCover(item: WorkItem, serviceSlug?: string): ProjectPh
           alt: `${item.name} in ${item.placeLabel}`,
           serviceSlugs: item.serviceSlugs,
         }
+  );
+}
+
+/** Full-width project banners need 2000px+ sources; gallery covers are 1400px and look grainy at 100vw. */
+export function getProjectPageHero(item: WorkItem): { src: string; alt: string } {
+  const bySlug: Record<string, { src: string; alt: string }> = {
+    "florence-sc-residential-landscape-byrnes-boulevard": {
+      src: siteImages.services.waterFeaturesCover,
+      alt: "A stone waterfall and stream in a planted backyard landscape",
+    },
+    "florence-sc-residential-landscape-maintenance-coit-street": {
+      src: siteImages.ctaAerial,
+      alt: "Aerial view of a maintained lawn and planting beds",
+    },
+    "bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church": {
+      src: siteImages.services.hardscapesCover,
+      alt: "A brick courtyard with planters and planting beds",
+    },
+    "florence-sc-commercial-landscape-the-manor": {
+      src: siteImages.gardenEstate,
+      alt: "Estate garden with seasonal color, palms, and a brick walk",
+    },
+  };
+
+  return (
+    bySlug[item.slug] ?? {
+      src: siteImages.services.landscapeCover,
+      alt: item.cover.alt || `${item.name} in ${item.placeLabel}`,
+    }
   );
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { CtaSection } from "@/app/components/CtaSection";
 import { PageHero } from "@/app/components/PageHero";
 import { ProjectMosaic } from "@/app/components/ProjectMosaic";
-import { getProjectBySlug, getProjectCover, getProjects } from "@/lib/loadProjects";
+import { getProjectBySlug, getProjectCover, getProjectPageHero, getProjects } from "@/lib/loadProjects";
 import { socialTags } from "@/lib/seo";
 import { PRIMARY_STATE_ABBR } from "@/lib/siteConstants";
 import { getServiceBySlug } from "@/lib/servicesData";
@@ -39,33 +39,24 @@ export async function generateMetadata({ params }: PortfolioSlugProps): Promise<
   };
 }
 
-function galleryPhotos(item: WorkItem) {
-  if (!item.cover.file) return item.photos;
-  const withoutCover = item.photos.filter((photo) => photo.file !== item.cover.file);
-  return withoutCover.length > 0 ? withoutCover : item.photos;
-}
-
 function ProjectPage({ item }: { item: WorkItem }) {
-  const cover = getProjectCover(item);
-  const photos = galleryPhotos(item);
+  const hero = getProjectPageHero(item);
+  const photos = item.photos;
   const services = item.serviceSlugs
     .map((slug) => getServiceBySlug(slug))
     .filter((service): service is NonNullable<typeof service> => Boolean(service));
   const location = item.city ? `${item.city}, ${PRIMARY_STATE_ABBR}` : item.placeLabel;
-  const coverImage = cover.src;
 
   return (
     <div>
       <article className="project-page">
-        {coverImage ? (
-          <PageHero
-            title="Explore our"
-            accent="portfolio"
-            image={coverImage}
-            imageAlt={cover.alt}
-            titleAs="p"
-          />
-        ) : null}
+        <PageHero
+          title="Explore our"
+          accent="portfolio"
+          image={hero.src}
+          imageAlt={hero.alt}
+          titleAs="p"
+        />
 
         <div className="project-page__stack">
         <div className="container-main">

@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal } from "./Reveal";
 import { TrustedBy } from "./TrustedBy";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/siteConstants";
 import { siteConfig } from "@/lib/siteConfig";
+
+type Review = (typeof siteConfig.reviews)[number];
 
 function Stars({ count }: { count: number }) {
   return (
@@ -118,7 +120,91 @@ function ReviewsTrack({ children }: { children: ReactNode }) {
   );
 }
 
+function ReviewBody({ review }: { review: Review }) {
+  return (
+    <>
+      <Stars count={review.rating} />
+      <span className="review__text">&ldquo;{review.text}&rdquo;</span>
+      <span className="review__cite">
+        <span className="review__name">{review.name}</span>
+        <span className="review__meta">
+          {review.source} · {review.service}
+        </span>
+      </span>
+    </>
+  );
+}
+
+function ReviewCard({
+  review,
+  onOpen,
+}: {
+  review: Review;
+  onOpen: (review: Review) => void;
+}) {
+  return (
+    <figure className="review">
+      <button
+        type="button"
+        className="review__open"
+        aria-haspopup="dialog"
+        aria-label={`Read full review from ${review.name}`}
+        onClick={() => onOpen(review)}
+      >
+        <ReviewBody review={review} />
+      </button>
+    </figure>
+  );
+}
+
+function ReviewDialog({
+  review,
+  onClose,
+}: {
+  review: Review | null;
+  onClose: () => void;
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (review) {
+      if (!dialog.open) dialog.showModal();
+    } else if (dialog.open) {
+      dialog.close();
+    }
+  }, [review]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      className="review-dialog"
+      aria-label={review ? `Review from ${review.name}` : "Review"}
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      {review ? (
+        <div className="review-dialog__panel">
+          <button type="button" className="review-dialog__close" aria-label="Close review" onClick={onClose}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+          <blockquote className="review-dialog__card">
+            <ReviewBody review={review} />
+          </blockquote>
+        </div>
+      ) : null}
+    </dialog>
+  );
+}
+
 export function ReviewsSection() {
+  const [openReview, setOpenReview] = useState<Review | null>(null);
+
   return (
     <section className="reviews reviews--aerial section--tight">
       <div className="reviews__window">
@@ -131,20 +217,13 @@ export function ReviewsSection() {
             <ReviewsTrack>
               {siteConfig.reviews.map((review, index) => (
                 <Reveal key={review.id} delay={index * 60}>
-                  <figure className="review">
-                    <Stars count={review.rating} />
-                    <blockquote className="review__text">&ldquo;{review.text}&rdquo;</blockquote>
-                    <figcaption className="review__cite">
-                      <p className="review__name">{review.name}</p>
-                      <p className="review__meta">
-                        {review.source} · {review.service}
-                      </p>
-                    </figcaption>
-                  </figure>
+                  <ReviewCard review={review} onOpen={setOpenReview} />
                 </Reveal>
               ))}
             </ReviewsTrack>
           </div>
+
+          <ReviewDialog review={openReview} onClose={() => setOpenReview(null)} />
 
           <div className="reviews__actions">
             <a

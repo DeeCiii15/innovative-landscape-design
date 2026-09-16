@@ -9,7 +9,7 @@ import { PageHero } from "@/app/components/PageHero";
 import { getServiceHubLink } from "@/lib/audienceHubs";
 import { getProjectCover, getProjectGalleryImages, getProjects, getProjectsByService } from "@/lib/loadProjects";
 import { socialTags } from "@/lib/seo";
-import { getServiceBySlug, serviceSlugs, type ServiceDef, type ServiceHighlight, type ServiceSection } from "@/lib/servicesData";
+import { getServiceBySlug, serviceHero, serviceSlugs, type ServiceDef, type ServiceHighlight, type ServiceSection } from "@/lib/servicesData";
 import type { WorkItem } from "@/lib/workData";
 
 type ServicePageProps = {
@@ -156,6 +156,7 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
   const included = includeItems(service);
   const hubLink = getServiceHubLink(service.family, from);
   const fromHubId = typeof from === "string" ? from : from?.[0];
+  const hero = serviceHero(service);
 
   return (
     <InnerPage
@@ -163,8 +164,8 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
         <PageHero
           title={service.headline}
           accent={service.headlineAccent}
-          image={service.galleryImage}
-          imageAlt={service.galleryImageAlt}
+          image={hero.src}
+          imageAlt={hero.alt}
         />
       }
     >

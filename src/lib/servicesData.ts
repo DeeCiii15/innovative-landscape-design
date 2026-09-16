@@ -66,6 +66,9 @@ export type ServiceDef = {
   metaDescription: string;
   galleryImage: string;
   galleryImageAlt: string;
+  /** Full-width page banner. Use a 2000px+ photo; galleryImage is used when this is omitted. */
+  heroImage?: string;
+  heroImageAlt?: string;
   /** Photo beside the service copy. Falls back to related-project photos, then the hero. */
   aboutImage?: string;
   aboutImageAlt?: string;
@@ -320,6 +323,8 @@ export const services: ServiceDef[] = [
       "CAST certified landscape lighting in Florence, SC. Fixture design, wiring, and aiming for architecture, walkways, trees, and outdoor living.",
     galleryImage: siteImages.services.lightingNight,
     galleryImageAlt: "Landscape lighting on trees, walks, and a stone water feature at night",
+    heroImage: siteImages.gardenPath,
+    heroImageAlt: "A garden path through trees and planting beds after the landscape is in",
     aboutImage: siteImages.services.lightingNight,
     aboutImageAlt: "Uplighted trees and a lit water feature in a courtyard after dark",
     icon: "lighting",
@@ -414,6 +419,8 @@ export const services: ServiceDef[] = [
       "Irrigation and water management in Florence, SC. Sprinklers, drip, and smart controllers for efficient watering from Innovative Landscape Design.",
     galleryImage: projectImages.byrnesFountain,
     galleryImageAlt: "Stone waterfall and stream with brick walks at a Florence home",
+    heroImage: siteImages.gardenEstate,
+    heroImageAlt: "A finished landscape with planting, lawn, and a brick walk",
     aboutImage: projectImages.byrnesStream,
     aboutImageAlt: "Stone waterfall moving water through a backyard landscape",
     icon: "irrigation",
@@ -578,6 +585,8 @@ export const services: ServiceDef[] = [
       "Lawn maintenance in Florence, SC: mowing, edging, trimming, and blowing for homes and commercial properties. Elite Turf applications available.",
     galleryImage: siteImages.aboutBackyard,
     galleryImageAlt: "Striped lawn after professional mowing in Florence, SC",
+    heroImage: siteImages.heroAerial,
+    heroImageAlt: "Aerial view of a striped lawn after professional mowing",
     icon: "lawn",
     highlights: [SERVICE_HIGHLIGHTS.eliteTurf],
   },
@@ -853,8 +862,10 @@ export const services: ServiceDef[] = [
     metaTitle: "Pruning and Cleanup in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Pruning and cleanup in Florence, SC: selective tree and shrub pruning with debris removal for homes and commercial properties.",
-    galleryImage: siteImages.aboutBackyard,
-    galleryImageAlt: "Shrubs and trees kept in shape beside a backyard lawn",
+    galleryImage: siteImages.aboutGardenBed,
+    galleryImageAlt: "Shrubs and planting kept in shape beside a lawn",
+    heroImage: siteImages.services.landscapeCover,
+    heroImageAlt: "Trees and planting beds kept in scale with the house",
     icon: "garden",
   },
 ];
@@ -865,6 +876,13 @@ export const navServices = constructionServices.filter((s) => s.inNav);
 
 export function getServicesByFamily(family: ServiceFamily): ServiceDef[] {
   return services.filter((s) => s.family === family);
+}
+
+export function serviceHero(service: ServiceDef): { src: string; alt: string } {
+  return {
+    src: service.heroImage ?? service.galleryImage,
+    alt: service.heroImageAlt ?? service.galleryImageAlt,
+  };
 }
 
 export function getServiceBySlug(slug: string): ServiceDef | undefined {

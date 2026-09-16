@@ -1,5 +1,5 @@
 import { getServiceBySlug, type ServiceDef, type ServiceFamily } from "./servicesData";
-import { projectImages, siteImages } from "./siteImages";
+import { siteImages } from "./siteImages";
 
 export type Audience = "residential" | "commercial";
 export type HubFamily = "construction" | "maintenance";
@@ -168,8 +168,8 @@ export const audienceHubs: readonly AudienceHub[] = [
       "Residential landscape maintenance in Florence, SC: lawn care, garden maintenance, seasonal cleanup, and seasonal color for homes.",
     galleryImage: siteImages.ctaAerial,
     galleryImageAlt: "Aerial view of a maintained lawn and planting beds",
-    aboutImage: projectImages.coitAnnuals,
-    aboutImageAlt: "Seasonal color in a brick planter bed along a walk",
+    aboutImage: siteImages.aboutGardenBed,
+    aboutImageAlt: "Seasonal color in a planting bed along a maintained walk",
     serviceSlugs: MAINTENANCE_SERVICE_SLUGS,
     serviceGroups: MAINTENANCE_SERVICE_GROUPS,
     workHeading: "Featured lawn care in Florence",

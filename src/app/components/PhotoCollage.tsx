@@ -41,11 +41,24 @@ const stills = [
   },
 ] as const;
 
+const ENTER_MS = 1300;
+const SHIFT_RANGE = 72;
+
+function collageProgress(row: HTMLElement) {
+  const rect = row.getBoundingClientRect();
+  const view = window.innerHeight || 1;
+  return Math.min(1, Math.max(0, (view - rect.top) / (view + rect.height)));
+}
+
 export function PhotoCollage() {
   const rowRef = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(true);
+  const originProgress = useRef(0);
+  const enteredRef = useRef(false);
+  const [shown, setShown] = useState(false);
   const [entered, setEntered] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+
+  enteredRef.current = entered;
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -101,8 +114,22 @@ export function PhotoCollage() {
   }, []);
 
   useEffect(() => {
-    if (!shown) return;
-    const id = window.setTimeout(() => setEntered(true), reducedMotion ? 0 : 900);
+    if (!shown) {
+      enteredRef.current = false;
+      setEntered(false);
+      return;
+    }
+
+    const id = window.setTimeout(() => {
+      const row = rowRef.current;
+      if (row) {
+        originProgress.current = collageProgress(row);
+        row.style.setProperty("--collage-shift", "0px");
+      }
+      enteredRef.current = true;
+      setEntered(true);
+    }, reducedMotion ? 0 : ENTER_MS);
+
     return () => window.clearTimeout(id);
   }, [shown, reducedMotion]);
 
@@ -114,18 +141,23 @@ export function PhotoCollage() {
     }
 
     let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        const rect = row.getBoundingClientRect();
-        const view = window.innerHeight || 1;
-        const progress = Math.min(1, Math.max(0, (view - rect.top) / (view + rect.height)));
-        row.style.setProperty("--collage-shift", `${progress * 72}px`);
-      });
+    const apply = () => {
+      frame = 0;
+      if (!enteredRef.current) {
+        originProgress.current = collageProgress(row);
+        row.style.setProperty("--collage-shift", "0px");
+        return;
+      }
+      const delta = collageProgress(row) - originProgress.current;
+      row.style.setProperty("--collage-shift", `${delta * SHIFT_RANGE}px`);
     };
 
-    onScroll();
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(apply);
+    };
+
+    apply();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

@@ -32,14 +32,16 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="relative space-y-5">
-      <input
-        type="text"
-        name="_gotcha"
-        tabIndex={-1}
-        autoComplete="off"
-        className="hidden"
-        aria-hidden="true"
-      />
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor="contact-gotcha">Website</label>
+        <input
+          id="contact-gotcha"
+          type="text"
+          name="_gotcha"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
