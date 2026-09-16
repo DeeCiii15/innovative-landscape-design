@@ -3394,14 +3394,16 @@ body {
     background-image: none;
   }
 
-  html.aerial-ready .cta__panel.cta__panel--window {
-    background-image:
-      linear-gradient(transparent, transparent),
-      url("/images/site/cta-aerial.jpg");
-    background-size: 100% 100%, cover;
-    background-position: center, center;
-    background-repeat: no-repeat;
-    background-attachment: scroll, fixed;
+  @media (min-width: 768px) {
+    html.aerial-ready .cta__panel.cta__panel--window {
+      background-image:
+        linear-gradient(transparent, transparent),
+        url("/images/site/cta-aerial.jpg");
+      background-size: 100% 100%, cover;
+      background-position: center, center;
+      background-repeat: no-repeat;
+      background-attachment: scroll, fixed;
+    }
   }
 
   .cta__scrim {
@@ -3507,18 +3509,20 @@ body {
     );
   }
 
-  html.aerial-ready .footer {
-    background-image:
-      linear-gradient(
-        to bottom,
-        rgba(var(--color-overlay-rgb), 0.48) 0%,
-        rgba(4, 21, 8, 0.7) 100%
-      ),
-      url("/images/site/cta-aerial.jpg");
-    background-size: 100% 100%, cover;
-    background-position: center, center;
-    background-repeat: no-repeat;
-    background-attachment: scroll, fixed;
+  @media (min-width: 768px) {
+    html.aerial-ready .footer {
+      background-image:
+        linear-gradient(
+          to bottom,
+          rgba(var(--color-overlay-rgb), 0.48) 0%,
+          rgba(4, 21, 8, 0.7) 100%
+        ),
+        url("/images/site/cta-aerial.jpg");
+      background-size: 100% 100%, cover;
+      background-position: center, center;
+      background-repeat: no-repeat;
+      background-attachment: scroll, fixed;
+    }
   }
 
   .footer__inner {
@@ -4141,14 +4145,22 @@ body {
       background: transparent;
     }
 
+    html.aerial-ready .cta__panel.cta__panel--window,
     .cta__panel.cta__panel--window {
       overflow: visible;
       background-color: transparent;
       background-image: none;
+      background-attachment: scroll;
       box-shadow:
         0 0 0 100vmax var(--color-canvas),
         0 28px 56px -20px rgba(16, 40, 18, 0.5),
         0 12px 24px -12px rgba(0, 0, 0, 0.28);
+    }
+
+    html.aerial-ready .footer {
+      background: transparent;
+      background-image: none;
+      background-attachment: scroll;
     }
 
     .reviews__scroller {
