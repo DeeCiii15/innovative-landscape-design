@@ -1,62 +1,41 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { CtaSection } from "@/app/components/CtaSection";
 import { PageHero } from "@/app/components/PageHero";
 import { ProjectMosaic } from "@/app/components/ProjectMosaic";
 import { getProjectBySlug, getProjectCover, getProjects } from "@/lib/loadProjects";
-import { getSiteUrl, PRIMARY_STATE, WORK_PATH } from "@/lib/siteConstants";
+import { socialTags } from "@/lib/seo";
+import { PRIMARY_STATE_ABBR } from "@/lib/siteConstants";
 import { getServiceBySlug } from "@/lib/servicesData";
-import {
-  getWorkCategory,
-  portfolioFilterSlugs,
-  workItemPath,
-  type WorkItem,
-} from "@/lib/workData";
+import { workItemPath, type WorkItem } from "@/lib/workData";
 
 type PortfolioSlugProps = {
   params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {
-  const slugs = new Set(portfolioFilterSlugs());
-  for (const item of getProjects()) slugs.add(item.slug);
-  return [...slugs].map((slug) => ({ slug }));
+  return getProjects().map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({ params }: PortfolioSlugProps): Promise<Metadata> {
   const { slug } = await params;
   const item = getProjectBySlug(slug);
-  if (item) {
-    const cover = getProjectCover(item);
-    const canonical = workItemPath(item.slug);
-    return {
-      title: item.title,
-      description: item.description,
-      alternates: { canonical },
-      openGraph: {
-        title: `${item.title} | Innovative Landscape Design`,
-        description: item.description,
-        url: `${getSiteUrl()}${canonical}`,
-        images: cover.src ? [{ url: cover.src, alt: cover.alt }] : undefined,
-      },
-    };
-  }
+  if (!item) return { title: "Portfolio" };
 
-  const category = getWorkCategory(slug);
-  if (!category) return { title: "Portfolio" };
-
-  const canonical = `${WORK_PATH}/${category.slug}`;
+  const cover = getProjectCover(item);
+  const canonical = workItemPath(item.slug);
+  const title = `${item.title} | Innovative Landscape Design`;
   return {
-    title: `${category.name} Gallery`,
-    description: category.description,
+    title: item.title,
+    description: item.metaDescription,
     alternates: { canonical },
-    openGraph: {
-      title: `${category.name} Gallery | Innovative Landscape Design`,
-      description: category.description,
-      url: `${getSiteUrl()}${canonical}`,
-      images: [{ url: category.image, alt: category.imageAlt }],
-    },
+    ...socialTags({
+      title,
+      description: item.metaDescription,
+      path: canonical,
+      image: cover.src ? { url: cover.src, alt: cover.alt } : undefined,
+    }),
   };
 }
 
@@ -72,7 +51,7 @@ function ProjectPage({ item }: { item: WorkItem }) {
   const services = item.serviceSlugs
     .map((slug) => getServiceBySlug(slug))
     .filter((service): service is NonNullable<typeof service> => Boolean(service));
-  const location = item.city ? `${item.city}, ${PRIMARY_STATE}` : item.placeLabel;
+  const location = item.city ? `${item.city}, ${PRIMARY_STATE_ABBR}` : item.placeLabel;
   const coverImage = cover.src;
 
   return (
@@ -132,15 +111,9 @@ function ProjectPage({ item }: { item: WorkItem }) {
   );
 }
 
-function CategoryPage({ slug }: { slug: string }) {
-  if (!getWorkCategory(slug)) notFound();
-  return redirect(WORK_PATH);
-}
-
 export default async function PortfolioSlugPage({ params }: PortfolioSlugProps) {
   const { slug } = await params;
   const item = getProjectBySlug(slug);
-  if (item) return <ProjectPage item={item} />;
-  if (getWorkCategory(slug)) return <CategoryPage slug={slug} />;
-  notFound();
+  if (!item) notFound();
+  return <ProjectPage item={item} />;
 }

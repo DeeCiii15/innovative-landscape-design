@@ -15,7 +15,7 @@ export function LogoHomeLink() {
           alt=""
           width={1472}
           height={848}
-          priority
+          sizes="88px"
         />
       </span>
       <span className="site-logo__name">{siteConfig.name}</span>

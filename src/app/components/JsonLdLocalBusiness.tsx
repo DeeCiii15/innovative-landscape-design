@@ -1,12 +1,12 @@
 import { audienceHubs } from "@/lib/audienceHubs";
 import { siteConfig } from "@/lib/siteConfig";
-import { getSiteUrl, SERVICE_AREAS } from "@/lib/siteConstants";
+import { BUSINESS_GEO, getSiteUrl, SERVICE_AREAS } from "@/lib/siteConstants";
 import { services } from "@/lib/servicesData";
 
 export function JsonLdLocalBusiness() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "LandscapingBusiness",
     name: siteConfig.name,
     url: getSiteUrl(),
     image: `${getSiteUrl()}${siteConfig.heroImage}`,
@@ -19,6 +19,11 @@ export function JsonLdLocalBusiness() {
       addressRegion: "SC",
       postalCode: "29501",
       addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: BUSINESS_GEO.latitude,
+      longitude: BUSINESS_GEO.longitude,
     },
     areaServed: SERVICE_AREAS.map((city) => ({
       "@type": "City",

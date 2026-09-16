@@ -11,6 +11,7 @@ export function Hero() {
             alt={siteConfig.heroImageAlt}
             fill
             priority
+            quality={85}
             sizes="100vw"
             className="hero__image object-cover"
           />

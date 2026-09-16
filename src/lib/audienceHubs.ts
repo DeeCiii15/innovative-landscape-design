@@ -1,5 +1,5 @@
-import { getServiceBySlug, type ServiceDef } from "./servicesData";
-import { siteImages } from "./siteImages";
+import { getServiceBySlug, type ServiceDef, type ServiceFamily } from "./servicesData";
+import { projectImages, siteImages } from "./siteImages";
 
 export type Audience = "residential" | "commercial";
 export type HubFamily = "construction" | "maintenance";
@@ -52,6 +52,8 @@ export type AudienceHub = {
   siblingLabel: string;
   otherAudiencePath: string;
   otherAudienceLabel: string;
+  /** Locked featured job on this hub. Resolved by slug, even if it is not tagged to the hub's services. */
+  featuredWorkSlug: string;
 };
 
 export const CONSTRUCTION_SERVICE_SLUGS = [
@@ -107,26 +109,26 @@ export const audienceHubs: readonly AudienceHub[] = [
     navBlurb:
       "Design and install the outdoor space—planting, hardscapes, lighting, water features, irrigation, kitchens, and drainage—as one job.",
     eyebrow: "For homeowners",
-    headline: "Build the yard you actually",
-    headlineAccent: "use",
+    headline: "Build the landscape of your",
+    headlineAccent: "dreams",
     intro:
-      "Residential landscape services for homes in Florence, SC: planting, hardscapes, lighting, water features, irrigation, outdoor kitchens, turf, and drainage—designed and installed as one outdoor living space around the house.",
-    aboutHeading: "About residential landscape services",
-    body: "This is the project work for a home yard. We start with how you want to live outside: a patio you actually sit on, a front yard that looks finished from the street, lighting you can walk at night, and planting that fits the beds you have. If the space around the house does not match how you use it—no real gathering space, tired turf, water that sits after rain—residential landscape services are the install that changes it. Outdoor kitchens, hardscapes, lighting, water features, irrigation, turf, drainage, and landscape enhancements can be one job for the property instead of a string of disconnected add-ons.",
+      "We design and build landscapes for homes in Florence, SC—turning the space around the house into a finished outdoor place to live, not a collection of leftover projects.",
+    aboutHeading: "Residential landscape services",
+    body: "This is the project work for a home yard. We start with how you want to live outside: a patio you actually sit on, a front yard that looks finished from the street, lighting you can walk at night, and planting that fits the beds you have. If the space around the house does not match how you use it—no real gathering space, tired turf, water that sits after rain—residential landscape services are the install that changes it. The patio, the planting, the lighting, and the rest of the yard can be one job for the property instead of a string of disconnected add-ons.",
     benefits: [
       "One plan and one install for the outdoor space, not a pile of separate trades",
       "A yard built for how you actually live—not only for how it looks from the street",
       "Work that can move into lawn care after it is finished, so the install stays in shape",
     ],
-    galleryHeading: "Residential landscape services",
-    galleryLead: "See all of the different residential landscape services we offer.",
-    metaTitle: "Landscape Services for Homes in Florence, SC",
+    galleryHeading: "Services we offer",
+    galleryLead: "What we can plan and install around the house.",
+    metaTitle: "Landscape Services for Homes in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Residential landscape services in Florence, SC: hardscapes, lighting, water features, irrigation, planting, outdoor kitchens, and drainage for homes.",
-    galleryImage: siteImages.heroFrontYard,
+    galleryImage: siteImages.services.landscapeCover,
     galleryImageAlt: "Finished front yard with planting beds and a striped lawn",
     aboutImage: siteImages.aboutBackyard,
-    aboutImageAlt: "A finished backyard with layered planting beds, planters, and a lawn leading to the house",
+    aboutImageAlt: "A striped backyard lawn leading to a white sunroom, framed by trees and planting beds",
     serviceSlugs: CONSTRUCTION_SERVICE_SLUGS,
     serviceGroups: CONSTRUCTION_SERVICE_GROUPS,
     workHeading: "Featured landscape work in Florence",
@@ -137,6 +139,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     siblingLabel: "Lawn Care Services",
     otherAudiencePath: COMMERCIAL_LANDSCAPE_PATH,
     otherAudienceLabel: "Commercial Landscape Services",
+    featuredWorkSlug: "florence-sc-residential-landscape-byrnes-boulevard",
   },
   {
     id: "residential-maintenance",
@@ -147,26 +150,26 @@ export const audienceHubs: readonly AudienceHub[] = [
     name: "Lawn Care Services",
     navBlurb: "Ongoing care for the yard you have: mowing, beds, seasonal cleanup, and color.",
     eyebrow: "For homeowners",
-    headline: "Keep the finished yard looking",
+    headline: "Keep the yard looking",
     headlineAccent: "right",
     intro:
-      "Residential lawn care services for homes in Florence, SC: weekly mowing, garden and bed work, seasonal cleanup, and seasonal color—on a plan built around the yard at the house, not a commercial property.",
-    aboutHeading: "About residential lawn care services",
+      "We care for home yards in Florence, SC. Once the landscape is in—or if you already have a yard you like—we keep it looking right week to week, on a plan built around the house.",
+    aboutHeading: "Residential lawn care services",
     body: "This is ongoing care for a home yard. It is not a redesign, and it is not commercial groundskeeping for a storefront, office, or HOA common area. After the landscape is in—or for a yard you already have—the lawn still needs mowing, beds still need tending, and seasons still change the property around the house. You can start with mowing only, or put lawn, gardens, cleanup, and color on one residential plan so the whole yard stays even week to week.",
     benefits: [
       "A yard that looks tended week to week without you running the crew",
       "Start with lawn only, or add beds, cleanup, and color when you are ready",
       "The same team can take over a landscape we installed or one we did not",
     ],
-    galleryHeading: "Lawn care services",
-    galleryLead: "Each card is a maintenance service for homes. Open one for what it includes.",
-    metaTitle: "Lawn Care Services for Homes in Florence, SC",
+    galleryHeading: "Services we offer",
+    galleryLead: "The care that keeps a home landscape looking right after it is in.",
+    metaTitle: "Lawn Care Services for Homes in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Residential landscape maintenance in Florence, SC: lawn care, garden maintenance, seasonal cleanup, and seasonal color for homes.",
-    galleryImage: siteImages.heroFrontYard,
-    galleryImageAlt: "Maintained residential lawn and planting beds",
-    aboutImage: siteImages.aboutGardenBed,
-    aboutImageAlt: "A curved planting bed with lime groundcover, pink flowers, and a flowering crepe myrtle beside the lawn",
+    galleryImage: siteImages.ctaAerial,
+    galleryImageAlt: "Aerial view of a maintained lawn and planting beds",
+    aboutImage: projectImages.coitAnnuals,
+    aboutImageAlt: "Seasonal color in a brick planter bed along a walk",
     serviceSlugs: MAINTENANCE_SERVICE_SLUGS,
     serviceGroups: MAINTENANCE_SERVICE_GROUPS,
     workHeading: "Featured lawn care in Florence",
@@ -177,6 +180,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     siblingLabel: "Landscape Services",
     otherAudiencePath: COMMERCIAL_PROPERTY_MAINTENANCE_PATH,
     otherAudienceLabel: "Property Maintenance Services",
+    featuredWorkSlug: "florence-sc-residential-landscape-maintenance-coit-street",
   },
   {
     id: "commercial-construction",
@@ -189,25 +193,25 @@ export const audienceHubs: readonly AudienceHub[] = [
       "Project work for offices, retail, HOAs, and other properties—hardscapes, lighting, irrigation, planting, and drainage.",
     eyebrow: "For businesses and HOAs",
     headline: "Commercial landscaping that",
-    headlineAccent: "holds up",
+    headlineAccent: "lasts",
     intro:
-      "Commercial landscape services in Florence, SC for offices, retail, HOAs, churches, and other properties—hardscapes, lighting, irrigation, planting, and drainage scoped for a commercial site.",
-    aboutHeading: "About commercial landscape services",
+      "We design and install landscapes for businesses and HOAs in Florence, SC—so the property looks finished from the street and is built to last.",
+    aboutHeading: "Commercial landscape services",
     body: "Commercial landscape services are the project work for a property people see every day—entries, parking, common areas, and the planting and lighting around them. The trades are the same ones we use on homes. The job is different: access, occupied sites, insurance, and a landscape that has to look right from the street on a schedule the business or HOA can live with.",
     benefits: [
-      "Curb appeal that holds up to traffic, weather, and a public-facing site",
+      "Curb appeal that lasts through traffic, weather, and a public-facing site",
       "Work scoped around access, hours, and how the property operates",
       "The same landscape services as a home job, sized to a commercial or HOA site",
     ],
-    galleryHeading: "Landscape services",
-    galleryLead: "Each card is a service we design and install for businesses and HOAs. Open one for what it includes and related work.",
-    metaTitle: "Commercial Landscape Services in Florence, SC",
+    galleryHeading: "Services we offer",
+    galleryLead: "What we can plan and install for a business or HOA site.",
+    metaTitle: "Commercial Landscape Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Commercial landscape services in Florence, SC for businesses, HOAs, and property managers—hardscapes, lighting, irrigation, planting, and drainage.",
-    galleryImage: siteImages.heroAerial,
-    galleryImageAlt: "Aerial view of a maintained commercial-scale landscape",
+    galleryImage: siteImages.gardenEstate,
+    galleryImageAlt: "Estate garden with seasonal color, palms, and a brick walk",
     aboutImage: siteImages.services.hardscapesCover,
-    aboutImageAlt: "Stepping-stone garden path with hostas and white flowers",
+    aboutImageAlt: "A brick courtyard with planters, palms, and planting beds beside the house",
     serviceSlugs: CONSTRUCTION_SERVICE_SLUGS,
     serviceGroups: CONSTRUCTION_SERVICE_GROUPS,
     workHeading: "Featured commercial landscape work in Florence",
@@ -218,6 +222,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     siblingLabel: "Property Maintenance Services",
     otherAudiencePath: RESIDENTIAL_LANDSCAPE_PATH,
     otherAudienceLabel: "Landscape Services",
+    featuredWorkSlug: "florence-sc-commercial-landscape-the-manor",
   },
   {
     id: "commercial-maintenance",
@@ -227,26 +232,26 @@ export const audienceHubs: readonly AudienceHub[] = [
     navLabel: "Property Maintenance Services",
     name: "Property Maintenance Services",
     navBlurb:
-      "Recurring care so the property looks presentation-ready for customers, tenants, and the board.",
+      "Recurring care so the property looks sharp for customers, tenants, and the board.",
     eyebrow: "For businesses and HOAs",
-    headline: "Keep the property",
-    headlineAccent: "presentation-ready",
+    headline: "Keep the property looking",
+    headlineAccent: "sharp",
     intro:
-      "Property maintenance services in Florence, SC: lawn care, garden and bed work, seasonal cleanup, and color for businesses, HOAs, and managed properties.",
-    aboutHeading: "About property maintenance services",
+      "We care for landscapes at businesses and HOAs in Florence, SC—keeping the grounds looking sharp on a schedule the site can actually live with.",
+    aboutHeading: "Property maintenance services",
     body: "Property maintenance is recurring care so a commercial or HOA landscape looks tended on a schedule the site can live with. It is not a redesign. If the planting and turf are already there, we pick up at maintain. If the property needs new landscape work, that is a separate conversation. You can put the whole grounds on one plan, or start with commercial lawn maintenance when turf is the main need.",
     benefits: [
-      "A property that looks presentation-ready for customers, tenants, and the board",
+      "A property that looks sharp for customers, tenants, and the board",
       "One vendor for lawn, beds, cleanup, and color—or lawn only if that is the need",
       "A plan built from the site you have, including landscapes we did not install",
     ],
-    galleryHeading: "Property maintenance services",
-    galleryLead: "Each card is a maintenance service for businesses and HOAs. Open one for what it includes.",
-    metaTitle: "Property Maintenance Services in Florence, SC",
+    galleryHeading: "Services we offer",
+    galleryLead: "The care that keeps a commercial landscape looking sharp week to week.",
+    metaTitle: "Property Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Commercial landscape maintenance in Florence, SC for businesses and HOAs: lawn maintenance, garden care, seasonal cleanup, and seasonal color.",
-    galleryImage: siteImages.heroAerial,
-    galleryImageAlt: "Maintained commercial landscape and lawn",
+    galleryImage: siteImages.gardenPath,
+    galleryImageAlt: "Maintained garden path and planting at a commercial property",
     aboutImage: siteImages.services.landscapeCover,
     aboutImageAlt: "Landscaped front yard with a striped lawn, planting beds, and a brick home",
     serviceSlugs: MAINTENANCE_SERVICE_SLUGS,
@@ -259,6 +264,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     siblingLabel: "Commercial Landscape Services",
     otherAudiencePath: RESIDENTIAL_LAWN_CARE_PATH,
     otherAudienceLabel: "Lawn Care Services",
+    featuredWorkSlug: "bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church",
   },
 ];
 
@@ -287,4 +293,34 @@ export function getHubsForFamily(family: HubFamily): {
   const residential = audienceHubs.find((hub) => hub.audience === "residential" && hub.family === family)!;
   const commercial = audienceHubs.find((hub) => hub.audience === "commercial" && hub.family === family)!;
   return { residential, commercial };
+}
+
+function seeOtherServicesLabel(hub: AudienceHub): string {
+  if (hub.audience === "residential") {
+    return hub.family === "construction"
+      ? "See other residential landscape services"
+      : "See other residential lawn care services";
+  }
+  return hub.family === "construction"
+    ? "See other commercial landscape services"
+    : "See other commercial property maintenance services";
+}
+
+/** One hub link from a service page, matching the hub the visitor came from. */
+export function getServiceHubLink(
+  family: ServiceFamily,
+  fromHubId?: string | string[],
+): { href: string; label: string } {
+  const requested = Array.isArray(fromHubId) ? fromHubId[0] : fromHubId;
+  const { residential } = getHubsForFamily(family);
+  const match = audienceHubs.find((hub) => hub.id === requested && hub.family === family);
+  const hub = match ?? residential;
+  return {
+    href: `${hub.path}#services`,
+    label: seeOtherServicesLabel(hub),
+  };
+}
+
+export function servicePathWithHub(slug: string, hubId: string): string {
+  return `/services/${slug}?from=${encodeURIComponent(hubId)}`;
 }

@@ -326,7 +326,6 @@ export function ProjectGallery({
                         className="project-gallery__strip-photo"
                         style={{ width: "auto", height: "100%", maxWidth: "none" }}
                         draggable={false}
-                        loading="eager"
                       />
                     </button>
                   ))}

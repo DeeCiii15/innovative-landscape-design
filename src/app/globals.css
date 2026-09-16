@@ -582,6 +582,12 @@ body {
     aspect-ratio: 1;
   }
 
+  .project-mosaic__more {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.75rem;
+  }
+
   .service-number {
     font-family: var(--font-display-face), var(--font-sans-body), ui-sans-serif, system-ui, sans-serif;
     font-size: 0.8rem;
@@ -1327,7 +1333,7 @@ body {
 
   .hero__drift {
     position: absolute;
-    inset: -12%;
+    inset: -1.5%;
     animation: hero-drift 26s ease-in-out infinite alternate;
   }
 
@@ -2036,6 +2042,15 @@ body {
     padding: clamp(2.75rem, 5.5vw, 4.25rem) 0 clamp(2.25rem, 4.5vw, 3.5rem);
   }
 
+  .hub-logos + .hub-featured {
+    background: var(--color-band);
+  }
+
+  .inner-page .hub-logos + .hub-featured + .process-story,
+  .inner-page .hub-logos + .hub-featured + .process-story .process-story__sticky {
+    background: var(--color-canvas);
+  }
+
   /* ================= SERVICE MODULES ================= */
   /* Copy + photo, with a compact included-work list. */
   .service-module {
@@ -2130,6 +2145,18 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     color: var(--color-muted);
+  }
+
+  .service-module__hubs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-top: 1.75rem;
+  }
+
+  .service-module__hub-link {
+    font-size: 0.9375rem;
   }
 
   .service-module__media {
@@ -2463,12 +2490,22 @@ body {
     width: 100%;
     min-height: 8.5rem;
     overflow: hidden;
+    border: 0;
     border-radius: 0;
+    padding: 0;
     background: var(--color-surface);
     opacity: 0.45;
     transform: scale(0.96);
     transform-origin: center bottom;
     transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .process-story__media:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    z-index: 2;
   }
 
   .process-story__step.is-active .process-story__media {
@@ -3095,25 +3132,70 @@ body {
     position: relative;
   }
 
-  .reviews__grid {
+  .reviews__carousel {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.45rem;
   }
 
-  .reviews__swipe-hint {
+  .reviews__arrow {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    flex-shrink: 0;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    background: rgba(10, 31, 12, 0.4);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .reviews__arrow:hover:not(:disabled) {
+    background: rgba(10, 31, 12, 0.62);
+  }
+
+  .reviews__arrow:disabled {
+    opacity: 0.28;
+    cursor: default;
+  }
+
+  .reviews__arrow:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .reviews__grid {
+    display: flex;
+    gap: 1rem;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.15rem 0 0.45rem;
+    scrollbar-width: none;
+  }
+
+  .reviews__grid::-webkit-scrollbar {
     display: none;
   }
 
-  @media (min-width: 640px) {
-    .reviews__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .reviews__grid > * {
+    flex: 0 0 calc((100% - 2rem) / 3.2);
+    min-width: 16.5rem;
+    scroll-snap-align: center;
   }
 
-  @media (min-width: 1100px) {
-    .reviews__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+  .reviews__grid .reveal,
+  .reviews__grid .reveal.is-waiting {
+    opacity: 1;
+    transform: none;
   }
 
   .reviews__actions {
@@ -3348,7 +3430,7 @@ body {
 
   .footer__lockup {
     display: block;
-    width: 11.25rem;
+    width: min(15.5rem, 78vw);
     line-height: 0;
   }
 
@@ -3821,7 +3903,7 @@ body {
     }
 
     .hero__drift {
-      inset: -14%;
+      inset: -2%;
       animation-name: hero-drift-mobile;
     }
 
@@ -3903,6 +3985,10 @@ body {
       text-align: center;
     }
 
+    .service-module__hubs {
+      align-items: center;
+    }
+
     .hub-about__heading,
     .service-module__heading,
     .hub-services__head .heading-section,
@@ -3961,7 +4047,16 @@ body {
     }
 
     .reviews__scroller {
-      margin-inline: -0.15rem;
+      margin-inline: 0;
+    }
+
+    .reviews__carousel {
+      gap: 0.3rem;
+    }
+
+    .reviews__arrow {
+      width: 1.85rem;
+      height: 1.85rem;
     }
 
     .reviews__grid {
@@ -3972,20 +4067,14 @@ body {
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: 11%;
+      scroll-padding-inline: 0;
       -webkit-overflow-scrolling: touch;
-      padding: 0.15rem 11% 0.35rem;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.55) transparent;
+      padding: 0.15rem 0 0.35rem;
+      scrollbar-width: none;
     }
 
     .reviews__grid::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .reviews__grid::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.55);
-      border-radius: 999px;
+      display: none;
     }
 
     .reviews__grid > * {
@@ -3998,17 +4087,6 @@ body {
     .reviews__grid .reveal.is-waiting {
       opacity: 1;
       transform: none;
-    }
-
-    .reviews__swipe-hint {
-      display: block;
-      margin: 0.7rem 0 0;
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.78);
     }
 
     .trusted-by__viewport {
@@ -4146,6 +4224,11 @@ body {
 
     .inner-page .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky {
       background: var(--color-band);
+    }
+
+    .inner-page .hub-logos + .hub-featured + .process-story:not(.process-story--released):not(.process-story--static) .process-story__sticky,
+    .inner-page .hub-logos + .hub-featured + .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
+      background: var(--color-canvas);
     }
 
     .process-story:not(.process-story--released):not(.process-story--static) .process-story__travel {
@@ -4305,19 +4388,19 @@ body {
 
   @keyframes hero-drift {
     from {
-      transform: translate3d(3.5%, 1.8%, 0);
+      transform: translate3d(1.2%, 0.6%, 0);
     }
     to {
-      transform: translate3d(-5.2%, -3.2%, 0);
+      transform: translate3d(-1.2%, -0.8%, 0);
     }
   }
 
   @keyframes hero-drift-mobile {
     from {
-      transform: translate3d(4.4%, 2.2%, 0);
+      transform: translate3d(1.4%, 0.8%, 0);
     }
     to {
-      transform: translate3d(-6.4%, -4%, 0);
+      transform: translate3d(-1.4%, -1%, 0);
     }
   }
 

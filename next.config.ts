@@ -1,20 +1,54 @@
 import type { NextConfig } from "next";
+import { services } from "./src/lib/servicesData";
+
+const retiredPortfolioSlugs = [
+  ...new Set([
+    ...services.map((service) => service.slug),
+    "landscape-design",
+    "landscaping",
+    "lighting",
+    "design",
+  ]),
+];
+
+/** Folder names and earlier slug drafts → current `/portfolio/{slug}` URLs. */
+const portfolioSlugRedirects: Array<[string, string]> = [
+  ["coit-street", "florence-sc-residential-landscape-maintenance-coit-street"],
+  ["florence-sc-residential-landscape-maintenancecoit-street", "florence-sc-residential-landscape-maintenance-coit-street"],
+  ["byrnes-boulevard", "florence-sc-residential-landscape-byrnes-boulevard"],
+  ["florence-sc-residential-landscapebyrnes-boulevard", "florence-sc-residential-landscape-byrnes-boulevard"],
+  ["bennettsville-first-presbyterian-church", "bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church"],
+  ["methodist-manor", "florence-sc-commercial-landscape-the-manor"],
+];
 
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 85],
   },
   async redirects() {
+    const portfolioCategoryRedirects = retiredPortfolioSlugs.map((slug) => ({
+      source: `/portfolio/${slug}`,
+      destination: "/portfolio",
+      permanent: true as const,
+    }));
+    const renamedProjectRedirects = portfolioSlugRedirects.map(([from, to]) => ({
+      source: `/portfolio/${from}`,
+      destination: `/portfolio/${to}`,
+      permanent: true as const,
+    }));
+
     return [
       { source: "/login", destination: "https://portal.golmn.com/login/4RF8cNCxVzu5-7VdjQqAqg", permanent: false },
       { source: "/transformations", destination: "/portfolio", permanent: true },
       { source: "/gallery", destination: "/portfolio", permanent: true },
-      { source: "/gallery/design", destination: "/portfolio/landscape-enhancements", permanent: true },
-      { source: "/gallery/irrigation", destination: "/portfolio/irrigation", permanent: true },
-      { source: "/gallery/hardscapes", destination: "/portfolio/hardscapes", permanent: true },
-      { source: "/gallery/lighting", destination: "/portfolio/outdoor-lighting", permanent: true },
-      { source: "/gallery/water-features", destination: "/portfolio/water-features", permanent: true },
-      { source: "/portfolio/landscape-design", destination: "/portfolio/landscape-enhancements", permanent: true },
+      { source: "/gallery/design", destination: "/portfolio", permanent: true },
+      { source: "/gallery/irrigation", destination: "/portfolio", permanent: true },
+      { source: "/gallery/hardscapes", destination: "/portfolio", permanent: true },
+      { source: "/gallery/lighting", destination: "/portfolio", permanent: true },
+      { source: "/gallery/water-features", destination: "/portfolio", permanent: true },
+      ...portfolioCategoryRedirects,
+      ...renamedProjectRedirects,
       { source: "/portfolio/:category/:item", destination: "/portfolio/:item", permanent: true },
       { source: "/projects", destination: "/portfolio", permanent: true },
       { source: "/projects/:path*", destination: "/portfolio/:path*", permanent: true },
@@ -24,7 +58,21 @@ const nextConfig: NextConfig = {
       { source: "/services/design", destination: "/services/landscape-enhancements", permanent: true },
       { source: "/services/landscaping", destination: "/services/landscape-enhancements", permanent: true },
       { source: "/services/lighting", destination: "/services/outdoor-lighting", permanent: true },
-      { source: "/services", destination: "/", permanent: true },
+      { source: "/services", destination: "/residential/landscape-services", permanent: true },
+      { source: "/about", destination: "/", permanent: true },
+      { source: "/about-us", destination: "/", permanent: true },
+      {
+        source: "/how-regular-maintenance-affects-landscaping-talk-about-the-importance-of-maintenance-and-the-best-practices-to-keep-a-landscape-looking-fresh",
+        destination: "/services/total-landscape-maintenance",
+        permanent: true,
+      },
+      {
+        source: "/common-issues-lawn-care-south-carolina",
+        destination: "/services/lawn-maintenance",
+        permanent: true,
+      },
+      { source: "/planting-flowers-in-the-fall", destination: "/services/seasonal-color", permanent: true },
+      { source: "/florence-sc-landscape-design", destination: "/", permanent: true },
       { source: "/residential", destination: "/residential/landscape-services", permanent: true },
       { source: "/commercial", destination: "/commercial/landscape-services", permanent: true },
       {
@@ -64,6 +112,10 @@ const nextConfig: NextConfig = {
       { source: "/images/projects/CommercialLighting/:file", destination: "/images/projects/commercial-lighting/:file", permanent: true },
       { source: "/images/projects/CommercialHardscape/:file", destination: "/images/projects/commercial-hardscape/:file", permanent: true },
       { source: "/images/projects/BackyardWaterfall/:file", destination: "/images/projects/backyard-waterfall/:file", permanent: true },
+      { source: "/images/projects/coit-street/:file", destination: "/images/projects/florence-sc-residential-landscape-maintenance-coit-street/:file", permanent: true },
+      { source: "/images/projects/byrnes-boulevard/:file", destination: "/images/projects/florence-sc-residential-landscape-byrnes-boulevard/:file", permanent: true },
+      { source: "/images/projects/bennettsville-first-presbyterian-church/:file", destination: "/images/projects/bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church/:file", permanent: true },
+      { source: "/images/projects/methodist-manor/:file", destination: "/images/projects/florence-sc-commercial-landscape-the-manor/:file", permanent: true },
     ];
   },
 };

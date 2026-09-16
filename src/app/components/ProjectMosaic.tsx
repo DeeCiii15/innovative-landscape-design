@@ -1,5 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import type { ProjectPhoto } from "@/projects/types";
+
+const INITIAL_PHOTOS = 12;
 
 type MosaicRow =
   | { type: "wide"; photos: ProjectPhoto[] }
@@ -42,10 +47,15 @@ function scrapbookRows(photos: ProjectPhoto[]): MosaicRow[] {
   return rows;
 }
 
-export function ProjectMosaic({ photos, priority = false }: { photos: ProjectPhoto[]; priority?: boolean }) {
+export function ProjectMosaic({ photos }: { photos: ProjectPhoto[] }) {
+  const [expanded, setExpanded] = useState(false);
+
   if (photos.length === 0) return null;
 
-  const rows = scrapbookRows(photos);
+  const hasMore = photos.length > INITIAL_PHOTOS;
+  const visible = expanded || !hasMore ? photos : photos.slice(0, INITIAL_PHOTOS);
+  const remaining = photos.length - visible.length;
+  const rows = scrapbookRows(visible);
 
   return (
     <div className="project-mosaic">
@@ -57,7 +67,6 @@ export function ProjectMosaic({ photos, priority = false }: { photos: ProjectPho
                 src={photo.src}
                 alt={photo.alt}
                 fill
-                priority={priority && rowIndex === 0 && photoIndex === 0}
                 sizes={
                   row.type === "wide"
                     ? "(min-width: 78rem) 78rem, 100vw"
@@ -71,6 +80,13 @@ export function ProjectMosaic({ photos, priority = false }: { photos: ProjectPho
           ))}
         </div>
       ))}
+      {hasMore && !expanded ? (
+        <div className="project-mosaic__more">
+          <button type="button" className="btn-secondary cursor-pointer" onClick={() => setExpanded(true)}>
+            Load {remaining} more {remaining === 1 ? "photo" : "photos"}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

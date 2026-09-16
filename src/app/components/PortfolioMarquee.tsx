@@ -1,43 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
-import { connection } from "next/server";
-import { getProjects } from "@/lib/loadProjects";
 import { WORK_LABEL, WORK_PATH } from "@/lib/siteConstants";
-import { services } from "@/lib/servicesData";
+import { PROJECTS_IMAGES_PATH } from "@/lib/siteImages";
 import { Reveal } from "./Reveal";
 
-function shuffle<T>(items: T[]): T[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-}
+const MANOR = `${PROJECTS_IMAGES_PATH}/florence-sc-commercial-landscape-the-manor`;
+const BYRNES = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-byrnes-boulevard`;
+const COIT = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-maintenance-coit-street`;
+const CHURCH = `${PROJECTS_IMAGES_PATH}/bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church`;
 
-async function marqueeImages(): Promise<{ src: string; alt: string }[]> {
-  await connection();
+/** Locked Get Inspired strip: 12 photos, no two consecutive from the same job. */
+const MARQUEE_PHOTOS: readonly { src: string }[] = [
+  { src: `${MANOR}/DJI_0139.JPG` },
+  { src: `${BYRNES}/03.jpg` },
+  { src: `${COIT}/01.jpg` },
+  { src: `${CHURCH}/07.jpg` },
+  { src: `${MANOR}/20200710_102617.jpg` },
+  { src: `${BYRNES}/02.jpg` },
+  { src: `${COIT}/08.jpg` },
+  { src: `${CHURCH}/01.jpg` },
+  { src: `${MANOR}/2018-04-28 11.17.28.jpg` },
+  { src: `${BYRNES}/05.jpg` },
+  { src: `${COIT}/15.jpg` },
+  { src: `${CHURCH}/04.jpg` },
+];
 
-  const fromWork = getProjects().flatMap((item) => {
-    const photos = item.photos.filter((photo) => photo.src);
-    return shuffle(photos).slice(0, Math.min(4, photos.length));
-  });
+export function PortfolioMarquee() {
+  if (MARQUEE_PHOTOS.length === 0) return null;
 
-  const seen = new Set(fromWork.map((photo) => photo.src));
-  const extras = services
-    .map((service) => ({ src: service.galleryImage, alt: service.galleryImageAlt }))
-    .filter((photo) => photo.src && !seen.has(photo.src));
-
-  const photos = shuffle([...fromWork, ...extras]);
-  return photos.length > 0 ? photos : extras;
-}
-
-export async function PortfolioMarquee() {
-  const photos = await marqueeImages();
-  if (photos.length === 0) return null;
-
-  const copies = photos.length < 6 ? 4 : 2;
-  const strip = Array.from({ length: copies }, () => photos).flat();
+  const copies = MARQUEE_PHOTOS.length < 6 ? 4 : 2;
+  const strip = Array.from({ length: copies }, () => MARQUEE_PHOTOS).flat();
 
   return (
     <section className="portfolio-marquee">
@@ -46,7 +38,7 @@ export async function PortfolioMarquee() {
           <div className="portfolio-marquee__head">
             <div className="portfolio-marquee__titles">
               <h2 className="heading-section">Get inspired</h2>
-              <h2 className="portfolio-marquee__subhead">Some projects we're proud of</h2>
+              <p className="portfolio-marquee__subhead">Some projects we're proud of</p>
             </div>
             <Link href={WORK_PATH} className="link-arrow portfolio-marquee__head-link shrink-0">
               View the {WORK_LABEL.toLowerCase()}
@@ -68,7 +60,6 @@ export async function PortfolioMarquee() {
                   alt=""
                   fill
                   sizes="280px"
-                  loading={index < photos.length ? "eager" : "lazy"}
                   className="object-cover"
                 />
               </span>

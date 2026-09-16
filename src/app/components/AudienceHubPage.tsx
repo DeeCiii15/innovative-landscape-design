@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { connection } from "next/server";
 import { CtaSection } from "@/app/components/CtaSection";
 import { HubFeaturedWork } from "@/app/components/HubFeaturedWork";
 import { InnerPage } from "@/app/components/InnerPage";
@@ -7,31 +6,16 @@ import { PageHero } from "@/app/components/PageHero";
 import { ProcessStory } from "@/app/components/ProcessStory";
 import { ServiceGalleryGrid } from "@/app/components/ServiceGalleryGrid";
 import { TrustedBy } from "@/app/components/TrustedBy";
-import { getAudienceHub, type AudienceHub } from "@/lib/audienceHubs";
-import { getProjectsForHub } from "@/lib/loadProjects";
-import type { PropertyType } from "@/projects/types";
+import { getAudienceHub } from "@/lib/audienceHubs";
+import { getProjectBySlug } from "@/lib/loadProjects";
 
-const PROPERTY_TYPE_FOR_AUDIENCE: Record<AudienceHub["audience"], PropertyType> = {
-  residential: "Residential",
-  commercial: "Commercial",
-};
-
-function pickRandom<T>(items: T[]): T | undefined {
-  if (items.length === 0) return undefined;
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-export async function AudienceHubPage({ hubId }: { hubId: string }) {
-  await connection();
-
+export function AudienceHubPage({ hubId }: { hubId: string }) {
   const hub = getAudienceHub(hubId);
   if (!hub) return null;
 
   const isConstruction = hub.family === "construction";
   const ctaHeadline = isConstruction ? "Ready to talk about the project?" : "Ready to talk about a care plan?";
-  const featured = pickRandom(
-    getProjectsForHub(PROPERTY_TYPE_FOR_AUDIENCE[hub.audience], hub.serviceSlugs),
-  );
+  const featured = getProjectBySlug(hub.featuredWorkSlug);
   const showLogos = hub.audience === "commercial";
 
   return (
@@ -73,6 +57,7 @@ export async function AudienceHubPage({ hubId }: { hubId: string }) {
         slugs={hub.serviceSlugs}
         groups={hub.serviceGroups}
         showViewAll={false}
+        fromHubId={hub.id}
       />
 
       {showLogos ? (

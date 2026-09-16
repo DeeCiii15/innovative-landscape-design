@@ -222,8 +222,8 @@ export const processPhases: readonly ProcessPhase[] = [
     label: "Design",
     title: "Design",
     line: "We meet on site, learn the goals and budget, then present a 2D and 3D plan you can review before anyone breaks ground.",
-    image: siteImages.aboutConsultation,
-    imageAlt: "Landscape designer reviewing a site plan on a tablet with homeowners in their yard",
+    image: siteImages.services.design,
+    imageAlt: "2D landscape design plan with a plant legend listing species and quantities",
   },
   {
     slug: "prep",
@@ -231,8 +231,8 @@ export const processPhases: readonly ProcessPhase[] = [
     label: "Prepare",
     title: "Prepare",
     line: "Removals, grading, drainage, and soil work come first so the new landscape is not fighting old grade or debris.",
-    image: "/images/before-after/hardscapes-before.jpg",
-    imageAlt: "Yard cleared and graded ahead of landscape installation",
+    image: siteImages.process.prepare,
+    imageAlt: "Drainage crates set in a graded pit beside a putting green under construction",
   },
   {
     slug: "install",
@@ -240,8 +240,8 @@ export const processPhases: readonly ProcessPhase[] = [
     label: "Install",
     title: "Install",
     line: "Plants, sod, stone, irrigation, lighting, and water features go in as designed, finished with cleanup and care instructions.",
-    image: siteImages.services.hardscapes,
-    imageAlt: "Finished patio, walls, and planting after landscape installation",
+    image: siteImages.process.install,
+    imageAlt: "Stone waterfall being stacked on a prepared base during landscape installation",
   },
   {
     slug: "maintain",
@@ -249,8 +249,8 @@ export const processPhases: readonly ProcessPhase[] = [
     label: "Maintain",
     title: "Maintain",
     line: "A care plan built around the landscape, from mowing and beds to pruning, seasonal cleanup, and color, so it looks like the plan for years.",
-    image: siteImages.heroFrontYard,
-    imageAlt: "Professionally maintained front lawn and planting beds",
+    image: siteImages.process.maintain,
+    imageAlt: "Finished stone waterfall with palms, river rock, and turf kept on a maintenance plan",
   },
 ];
 

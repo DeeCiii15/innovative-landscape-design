@@ -10,7 +10,7 @@
     "landscape-enhancements",
     "hardscapes"
   ],
-  "description": "Short summary shown on portfolio cards.",
+  "description": "Short summary shown on portfolio cards and the project page.",
+  "metaDescription": "Optional shorter search snippet. Leave off to reuse description.",
   "story": "Optional longer writeup for the project page."
 }
-

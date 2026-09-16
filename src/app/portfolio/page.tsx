@@ -4,20 +4,19 @@ import { InnerPage } from "../components/InnerPage";
 import { PageHero } from "../components/PageHero";
 import { PortfolioGrid } from "../components/PortfolioGrid";
 import { getProjects } from "@/lib/loadProjects";
-import { getSiteUrl, WORK_PATH } from "@/lib/siteConstants";
+import { socialTags } from "@/lib/seo";
+import { WORK_PATH } from "@/lib/siteConstants";
 import { siteConfig } from "@/lib/siteConfig";
+import { siteImages } from "@/lib/siteImages";
+
+const title = `Landscape Portfolio in Florence, SC | ${siteConfig.name}`;
+const description = `Browse landscape design, irrigation, hardscape, lighting, and water feature work by ${siteConfig.name} in Florence, SC.`;
 
 export const metadata: Metadata = {
-  title: {
-    absolute: `Landscape Portfolio in Florence, SC | ${siteConfig.name}`,
-  },
-  description: `Browse landscape design, irrigation, hardscape, lighting, and water feature work by ${siteConfig.name} in Florence, SC.`,
+  title: { absolute: title },
+  description,
   alternates: { canonical: WORK_PATH },
-  openGraph: {
-    title: `Landscape Portfolio in Florence, SC | ${siteConfig.name}`,
-    description: `Browse landscape design, irrigation, hardscape, lighting, and water feature work by ${siteConfig.name} in Florence, SC.`,
-    url: `${getSiteUrl()}${WORK_PATH}`,
-  },
+  ...socialTags({ title, description, path: WORK_PATH }),
 };
 
 export default function PortfolioPage() {
@@ -27,8 +26,8 @@ export default function PortfolioPage() {
         <PageHero
           title="Explore our"
           accent="portfolio"
-          image={siteConfig.heroImage}
-          imageAlt={siteConfig.heroImageAlt}
+          image={siteImages.services.hardscapesCover}
+          imageAlt="Brick courtyard with planters, palms, and planting beds"
         />
       }
     >

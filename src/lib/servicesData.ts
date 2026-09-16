@@ -1,4 +1,4 @@
-import { siteImages } from "./siteImages";
+import { projectImages, siteImages } from "./siteImages";
 
 export type ServiceHighlight = {
   heading: string;
@@ -66,6 +66,9 @@ export type ServiceDef = {
   metaDescription: string;
   galleryImage: string;
   galleryImageAlt: string;
+  /** Photo beside the service copy. Falls back to related-project photos, then the hero. */
+  aboutImage?: string;
+  aboutImageAlt?: string;
   icon:
     | "landscaping"
     | "irrigation"
@@ -121,11 +124,11 @@ export const services: ServiceDef[] = [
     tagline: "Beds, trees, and planting that improve the yard you have.",
     ctaHeadline: "Ready to refresh the planting?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Landscape Enhancements in Florence, SC | Beds, Trees & Planting",
+    metaTitle: "Landscape Enhancements in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Landscape enhancements in Florence, SC: flower beds, trees, shrubs, and planting updates without a full renovation. Site prep and install from Innovative Landscape Design.",
-    galleryImage: siteImages.services.landscapeCover,
-    galleryImageAlt: "Landscaped front yard with a striped lawn, planting beds, and a brick home",
+      "Landscape enhancements in Florence, SC: flower beds, trees, shrubs, and planting updates without a full renovation, from Innovative Landscape Design.",
+    galleryImage: siteImages.bedAerial,
+    galleryImageAlt: "Aerial view of a curved planting bed with seasonal color beside the lawn",
     icon: "landscaping",
     highlights: [SERVICE_HIGHLIGHTS.suppliers],
   },
@@ -167,10 +170,10 @@ export const services: ServiceDef[] = [
     tagline: "Sod and lawn rebuilds, installed correctly.",
     ctaHeadline: "Need a new lawn or a turf rebuild?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Turf Renovation and Installation in Florence, SC | Sod & Lawn Rebuilds",
+    metaTitle: "Turf Renovation and Installation in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Turf renovation and sod installation in Florence, SC. Soil prep, grading, sod, and irrigation checks from Innovative Landscape Design.",
-    galleryImage: siteImages.heroFrontYard,
+    galleryImage: siteImages.heroAerial,
     galleryImageAlt: "Striped front lawn after turf installation in Florence, SC",
     icon: "landscaping",
     highlights: [SERVICE_HIGHLIGHTS.suppliers],
@@ -218,11 +221,11 @@ export const services: ServiceDef[] = [
     tagline: "Built outdoor living that holds up in Florence.",
     ctaHeadline: "Ready for a patio or outdoor living space?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Hardscapes in Florence, SC | Patios, Walks & Walls",
+    metaTitle: "Hardscapes in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Hardscape patios, walkways, walls, steps, and fire features in Florence, SC. Proper base, drainage, and finish from Innovative Landscape Design.",
     galleryImage: siteImages.services.hardscapesCover,
-    galleryImageAlt: "Stepping-stone garden path with hostas and white flowers",
+    galleryImageAlt: "Brick courtyard with planters, palms, and planting beds",
     icon: "hardscapes",
     highlights: [SERVICE_HIGHLIGHTS.clifRock],
   },
@@ -264,11 +267,13 @@ export const services: ServiceDef[] = [
     tagline: "Outdoor kitchens built into the landscape.",
     ctaHeadline: "Want an outdoor kitchen in your yard?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Outdoor Kitchens in Florence, SC | ClifRock Certified",
+    metaTitle: "Outdoor Kitchens in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Outdoor kitchen design and construction in Florence, SC. ClifRock certified installer for custom kitchens, fire features, and outdoor living.",
     galleryImage: siteImages.services.hardscapesCover,
-    galleryImageAlt: "Outdoor living hardscape with planting along a garden path",
+    galleryImageAlt: "Brick courtyard and sitting walls ready for outdoor living",
+    aboutImage: projectImages.churchWalks,
+    aboutImageAlt: "Herringbone paver walks and planting on a finished hardscape",
     icon: "kitchens",
     highlights: [SERVICE_HIGHLIGHTS.clifRock],
   },
@@ -310,11 +315,13 @@ export const services: ServiceDef[] = [
     tagline: "Professional-grade lighting, aimed correctly.",
     ctaHeadline: "Want your landscape to work after dark?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Landscape Lighting in Florence, SC | CAST Certified",
+    metaTitle: "Landscape Lighting in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "CAST certified landscape lighting in Florence, SC. Fixture design, wiring, and aiming for architecture, walkways, trees, and outdoor living.",
-    galleryImage: siteImages.services.lightingCover,
-    galleryImageAlt: "Home at dusk with uplit trees, a lit porch, and a brick walkway",
+    galleryImage: siteImages.services.lightingNight,
+    galleryImageAlt: "Landscape lighting on trees, walks, and a stone water feature at night",
+    aboutImage: siteImages.services.lightingNight,
+    aboutImageAlt: "Uplighted trees and a lit water feature in a courtyard after dark",
     icon: "lighting",
     highlights: [SERVICE_HIGHLIGHTS.castLighting],
   },
@@ -356,7 +363,7 @@ export const services: ServiceDef[] = [
     tagline: "Moving water, built into the landscape.",
     ctaHeadline: "Ready for a waterfall or pond in your yard?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Water Features in Florence, SC | Ponds & Waterfalls",
+    metaTitle: "Water Features in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Custom waterfalls, ponds, and streams in Florence, SC. Basin, pumps, stone, and planting designed and built by Innovative Landscape Design.",
     galleryImage: siteImages.services.waterFeaturesCover,
@@ -402,11 +409,13 @@ export const services: ServiceDef[] = [
     tagline: "Water where the landscape needs it.",
     ctaHeadline: "Want watering that matches the landscape?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Irrigation and Water Management in Florence, SC | Smart Sprinkler Systems",
+    metaTitle: "Irrigation and Water Management in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Irrigation and water management in Florence, SC. Sprinklers, drip, and smart controllers for efficient watering from Innovative Landscape Design.",
-    galleryImage: siteImages.heroAerial,
-    galleryImageAlt: "Irrigation system installation in Florence, SC",
+    galleryImage: projectImages.byrnesFountain,
+    galleryImageAlt: "Stone waterfall and stream with brick walks at a Florence home",
+    aboutImage: projectImages.byrnesStream,
+    aboutImageAlt: "Stone waterfall moving water through a backyard landscape",
     icon: "irrigation",
     highlights: [SERVICE_HIGHLIGHTS.smartIrrigation],
   },
@@ -451,8 +460,8 @@ export const services: ServiceDef[] = [
     metaTitle: "Drainage & Grading in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Yard drainage and grading in Florence, SC. We evaluate water flow, regrade low areas, and install catch basins, piping, and swales.",
-    galleryImage: siteImages.services.hardscapesCover,
-    galleryImageAlt: "Graded landscape with a stone path and planting beds",
+    galleryImage: siteImages.services.landscapeCover,
+    galleryImageAlt: "Finished front yard with planting beds and a striped lawn",
     icon: "drainage",
   },
   {
@@ -517,11 +526,11 @@ export const services: ServiceDef[] = [
     tagline: "The full-property care program.",
     ctaHeadline: "Want one plan for the whole property?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Total Landscape Maintenance in Florence, SC | Full-Property Care",
+    metaTitle: "Total Landscape Maintenance in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Total landscape maintenance in Florence, SC: lawn, beds, pruning, seasonal cleanup, and color on one plan for homes and commercial properties.",
-    galleryImage: siteImages.heroFrontYard,
-    galleryImageAlt: "Maintained front lawn and planting beds in Florence, SC",
+    galleryImage: siteImages.gardenEstate,
+    galleryImageAlt: "Estate garden with seasonal color, palms, and a brick walk",
     icon: "maintenance",
     highlights: [SERVICE_HIGHLIGHTS.eliteTurf],
   },
@@ -564,10 +573,10 @@ export const services: ServiceDef[] = [
     tagline: "Clean turf, every visit.",
     ctaHeadline: "Need a lawn maintenance schedule?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Lawn Maintenance Services in Florence, SC | Mow, Edge & Trim",
+    metaTitle: "Lawn Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Lawn maintenance in Florence, SC: mowing, edging, trimming, and blowing for homes and commercial properties. Elite Turf applications available.",
-    galleryImage: siteImages.heroAerial,
+    galleryImage: siteImages.aboutBackyard,
     galleryImageAlt: "Striped lawn after professional mowing in Florence, SC",
     icon: "lawn",
     highlights: [SERVICE_HIGHLIGHTS.eliteTurf],
@@ -610,11 +619,11 @@ export const services: ServiceDef[] = [
     tagline: "A clean start for spring or fall.",
     ctaHeadline: "Need a spring or fall cleanup?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Seasonal Cleanup in Florence, SC | Spring & Fall Landscape Cleanup",
+    metaTitle: "Seasonal Cleanup in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Seasonal landscape cleanup in Florence, SC: leaves, debris, cutback, and bed cleaning for spring and fall on homes and commercial properties.",
-    galleryImage: siteImages.services.landscapeCover,
-    galleryImageAlt: "Clean landscape beds and lawn after seasonal cleanup",
+    galleryImage: siteImages.heroFrontYard,
+    galleryImageAlt: "Maintained striped lawn and planting beds after seasonal cleanup",
     icon: "seasonal",
   },
   {
@@ -655,11 +664,11 @@ export const services: ServiceDef[] = [
     tagline: "Beds that stay in season.",
     ctaHeadline: "Want seasonal color in your beds?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Seasonal Color and Enhancements in Florence, SC | Annual Flower Displays",
+    metaTitle: "Seasonal Color and Enhancements in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Seasonal color and enhancements in Florence, SC. Design, changeout, and install for homes, HOAs, and commercial properties.",
-    galleryImage: siteImages.services.landscapeCover,
-    galleryImageAlt: "Colorful planting beds with seasonal flowers",
+    galleryImage: siteImages.ctaAerial,
+    galleryImageAlt: "Aerial view of seasonal color in curved planting beds",
     icon: "garden",
     highlights: [SERVICE_HIGHLIGHTS.suppliers],
   },
@@ -702,11 +711,11 @@ export const services: ServiceDef[] = [
     tagline: "Ornamental beds that stay in shape.",
     ctaHeadline: "Need the beds and shrubs looked after?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Garden Maintenance Services in Florence, SC | Beds & Ornamentals",
+    metaTitle: "Garden Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Garden maintenance in Florence, SC: pruning, weeding, bed care, mulch, and pine straw for ornamental landscapes on homes and commercial properties.",
-    galleryImage: siteImages.services.landscapeCover,
-    galleryImageAlt: "Maintained planting beds and shrubs",
+    galleryImage: siteImages.gardenPath,
+    galleryImageAlt: "Garden path through hostas and maintained planting beds",
     icon: "garden",
     highlights: [SERVICE_HIGHLIGHTS.suppliers],
   },
@@ -749,11 +758,11 @@ export const services: ServiceDef[] = [
     tagline: "Treatments that keep the lawn healthy.",
     ctaHeadline: "Need fertilization or weed control?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Turf Care in Florence, SC | Fertilization & Weed Control",
+    metaTitle: "Turf Care in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Turf care in Florence, SC: fertilization, weed control, and lawn applications through Elite Turf. Pair with lawn maintenance from Innovative Landscape Design.",
     galleryImage: siteImages.heroAerial,
-    galleryImageAlt: "Striped lawn after professional turf care in Florence, SC",
+    galleryImageAlt: "Striped lawn kept healthy with professional turf care",
     icon: "lawn",
     highlights: [SERVICE_HIGHLIGHTS.eliteTurf],
   },
@@ -795,11 +804,11 @@ export const services: ServiceDef[] = [
     tagline: "Beds refreshed, edges defined.",
     ctaHeadline: "Need mulch or pine straw installed?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Mulch and Pine Straw in Florence, SC | Bed Refresh",
+    metaTitle: "Mulch and Pine Straw in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Mulch and pine straw installation in Florence, SC. We measure, edge, install, and clean up beds for homes and commercial properties.",
-    galleryImage: siteImages.aboutGardenBed,
-    galleryImageAlt: "A planting bed with groundcover, flowers, and mulch beside the lawn",
+    galleryImage: siteImages.services.landscapeCover,
+    galleryImageAlt: "Planting beds with mulch beside a striped lawn",
     icon: "garden",
     highlights: [SERVICE_HIGHLIGHTS.suppliers],
   },
@@ -841,11 +850,11 @@ export const services: ServiceDef[] = [
     tagline: "Shrubs and trees kept in shape.",
     ctaHeadline: "Need pruning on the property?",
     ctaButton: "Request a free estimate",
-    metaTitle: "Pruning and Cleanup in Florence, SC | Trees & Shrubs",
+    metaTitle: "Pruning and Cleanup in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Pruning and cleanup in Florence, SC: selective tree and shrub pruning with debris removal for homes and commercial properties.",
     galleryImage: siteImages.aboutBackyard,
-    galleryImageAlt: "A finished backyard with layered planting beds and shrubs",
+    galleryImageAlt: "Shrubs and trees kept in shape beside a backyard lawn",
     icon: "garden",
   },
 ];
@@ -872,10 +881,6 @@ export function getServiceByWorkCategory(category: string): ServiceDef | undefin
 
 export function isServiceSlug(slug: string): boolean {
   return services.some((s) => s.slug === slug);
-}
-
-export function getMainService(): ServiceDef {
-  return getServiceBySlug("landscape-enhancements")!;
 }
 
 export const serviceSlugs = services.map((s) => s.slug);

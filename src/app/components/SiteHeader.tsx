@@ -7,7 +7,7 @@ import { LogoHomeLink } from "./LogoHomeLink";
 import { NavMegaMenu } from "./NavMegaMenu";
 import { navLinkClass, navLinkIsActive, navLinks } from "@/lib/nav";
 import { siteConfig } from "@/lib/siteConfig";
-import { CAREERS_PATH, FLORENCE_LANDSCAPE_PATH, LOGIN_PATH, WORK_PATH } from "@/lib/siteConstants";
+import { CAREERS_PATH, LOGIN_PATH, WORK_PATH } from "@/lib/siteConstants";
 
 const phoneDigits = siteConfig.phone.replace(/\D/g, "");
 
@@ -22,7 +22,6 @@ function pathUsesHeroOverlay(pathname: string): boolean {
     pathname.startsWith(`${CAREERS_PATH}/`) ||
     pathname === WORK_PATH ||
     pathname.startsWith(`${WORK_PATH}/`) ||
-    pathname === FLORENCE_LANDSCAPE_PATH ||
     pathname.startsWith("/gallery/")
   );
 }

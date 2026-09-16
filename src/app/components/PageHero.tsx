@@ -31,6 +31,7 @@ export function PageHero({
             alt={imageAlt}
             fill
             priority
+            quality={85}
             sizes="100vw"
             className="hero__image object-cover"
           />

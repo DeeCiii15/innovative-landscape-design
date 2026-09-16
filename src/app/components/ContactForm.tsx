@@ -1,41 +1,46 @@
 "use client";
 
-import { type FormEvent } from "react";
-import { siteConfig } from "@/lib/siteConfig";
+import { ValidationError, useForm } from "@formspree/react";
+import { FORMSPREE_CONTACT_ID } from "@/lib/siteConstants";
+
+const inputClass =
+  "w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-ink)] outline-none transition focus:border-[var(--color-green)] focus:ring-2 focus:ring-[var(--color-green)]/15 sm:text-sm";
 
 export function ContactForm() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const [state, handleSubmit, reset] = useForm(FORMSPREE_CONTACT_ID, {
+    data: {
+      subject: "Estimate request from the website",
+    },
+  });
 
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
-    const firstName = String(data.get("firstName") ?? "").trim();
-    const lastName = String(data.get("lastName") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-    const fullName = [firstName, lastName].filter(Boolean).join(" ");
-
-    const subject = `Estimate request from ${fullName || "website visitor"}`;
-    const body = [
-      `Name: ${fullName}`,
-      `Phone: ${phone}`,
-      `Email: ${email}`,
-      "",
-      "Message:",
-      message,
-    ].join("\n");
-
-    const mailto = `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+  if (state.succeeded) {
+    return (
+      <div className="space-y-4">
+        <p className="text-[var(--color-ink-soft)]">
+          Thanks — we got your message and will get back to you shortly.
+        </p>
+        <button
+          type="button"
+          onClick={reset}
+          className="btn-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2"
+        >
+          Send another message
+        </button>
+      </div>
+    );
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-base text-[var(--color-ink)] outline-none transition focus:border-[var(--color-green)] focus:ring-2 focus:ring-[var(--color-green)]/15 sm:text-sm";
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="relative space-y-5">
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="first-name" className="mb-1.5 block text-sm font-semibold text-[var(--color-ink)]">
@@ -77,6 +82,12 @@ export function ContactForm() {
           Email
         </label>
         <input id="email" name="email" type="email" required autoComplete="email" className={inputClass} />
+        <ValidationError
+          field="email"
+          prefix="Email"
+          errors={state.errors}
+          className="mt-1.5 text-sm text-red-700"
+        />
       </div>
 
       <div>
@@ -91,13 +102,22 @@ export function ContactForm() {
           placeholder="Tell us about your project — what would you like your 'after' to look like?"
           className={`${inputClass} resize-y`}
         />
+        <ValidationError
+          field="message"
+          prefix="Message"
+          errors={state.errors}
+          className="mt-1.5 text-sm text-red-700"
+        />
       </div>
+
+      <ValidationError errors={state.errors} className="text-sm text-red-700" />
 
       <button
         type="submit"
-        className="btn-primary w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2"
+        disabled={state.submitting}
+        className="btn-primary w-full sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-green)] focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
       >
-        Send message
+        {state.submitting ? "Sending…" : "Send message"}
       </button>
     </form>
   );

@@ -9,6 +9,7 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { SkipToContent } from "./components/SkipToContent";
 import { JsonLdLocalBusiness } from "./components/JsonLdLocalBusiness";
+import { socialTags } from "@/lib/seo";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
@@ -30,23 +31,28 @@ export const viewport = {
   viewportFit: "cover",
 };
 
+const homeTitle = `Landscaper in Florence, SC | ${siteConfig.name}`;
+const homeSocial = socialTags({
+  title: homeTitle,
+  description: siteConfig.description,
+  path: "/",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: `Landscape Design in Florence, SC | ${siteConfig.name}`,
+    default: homeTitle,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: "/" },
   openGraph: {
-    title: `Landscape Design in Florence, SC | ${siteConfig.name}`,
-    description: siteConfig.description,
+    ...homeSocial.openGraph,
     type: "website",
     locale: "en_US",
     siteName: siteConfig.name,
-    url: siteConfig.url,
-    images: [{ url: siteConfig.heroImage, alt: siteConfig.heroImageAlt }],
   },
+  twitter: homeSocial.twitter,
   icons: {
     icon: siteConfig.logo,
     apple: siteConfig.logo,

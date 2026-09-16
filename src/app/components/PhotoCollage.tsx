@@ -20,7 +20,7 @@ const stills = [
   {
     id: "mid",
     src: siteImages.aboutBackyard,
-    alt: "A finished backyard with layered planting beds, planters, and a lawn leading to the house",
+    alt: "A striped backyard lawn leading to a white sunroom, framed by trees and planting beds",
     role: "middle" as const,
     rest: 24,
     rotate: 0,
@@ -31,7 +31,7 @@ const stills = [
   {
     id: "right",
     src: siteImages.services.hardscapesCover,
-    alt: "Custom patio and outdoor living space",
+    alt: "A brick courtyard with planters, palms, and planting beds beside the house",
     role: "outer" as const,
     rest: -22,
     rotate: 1.85,
@@ -171,7 +171,6 @@ export function PhotoCollage() {
                   fill
                   sizes="(min-width: 900px) 32vw, 70vw"
                   className="object-cover"
-                  priority={still.role === "middle"}
                 />
               </figure>
             );

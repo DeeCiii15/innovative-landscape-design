@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import { processPhases } from "@/lib/processData";
 
 type ProcessStoryFamily = "company" | "construction" | "maintenance";
@@ -12,11 +13,11 @@ const processCopy: Record<ProcessStoryFamily, { heading: string; lead: string }>
     lead: "How most of our jobs work, from the first visit to a landscape that lasts.",
   },
   construction: {
-    heading: "How a job runs",
+    heading: "How we work",
     lead: "Landscape services follow the same four steps — design, prepare, install, maintain. That process applies to the services above, not only a full-yard renovation.",
   },
   maintenance: {
-    heading: "How a job runs",
+    heading: "How we work",
     lead: "New work starts with design and install. If the landscape is already in place, we pick up at maintain — on a cadence that fits the property.",
   },
 };
@@ -39,6 +40,9 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
   const [active, setActive] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [rail, setRail] = useState({ left: 0, span: 0, top: 0 });
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const measureRail = useCallback(() => {
     const track = trackRef.current;
@@ -198,11 +202,75 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
     measureRail();
   }, [active, reduceMotion, measureRail]);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const focusPhase = useCallback(
+    (index: number) => {
+      const clamped = Math.min(PHASES - 1, Math.max(0, index));
+      const targetProgress = (clamped + 0.5) / PHASES;
+      const section = sectionRef.current;
+      const lock = lockRef.current;
+      const sticky = stickyRef.current;
+
+      if (reduceMotion || !section || !lock || !sticky) {
+        applyProgress(targetProgress);
+        section?.scrollIntoView({ block: "start", behavior: "auto" });
+        return;
+      }
+
+      const header = document.querySelector(".site-header");
+      const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 76;
+      const html = document.documentElement;
+      const previousBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = "auto";
+      ignoreScrollRef.current = true;
+
+      if (releasedRef.current) {
+        releasedRef.current = false;
+        section.classList.remove("process-story--released");
+        void lock.offsetHeight;
+      }
+
+      const travel = Math.max(lock.offsetHeight - sticky.offsetHeight, 1);
+      const desiredTop = headerHeight - targetProgress * travel;
+      const delta = lock.getBoundingClientRect().top - desiredTop;
+      window.scrollTo({ top: Math.max(0, window.scrollY + delta), behavior: "auto" });
+      applyProgress(targetProgress);
+      lastScrollYRef.current = window.scrollY;
+      html.style.scrollBehavior = previousBehavior;
+      ignoreScrollRef.current = false;
+    },
+    [applyProgress, reduceMotion],
+  );
+
+  const openPhase = useCallback(
+    (index: number) => {
+      focusPhase(index);
+      setLightboxIndex(index);
+    },
+    [focusPhase],
+  );
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (lightboxIndex !== null) {
+      if (!dialog.open) dialog.showModal();
+    } else if (dialog.open) {
+      dialog.close();
+    }
+  }, [lightboxIndex, mounted]);
+
+  const lightboxPhase = lightboxIndex !== null ? processPhases[lightboxIndex] : null;
+
   const columns = reduceMotion
     ? EQUAL_COLS
     : processPhases.map((_, index) => (index === active ? "1.55fr" : "0.82fr")).join(" ");
 
   return (
+    <>
     <section
       id="process"
       ref={sectionRef}
@@ -230,15 +298,25 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
                       className={`process-story__step${isActive ? " is-active" : ""}`}
                       aria-current={isActive ? "step" : undefined}
                     >
-                      <div className="process-story__media">
+                      <button
+                        type="button"
+                        className="process-story__media"
+                        aria-label={`View ${phase.title} photo`}
+                        onClick={() => openPhase(index)}
+                      >
                         <Image
                           src={phase.image}
                           alt={isActive ? phase.imageAlt : ""}
                           fill
-                          sizes="(min-width: 900px) 32vw, 70vw"
-                          className="object-cover"
+                          sizes={
+                            isActive
+                              ? "(min-width: 900px) 36vw, 90vw"
+                              : "(min-width: 900px) 18vw, 45vw"
+                          }
+                          className={phase.slug === "design" ? "object-cover object-[8%_center]" : "object-cover"}
+                          unoptimized={phase.slug === "design"}
                         />
-                      </div>
+                      </button>
                       <span className="process-story__dot" aria-hidden />
                       <div className="process-story__copy">
                         <h3 className="process-story__title">{phase.title}</h3>
@@ -265,5 +343,45 @@ export function ProcessStory({ family = "company" }: { family?: ProcessStoryFami
         <div className="process-story__travel" aria-hidden />
       </div>
     </section>
+    {mounted
+      ? createPortal(
+          <dialog
+            ref={dialogRef}
+            className="project-lightbox"
+            aria-label={lightboxPhase ? `${lightboxPhase.title} photo` : "Process photo"}
+            onClose={() => setLightboxIndex(null)}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) setLightboxIndex(null);
+            }}
+          >
+            {lightboxPhase ? (
+              <div className="project-lightbox__panel" onClick={(event) => event.stopPropagation()}>
+                <button
+                  type="button"
+                  className="project-lightbox__close"
+                  aria-label="Close photo"
+                  onClick={() => setLightboxIndex(null)}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </button>
+                <div className="project-lightbox__stage">
+                  <Image
+                    src={lightboxPhase.image}
+                    alt={lightboxPhase.imageAlt}
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                    unoptimized={lightboxPhase.slug === "design"}
+                  />
+                </div>
+              </div>
+            ) : null}
+          </dialog>,
+          document.body,
+        )
+      : null}
+    </>
   );
 }

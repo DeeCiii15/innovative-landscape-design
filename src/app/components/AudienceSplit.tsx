@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { getHubsForAudience, type Audience } from "@/lib/audienceHubs";
 import { siteImages } from "@/lib/siteImages";
-import { elementVisible, watchEnter } from "./enterView";
+import { elementVisible } from "./enterView";
 
 function canHoverOpen() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -32,8 +32,8 @@ const panes: {
     label: "Commercial services",
     prompt: "For businesses and HOAs",
     blurb: "Landscape project work and ongoing property care for offices, retail, HOAs, and other managed sites.",
-    image: siteImages.services.lightingCover,
-    imageAlt: "A property with landscape lighting after dusk",
+    image: siteImages.gardenEstate,
+    imageAlt: "Estate garden with seasonal color, palms, and a brick walk",
   },
 ];
 
@@ -73,54 +73,42 @@ export function AudienceSplit({
       return elementVisible(section);
     };
 
-    const arrive = () => {
-      setWaiting(false);
-      setArrived(true);
+    const left = () => {
+      const rect = stage.getBoundingClientRect();
+      const view = window.innerHeight || 0;
+      if (view <= 0) return false;
+      return rect.bottom < view * 0.12 || rect.top > view * 0.88;
     };
 
-    if (!mobile) {
+    const sync = () => {
       if (entered()) {
-        arrive();
+        setWaiting(false);
+        setArrived(true);
         return;
       }
-      return watchEnter(section, arrive);
-    }
-
-    const observer = new IntersectionObserver(
-      () => {
-        if (entered()) {
-          arrive();
-          cleanup();
-        }
-      },
-      { threshold: [0.08, 0.16, 0.28], rootMargin: "10% 0px 0px 0px" },
-    );
-
-    const onScroll = () => {
-      if (!entered()) return;
-      arrive();
-      cleanup();
+      if (left()) {
+        setArrived(false);
+        setWaiting(true);
+        setOpen(null);
+      }
     };
 
-    let frame = 0;
-
-    function cleanup() {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.cancelAnimationFrame(frame);
-    }
-
-    frame = window.requestAnimationFrame(() => {
-      if (entered()) {
-        arrive();
-        cleanup();
-        return;
-      }
-      observer.observe(stage);
-      window.addEventListener("scroll", onScroll, { passive: true });
+    const observer = new IntersectionObserver(sync, {
+      threshold: [0, 0.08, 0.16, 0.28, 0.5],
+      rootMargin: "10% 0px 10% 0px",
     });
 
-    return cleanup;
+    let frame = window.requestAnimationFrame(sync);
+    observer.observe(stage);
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+      window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -177,7 +165,7 @@ export function AudienceSplit({
                     alt=""
                     fill
                     sizes="(min-width: 900px) 70vw, 100vw"
-                    className={`object-cover${pane.audience === "commercial" ? " object-[center_42%]" : " object-[center_35%]"}`}
+                    className={`object-cover${pane.audience === "commercial" ? " object-center" : " object-[center_35%]"}`}
                   />
                   <span className="service-split__scrim" aria-hidden />
                 </button>

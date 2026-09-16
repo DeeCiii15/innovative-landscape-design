@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { servicePathWithHub } from "@/lib/audienceHubs";
 import { WORK_PATH } from "@/lib/siteConstants";
 import { getServiceBySlug, services, type ServiceDef } from "@/lib/servicesData";
 
@@ -18,16 +19,17 @@ type ServiceGalleryGridProps = {
   showHeader?: boolean;
   showViewAll?: boolean;
   className?: string;
+  fromHubId?: string;
 };
 
 function cardsFromSlugs(slugs: readonly string[]): ServiceDef[] {
   return slugs.map((slug) => getServiceBySlug(slug)).filter((service): service is ServiceDef => Boolean(service));
 }
 
-function ServiceTile({ service }: { service: ServiceDef }) {
+function ServiceTile({ service, fromHubId }: { service: ServiceDef; fromHubId?: string }) {
   return (
     <Link
-      href={`/services/${service.slug}`}
+      href={fromHubId ? servicePathWithHub(service.slug, fromHubId) : `/services/${service.slug}`}
       className="project-tile focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
     >
       <Image
@@ -51,6 +53,7 @@ export function ServiceGalleryGrid({
   showHeader = true,
   showViewAll = true,
   className = "",
+  fromHubId,
 }: ServiceGalleryGridProps) {
   const seen = new Set<string>();
   const cards: ServiceDef[] = [];
@@ -90,7 +93,7 @@ export function ServiceGalleryGrid({
         <ul className="portfolio-index__grid">
           {cards.map((service) => (
             <li key={service.slug}>
-              <ServiceTile service={service} />
+              <ServiceTile service={service} fromHubId={fromHubId} />
             </li>
           ))}
         </ul>

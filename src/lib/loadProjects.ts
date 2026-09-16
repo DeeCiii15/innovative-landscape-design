@@ -16,7 +16,7 @@ import type { ProjectPhoto, PropertyType } from "@/projects/types";
 
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"]);
 const PHOTO_COMPRESS_EXTENSIONS = new Set([".jpg", ".jpeg", ".webp"]);
-const LARGE_PHOTO_BYTES = 400_000;
+const LARGE_PHOTO_BYTES = 80_000;
 const PROJECTS_DIR = path.join(process.cwd(), "public", "images", "projects");
 const PUBLIC_PREFIX = "/images/projects";
 const OPTIMIZE_SCRIPT = path.join(process.cwd(), "scripts", "optimize-images.mjs");
@@ -55,6 +55,7 @@ type ProjectJson = {
   featuredServiceSlug?: string;
   cover?: string;
   description: string;
+  metaDescription?: string;
   story?: string;
   photos?: PhotoJson[];
 };
@@ -178,6 +179,7 @@ function parseProjectJson(raw: unknown, folder: string): ProjectJson {
     featuredServiceSlug: asString(raw.featuredServiceSlug),
     cover: asString(raw.cover),
     description,
+    metaDescription: asString(raw.metaDescription),
     story: asString(raw.story),
     photos,
   };
@@ -261,6 +263,7 @@ function loadProjectFolder(folder: string): WorkItem {
     name: toTitleCase(json.name),
     title: toTitleCase(json.name),
     description: json.description,
+    metaDescription: json.metaDescription ?? json.description,
     story: json.story ?? "",
     propertyType: propertyTypeLabel(json.propertyType),
     placeLabel,
@@ -277,7 +280,6 @@ function loadProjectFolder(folder: string): WorkItem {
       serviceSlugs: json.serviceSlugs,
     },
     locationLabel: placeLabel,
-    categorySlug: featuredServiceSlug,
     type: featuredService?.name ?? firstService?.name ?? "Landscape",
     serviceName: featuredService?.name ?? firstService?.name ?? "Landscape",
   };

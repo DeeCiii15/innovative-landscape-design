@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import { useCallback, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal } from "./Reveal";
 import { TrustedBy } from "./TrustedBy";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/siteConstants";
@@ -26,28 +26,94 @@ function Stars({ count }: { count: number }) {
   );
 }
 
+function Chevron({ direction }: { direction: "prev" | "next" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
+      {direction === "prev" ? (
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 6l-6 6 6 6" />
+      ) : (
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l6 6-6 6" />
+      )}
+    </svg>
+  );
+}
+
 function ReviewsTrack({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  const updateArrows = useCallback(() => {
+    const grid = ref.current;
+    if (!grid) return;
+    const max = Math.max(0, grid.scrollWidth - grid.clientWidth);
+    setCanPrev(grid.scrollLeft > 8);
+    setCanNext(grid.scrollLeft < max - 8);
+  }, []);
+
+  const centerMiddle = useCallback(() => {
+    const grid = ref.current;
+    if (!grid) return;
+    const cards = [...grid.children];
+    const mid = cards[Math.floor(cards.length / 2)];
+    if (!(mid instanceof HTMLElement)) return;
+    const left = mid.offsetLeft - (grid.clientWidth - mid.offsetWidth) / 2;
+    grid.scrollTo({ left: Math.max(0, left), behavior: "auto" });
+  }, []);
+
+  const scrollByCard = (direction: -1 | 1) => {
+    const grid = ref.current;
+    if (!grid) return;
+    const card = grid.children[0];
+    const gap = Number.parseFloat(getComputedStyle(grid).columnGap || getComputedStyle(grid).gap) || 16;
+    const amount = card instanceof HTMLElement ? card.offsetWidth + gap : grid.clientWidth * 0.7;
+    grid.scrollBy({ left: direction * amount, behavior: "smooth" });
+  };
 
   useLayoutEffect(() => {
     const grid = ref.current;
-    if (!grid || !window.matchMedia("(max-width: 767px)").matches) return;
-    const second = grid.children[1];
-    if (!(second instanceof HTMLElement)) return;
+    if (!grid) return;
 
-    const centerSecond = () => {
-      const left = second.offsetLeft - (grid.clientWidth - second.offsetWidth) / 2;
-      grid.scrollTo({ left: Math.max(0, left), behavior: "auto" });
+    centerMiddle();
+    updateArrows();
+    const frame = window.requestAnimationFrame(() => {
+      centerMiddle();
+      updateArrows();
+    });
+
+    grid.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      grid.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
     };
-
-    centerSecond();
-    const frame = window.requestAnimationFrame(centerSecond);
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [centerMiddle, updateArrows]);
 
   return (
-    <div ref={ref} className="reviews__grid">
-      {children}
+    <div className="reviews__carousel">
+      <button
+        type="button"
+        className="reviews__arrow reviews__arrow--prev"
+        aria-label="Previous reviews"
+        disabled={!canPrev}
+        onClick={() => scrollByCard(-1)}
+      >
+        <Chevron direction="prev" />
+      </button>
+      <div ref={ref} className="reviews__grid">
+        {children}
+      </div>
+      <button
+        type="button"
+        className="reviews__arrow reviews__arrow--next"
+        aria-label="Next reviews"
+        disabled={!canNext}
+        onClick={() => scrollByCard(1)}
+      >
+        <Chevron direction="next" />
+      </button>
     </div>
   );
 }
@@ -71,14 +137,13 @@ export function ReviewsSection() {
                     <figcaption className="review__cite">
                       <p className="review__name">{review.name}</p>
                       <p className="review__meta">
-                        {review.location} · {review.service}
+                        {review.source} · {review.service}
                       </p>
                     </figcaption>
                   </figure>
                 </Reveal>
               ))}
             </ReviewsTrack>
-            <p className="reviews__swipe-hint">Swipe for more reviews</p>
           </div>
 
           <div className="reviews__actions">

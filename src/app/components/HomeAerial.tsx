@@ -10,7 +10,6 @@ export function HomeAerial() {
         fill
         sizes="100vw"
         className="object-cover"
-        priority={false}
       />
     </div>
   );

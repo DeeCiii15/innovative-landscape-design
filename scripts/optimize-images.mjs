@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Compresses site and gallery photographs in place.
- * Skips logos and partner marks. Safe to re-run: already-small files are left alone.
+ * Compresses project gallery photographs in place.
+ * Skips heroes, logos, partner marks, and other site/featured images.
+ * Safe to re-run: already-small files are left alone.
  *
  *   npm run optimize-images
  *   node scripts/optimize-images.mjs path/to/photo.jpg
@@ -16,11 +17,12 @@ import sharp from "sharp";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const IMAGES_ROOT = path.join(ROOT, "public", "images");
-const MAX_EDGE = 2400;
-const JPEG_QUALITY = 80;
-const WEBP_QUALITY = 80;
-const MIN_BYTES = 250_000;
-const SKIP_DIRS = new Set(["trusted"]);
+const PROJECTS_ROOT = path.join(IMAGES_ROOT, "projects");
+const MAX_EDGE = 1400;
+const JPEG_QUALITY = 64;
+const WEBP_QUALITY = 64;
+const MIN_BYTES = 80_000;
+const SKIP_DIRS = new Set(["trusted", "_template"]);
 const SKIP_NAME = /^(logo|grass-mark)/i;
 const PHOTO_EXT = new Set([".jpg", ".jpeg", ".webp"]);
 
@@ -28,7 +30,13 @@ function isPhoto(filePath) {
   return PHOTO_EXT.has(path.extname(filePath).toLowerCase());
 }
 
+function isProjectPhoto(filePath) {
+  const rel = path.relative(PROJECTS_ROOT, filePath);
+  return rel !== "" && !rel.startsWith("..") && !path.isAbsolute(rel);
+}
+
 function shouldSkip(filePath) {
+  if (!isProjectPhoto(filePath)) return true;
   const rel = path.relative(IMAGES_ROOT, filePath);
   const parts = rel.split(path.sep);
   if (parts.some((part) => SKIP_DIRS.has(part))) return true;
@@ -46,6 +54,17 @@ async function walk(dir, acc = []) {
   return acc;
 }
 
+async function collect(targets) {
+  const files = [];
+  for (const target of targets) {
+    const info = await stat(target).catch(() => null);
+    if (!info) continue;
+    if (info.isDirectory()) files.push(...(await walk(target)));
+    else files.push(target);
+  }
+  return files;
+}
+
 async function optimizeFile(filePath) {
   if (!isPhoto(filePath) || shouldSkip(filePath)) {
     return { skipped: true, filePath };
@@ -58,14 +77,6 @@ async function optimizeFile(filePath) {
   }
 
   const image = sharp(filePath, { failOn: "none" }).rotate();
-  const meta = await image.metadata();
-  const width = meta.width ?? 0;
-  const height = meta.height ?? 0;
-  const needsResize = width > MAX_EDGE || height > MAX_EDGE;
-  if (!needsResize && before.size < 380_000) {
-    return { skipped: true, filePath };
-  }
-
   const ext = path.extname(filePath).toLowerCase();
   const tmp = `${filePath}.opt.tmp${ext}`;
   let pipeline = image.resize({
@@ -102,7 +113,7 @@ function kb(bytes) {
 }
 
 const args = process.argv.slice(2).map((item) => path.resolve(item));
-const files = args.length > 0 ? args : await walk(IMAGES_ROOT);
+const files = args.length > 0 ? await collect(args) : await walk(PROJECTS_ROOT);
 
 let saved = 0;
 let changed = 0;

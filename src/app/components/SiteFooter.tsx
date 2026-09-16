@@ -58,7 +58,13 @@ export function SiteFooter() {
     <footer className="footer mt-auto">
       <div className="container-main footer__inner">
         <Link href="/" className="footer__lockup" aria-label={`${siteConfig.name} home`}>
-          <Image src="/images/logo-lockup.png" alt={siteConfig.name} width={3917} height={2058} />
+          <Image
+            src="/images/logo-lockup.png"
+            alt={siteConfig.name}
+            width={3917}
+            height={2058}
+            sizes="(min-width: 768px) 248px, 200px"
+          />
         </Link>
 
         <p className="footer__contact">

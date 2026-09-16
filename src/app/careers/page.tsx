@@ -4,20 +4,19 @@ import { CareerForm } from "@/app/components/CareerForm";
 import { CtaSection } from "@/app/components/CtaSection";
 import { InnerPage } from "@/app/components/InnerPage";
 import { PageHero } from "@/app/components/PageHero";
+import { socialTags } from "@/lib/seo";
 import { siteConfig } from "@/lib/siteConfig";
-import { CAREERS_PATH, getSiteUrl } from "@/lib/siteConstants";
+import { CAREERS_PATH } from "@/lib/siteConstants";
 
 const phoneDigits = siteConfig.phone.replace(/\D/g, "");
+const title = `Landscape Jobs in Florence, SC | ${siteConfig.name}`;
+const description = `Work with ${siteConfig.name} in Florence, SC. Construction, lawn care, irrigation, and design roles on a team that builds outdoor spaces.`;
 
 export const metadata: Metadata = {
-  title: { absolute: `Careers | Landscape Jobs in Florence, SC` },
-  description: `Work with ${siteConfig.name} in Florence, SC. Landscape construction, lawn care, irrigation, and design roles on a team that builds and maintains outdoor spaces.`,
+  title: { absolute: title },
+  description,
   alternates: { canonical: CAREERS_PATH },
-  openGraph: {
-    title: `Careers | ${siteConfig.name}`,
-    description: `Join the ${siteConfig.name} team in Florence, SC.`,
-    url: `${getSiteUrl()}${CAREERS_PATH}`,
-  },
+  ...socialTags({ title, description, path: CAREERS_PATH }),
 };
 
 export default function CareersPage() {

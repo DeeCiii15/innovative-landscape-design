@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next";
 import { audienceHubs } from "@/lib/audienceHubs";
-import { getLiveLocations } from "@/lib/locations";
 import { services } from "@/lib/servicesData";
 import { getProjects } from "@/lib/loadProjects";
 import { getSiteUrl, CAREERS_PATH, WORK_PATH } from "@/lib/siteConstants";
-import { workCategories, workCategoryPath, workItemPath, portfolioCategories } from "@/lib/workData";
+import { workItemPath } from "@/lib/workData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
@@ -35,40 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  for (const category of portfolioCategories) {
-    entries.push({
-      url: `${base}${workCategoryPath(category.slug)}`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.75,
-    });
-  }
-
-  for (const category of workCategories) {
-    if (portfolioCategories.some((entry) => entry.slug === category.slug)) continue;
-    entries.push({
-      url: `${base}${workCategoryPath(category.slug)}`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    });
-  }
-
   for (const item of getProjects()) {
     entries.push({
       url: `${base}${workItemPath(item.slug)}`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.65,
-    });
-  }
-
-  for (const location of getLiveLocations()) {
-    entries.push({
-      url: `${base}${location.path}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.85,
     });
   }
 

@@ -3,14 +3,18 @@ import Link from "next/link";
 import { ContactForm } from "../components/ContactForm";
 import { InnerPage } from "../components/InnerPage";
 import { PageHero } from "../components/PageHero";
+import { socialTags } from "@/lib/seo";
 import { siteConfig } from "@/lib/siteConfig";
+import { siteImages } from "@/lib/siteImages";
+
+const title = `Contact Landscaper in Florence, SC | ${siteConfig.name}`;
+const description = `Contact ${siteConfig.name} in Florence, SC for hardscapes, lighting, water features, irrigation, planting, and lawn care.`;
 
 export const metadata: Metadata = {
-  title: {
-    absolute: `Contact Landscape Design in Florence, SC | ${siteConfig.name}`,
-  },
-  description: `Contact ${siteConfig.name} in Florence, SC for landscape design, installation, maintenance, and outdoor living projects.`,
+  title: { absolute: title },
+  description,
   alternates: { canonical: "/contact" },
+  ...socialTags({ title, description, path: "/contact" }),
 };
 
 const phoneDigits = siteConfig.phone.replace(/\D/g, "");
@@ -22,8 +26,8 @@ export default function ContactPage() {
         <PageHero
           title="Let's talk about your"
           accent="project"
-          image={siteConfig.heroImage}
-          imageAlt={siteConfig.heroImageAlt}
+          image={siteImages.services.hardscapesCover}
+          imageAlt="Brick courtyard with planters, palms, and planting beds"
         />
       }
     >
@@ -32,7 +36,7 @@ export default function ContactPage() {
           <div className="surface-card p-7 sm:p-9 lg:order-2">
             <h2 className="text-2xl font-medium text-[var(--color-ink)]">Send a message</h2>
             <p className="mt-2 text-sm text-[var(--color-muted)]">
-              Fill out the form and we&apos;ll open your email app so you can send it directly.
+              Fill out the form and we&apos;ll get back to you.
             </p>
             <div className="mt-8">
               <ContactForm />
@@ -85,7 +89,7 @@ export default function ContactPage() {
             <p className="mt-6 text-sm text-[var(--color-muted)]">
               Want to see how we work first?{" "}
               <Link href="/#process" className="font-semibold text-[var(--color-green)] hover:underline">
-                See how a job runs
+                See our process
               </Link>
               .
             </p>

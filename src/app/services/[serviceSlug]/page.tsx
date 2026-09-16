@@ -6,13 +6,15 @@ import { CtaSection } from "@/app/components/CtaSection";
 import { HubWorkRow } from "@/app/components/HubWorkRow";
 import { InnerPage } from "@/app/components/InnerPage";
 import { PageHero } from "@/app/components/PageHero";
+import { getServiceHubLink } from "@/lib/audienceHubs";
 import { getProjectCover, getProjectGalleryImages, getProjects, getProjectsByService } from "@/lib/loadProjects";
-import { getSiteUrl } from "@/lib/siteConstants";
+import { socialTags } from "@/lib/seo";
 import { getServiceBySlug, serviceSlugs, type ServiceDef, type ServiceHighlight, type ServiceSection } from "@/lib/servicesData";
 import type { WorkItem } from "@/lib/workData";
 
 type ServicePageProps = {
   params: Promise<{ serviceSlug: string }>;
+  searchParams: Promise<{ from?: string | string[] }>;
 };
 
 type ModulePhoto = {
@@ -25,6 +27,10 @@ function relatedProjectsHeading(service: ServiceDef): string {
 }
 
 function modulePhoto(service: ServiceDef, related: WorkItem[]): ModulePhoto {
+  if (service.aboutImage) {
+    return { src: service.aboutImage, alt: service.aboutImageAlt ?? service.galleryImageAlt };
+  }
+
   const fallback: ModulePhoto = { src: service.galleryImage, alt: service.galleryImageAlt };
 
   for (const item of related) {
@@ -51,12 +57,12 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     title: { absolute: service.metaTitle },
     description: service.metaDescription,
     alternates: { canonical },
-    openGraph: {
+    ...socialTags({
       title: service.metaTitle,
       description: service.metaDescription,
-      url: `${getSiteUrl()}${canonical}`,
-      images: [{ url: service.galleryImage, alt: service.galleryImageAlt }],
-    },
+      path: canonical,
+      image: { url: service.galleryImage, alt: service.galleryImageAlt },
+    }),
   };
 }
 
@@ -130,8 +136,17 @@ function includeItems(service: ServiceDef): {
   return [...sections, ...highlights];
 }
 
-export default async function ServicePage({ params }: ServicePageProps) {
+function withHubFrom(href: string | undefined, fromHubId?: string): string | undefined {
+  if (!href || !fromHubId || !href.startsWith("/services/")) return href;
+  const [path, hash] = href.split("#");
+  const url = new URL(path, "https://ildsc.com");
+  url.searchParams.set("from", fromHubId);
+  return `${url.pathname}${url.search}${hash ? `#${hash}` : ""}`;
+}
+
+export default async function ServicePage({ params, searchParams }: ServicePageProps) {
   const { serviceSlug } = await params;
+  const { from } = await searchParams;
   const service = getServiceBySlug(serviceSlug);
   if (!service) notFound();
 
@@ -139,6 +154,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const relatedWork = taggedWork.length > 0 ? taggedWork : getProjects();
   const photo = modulePhoto(service, taggedWork);
   const included = includeItems(service);
+  const hubLink = getServiceHubLink(service.family, from);
+  const fromHubId = typeof from === "string" ? from : from?.[0];
 
   return (
     <InnerPage
@@ -167,14 +184,26 @@ export default async function ServicePage({ params }: ServicePageProps) {
                       <IncludeItem
                         key={item.title}
                         title={item.title}
+                        href={withHubFrom(item.href, fromHubId)}
                         body={item.body}
-                        href={item.href}
                         linkLabel={item.linkLabel}
                       />
                     ))}
                   </ul>
                 </div>
               ) : null}
+
+              <nav className="service-module__hubs" aria-label="Other services">
+                <Link
+                  href={hubLink.href}
+                  className="link-arrow service-module__hub-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
+                >
+                  {hubLink.label}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="size-4" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </Link>
+              </nav>
             </div>
 
             <div className="service-module__media relative">
@@ -184,7 +213,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 fill
                 sizes="(min-width: 900px) 44vw, 100vw"
                 className="object-cover"
-                priority
               />
             </div>
           </div>
