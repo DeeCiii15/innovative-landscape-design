@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { HeroPhoto } from "./HeroPhoto";
 
 type PageHeroProps = {
   title: string;
@@ -26,15 +26,7 @@ export function PageHero({
     <section className="hero page-hero" aria-label={label}>
       <div className="hero__media">
         <div className="hero__drift">
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            quality={85}
-            sizes="100vw"
-            className="hero__image object-cover"
-          />
+          <HeroPhoto src={image} alt={imageAlt} />
         </div>
       </div>
 

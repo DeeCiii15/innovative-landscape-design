@@ -1551,6 +1551,10 @@ body {
     gap: 0.75rem;
     align-items: end;
     overflow: visible;
+    --collage-rest-left: -28px;
+    --collage-rest-mid: 24px;
+    --collage-rest-right: -22px;
+    --collage-shift-range: 72px;
   }
 
   @media (min-width: 768px) {
@@ -3387,6 +3391,10 @@ body {
     isolation: auto;
     overflow: visible;
     background-color: transparent;
+    background-image: none;
+  }
+
+  html.aerial-ready .cta__panel.cta__panel--window {
     background-image:
       linear-gradient(transparent, transparent),
       url("/images/site/cta-aerial.jpg");
@@ -3492,6 +3500,14 @@ body {
     overflow: hidden;
     color: #fff;
     background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(var(--color-overlay-rgb), 0.48) 0%,
+      rgba(4, 21, 8, 0.7) 100%
+    );
+  }
+
+  html.aerial-ready .footer {
     background-image:
       linear-gradient(
         to bottom,
@@ -4003,6 +4019,10 @@ body {
 
     .photo-collage__grid {
       gap: 0.4rem;
+      --collage-rest-left: -6px;
+      --collage-rest-mid: 8px;
+      --collage-rest-right: -4px;
+      --collage-shift-range: 22px;
     }
 
     .hub-featured .heading-section,

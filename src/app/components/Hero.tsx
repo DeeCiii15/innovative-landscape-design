@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { HeroPhoto } from "./HeroPhoto";
 import { siteConfig } from "@/lib/siteConfig";
 
 export function Hero() {
@@ -6,15 +6,7 @@ export function Hero() {
     <section className="hero" aria-label="Featured landscape">
       <div className="hero__media">
         <div className="hero__drift">
-          <Image
-            src={siteConfig.heroImage}
-            alt={siteConfig.heroImageAlt}
-            fill
-            priority
-            quality={85}
-            sizes="100vw"
-            className="hero__image object-cover"
-          />
+          <HeroPhoto src={siteConfig.heroImage} alt={siteConfig.heroImageAlt} />
         </div>
       </div>
 

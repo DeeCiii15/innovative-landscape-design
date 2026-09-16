@@ -11,7 +11,6 @@ const stills = [
     src: siteImages.aboutGardenBed,
     alt: "A curved planting bed with lime groundcover, pink flowers, and a flowering crepe myrtle beside the lawn",
     role: "outer" as const,
-    rest: -28,
     rotate: -2.4,
     delay: "0.26s",
     place: "photo-collage__item--left",
@@ -22,7 +21,6 @@ const stills = [
     src: siteImages.aboutBackyard,
     alt: "A striped backyard lawn leading to a white sunroom, framed by trees and planting beds",
     role: "middle" as const,
-    rest: 24,
     rotate: 0,
     delay: "0.06s",
     place: "photo-collage__item--mid",
@@ -33,7 +31,6 @@ const stills = [
     src: siteImages.services.hardscapesCover,
     alt: "A brick courtyard with planters, palms, and planting beds beside the house",
     role: "outer" as const,
-    rest: -22,
     rotate: 1.85,
     delay: "0.16s",
     place: "photo-collage__item--right",
@@ -42,12 +39,17 @@ const stills = [
 ] as const;
 
 const ENTER_MS = 1300;
-const SHIFT_RANGE = 72;
 
 function collageProgress(row: HTMLElement) {
   const rect = row.getBoundingClientRect();
   const view = window.innerHeight || 1;
   return Math.min(1, Math.max(0, (view - rect.top) / (view + rect.height)));
+}
+
+function collageShiftRange(row: HTMLElement) {
+  const raw = getComputedStyle(row).getPropertyValue("--collage-shift-range");
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) ? value : 72;
 }
 
 export function PhotoCollage() {
@@ -149,7 +151,7 @@ export function PhotoCollage() {
         return;
       }
       const delta = collageProgress(row) - originProgress.current;
-      row.style.setProperty("--collage-shift", `${delta * SHIFT_RANGE}px`);
+      row.style.setProperty("--collage-shift", `${delta * collageShiftRange(row)}px`);
     };
 
     const onScroll = () => {
@@ -179,10 +181,11 @@ export function PhotoCollage() {
             const enterX = shown || still.role === "middle" ? 0 : still.fromX;
             const enterY = shown || still.role !== "middle" ? 0 : 80;
             const shift = entered ? "var(--collage-shift)" : "0px";
+            const rest = `var(--collage-rest-${still.id})`;
             const y =
               still.role === "middle"
-                ? `calc(${still.rest + enterY}px - ${shift})`
-                : `calc(${still.rest + enterY}px + ${shift})`;
+                ? `calc(${rest} + ${enterY}px - ${shift})`
+                : `calc(${rest} + ${enterY}px + ${shift})`;
 
             return (
               <figure
