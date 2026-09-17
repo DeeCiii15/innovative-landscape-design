@@ -27,7 +27,7 @@ export const siteConfig = {
   description:
     "Florence, SC landscape company for hardscapes, lighting, water features, irrigation, planting, and lawn care. Serving the Florence area for almost 20 years.",
   url: CANONICAL_SITE_URL,
-  logo: "/images/logo-ild-icon.png",
+  logo: "/images/logo-ild-oval.png",
   heroImage: siteImages.heroFrontYard,
   heroImageAlt: "Aerial view of a striped front lawn framed by colorful planting beds and a brick home",
   phone: "(843) 230-1036",

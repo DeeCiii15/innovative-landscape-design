@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Jost, Newsreader } from "next/font/google";
 import Script from "next/script";
 import { HomeAerial } from "./components/HomeAerial";
@@ -53,10 +54,6 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
   },
   twitter: homeSocial.twitter,
-  icons: {
-    icon: siteConfig.logo,
-    apple: siteConfig.logo,
-  },
 };
 
 export default function RootLayout({
@@ -85,6 +82,7 @@ export default function RootLayout({
         </main>
         <SiteFooter />
         <MobileCallBar />
+        <Analytics />
       </body>
     </html>
   );

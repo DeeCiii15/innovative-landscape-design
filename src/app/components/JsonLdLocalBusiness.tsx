@@ -1,15 +1,25 @@
 import { audienceHubs } from "@/lib/audienceHubs";
 import { siteConfig } from "@/lib/siteConfig";
-import { BUSINESS_GEO, getSiteUrl, SERVICE_AREAS } from "@/lib/siteConstants";
+import {
+  BUSINESS_GEO,
+  FOUNDING_YEAR,
+  GOOGLE_MAPS_URL,
+  getSiteUrl,
+  SERVICE_AREAS,
+} from "@/lib/siteConstants";
 import { services } from "@/lib/servicesData";
 
 export function JsonLdLocalBusiness() {
+  const base = getSiteUrl();
   const data = {
     "@context": "https://schema.org",
     "@type": "LandscapingBusiness",
+    "@id": `${base}/#localbusiness`,
     name: siteConfig.name,
-    url: getSiteUrl(),
-    image: `${getSiteUrl()}${siteConfig.heroImage}`,
+    url: base,
+    logo: `${base}${siteConfig.logo}`,
+    image: `${base}${siteConfig.heroImage}`,
+    foundingDate: String(FOUNDING_YEAR),
     telephone: siteConfig.phone,
     email: siteConfig.email,
     address: {
@@ -25,12 +35,13 @@ export function JsonLdLocalBusiness() {
       latitude: BUSINESS_GEO.latitude,
       longitude: BUSINESS_GEO.longitude,
     },
+    hasMap: GOOGLE_MAPS_URL,
     areaServed: SERVICE_AREAS.map((city) => ({
       "@type": "City",
       name: city,
     })),
     openingHours: "Mo-Su 09:00-17:00",
-    sameAs: siteConfig.social.map((profile) => profile.href),
+    sameAs: [GOOGLE_MAPS_URL, ...siteConfig.social.map((profile) => profile.href)],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Landscaping services",
@@ -40,7 +51,7 @@ export function JsonLdLocalBusiness() {
           itemOffered: {
             "@type": "Service",
             name: service.name,
-            url: `${getSiteUrl()}/services/${service.slug}`,
+            url: `${base}/services/${service.slug}`,
           },
         })),
         ...audienceHubs.map((hub) => ({
@@ -48,7 +59,7 @@ export function JsonLdLocalBusiness() {
           itemOffered: {
             "@type": "Service",
             name: hub.name,
-            url: `${getSiteUrl()}${hub.path}`,
+            url: `${base}${hub.path}`,
           },
         })),
       ],

@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const entries: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/llms.txt`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}${CAREERS_PATH}`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}${WORK_PATH}`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
