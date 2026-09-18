@@ -849,6 +849,20 @@ body {
     border-color: transparent;
   }
 
+  .mobile-nav .nav-mega__hub:hover .nav-mega__title,
+  .mobile-nav .nav-mega__hub.is-active .nav-mega__title {
+    color: var(--color-brand-dark);
+  }
+
+  .mobile-nav .nav-mega__hub:hover .nav-mega__blurb,
+  .mobile-nav .nav-mega__hub.is-active .nav-mega__blurb {
+    color: var(--color-muted);
+  }
+
+  .mobile-nav .nav-mega__hub.is-active .nav-mega__title {
+    font-weight: 700;
+  }
+
   .site-header--menu-open {
     backdrop-filter: none;
   }
