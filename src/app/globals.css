@@ -4007,9 +4007,22 @@ body {
       font-size: clamp(2rem, 9vw, 2.75rem);
     }
 
+    .hero,
+    .project-hero {
+      min-height: 0;
+      height: auto;
+      aspect-ratio: 4 / 5;
+    }
+
     .hero__drift {
-      inset: -3.1%;
+      inset: -1%;
       animation-name: hero-drift-mobile;
+    }
+
+    .hero__media img,
+    .hero__image,
+    .project-hero img {
+      object-position: 50% 42%;
     }
 
     .heading-section,
