@@ -26,8 +26,8 @@ export default function ContactPage() {
         <PageHero
           title="Let's talk about your"
           accent="project"
-          image={siteImages.services.hardscapesCover}
-          imageAlt="Brick courtyard with planters, palms, and planting beds"
+          image={siteImages.coitCourtyard}
+          imageAlt="Brick courtyard with a stone planter, palms, and seasonal color"
         />
       }
     >

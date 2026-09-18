@@ -3,13 +3,15 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { siteImages } from "@/lib/siteImages";
+import { PROJECTS_IMAGES_PATH } from "@/lib/siteImages";
+
+const COIT = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-maintenance-coit-street`;
 
 const stills = [
   {
     id: "left",
-    src: siteImages.aboutGardenBed,
-    alt: "A curved planting bed with lime groundcover, pink flowers, and a flowering crepe myrtle beside the lawn",
+    src: `${COIT}/photo-16.jpg`,
+    alt: "A stepping-stone garden path with groundcover and flowers toward the lawn",
     role: "outer" as const,
     rotate: -2.4,
     delay: "0.26s",
@@ -18,8 +20,8 @@ const stills = [
   },
   {
     id: "mid",
-    src: siteImages.aboutBackyard,
-    alt: "A striped backyard lawn leading to a white sunroom, framed by trees and planting beds",
+    src: `${COIT}/photo-08.jpg`,
+    alt: "A garden path and flowering beds opening onto a lawn",
     role: "middle" as const,
     rotate: 0,
     delay: "0.06s",
@@ -28,8 +30,8 @@ const stills = [
   },
   {
     id: "right",
-    src: siteImages.services.hardscapesCover,
-    alt: "A brick courtyard with planters, palms, and planting beds beside the house",
+    src: `${COIT}/photo-10.jpg`,
+    alt: "Seasonal color planting with palms, chartreuse groundcover, and a lawn edge",
     role: "outer" as const,
     rotate: 1.85,
     delay: "0.16s",

@@ -24,16 +24,16 @@ const panes: {
     label: "Residential services",
     prompt: "For homeowners",
     blurb: "Design, install, and care for the landscape around your home—from the first plan through lawn and bed care.",
-    image: siteImages.heroFrontYard,
-    imageAlt: "A finished residential front yard with planting beds and lawn",
+    image: siteImages.coitLawnHero,
+    imageAlt: "A finished residential lawn, planting beds, and white home",
   },
   {
     audience: "commercial",
     label: "Commercial services",
     prompt: "For businesses and HOAs",
     blurb: "Landscape project work and ongoing property care for offices, retail, HOAs, and other managed sites.",
-    image: siteImages.gardenEstate,
-    imageAlt: "Estate garden with seasonal color, palms, and a brick walk",
+    image: siteImages.coitCourtyard,
+    imageAlt: "A brick courtyard with a stacked planter, palms, and seasonal color",
   },
 ];
 
@@ -165,7 +165,7 @@ export function AudienceSplit({
                     alt=""
                     fill
                     sizes="(min-width: 900px) 70vw, 100vw"
-                    className={`object-cover${pane.audience === "commercial" ? " object-center" : " object-[center_35%]"}`}
+                    className="object-cover object-center"
                   />
                   <span className="service-split__scrim" aria-hidden />
                 </button>

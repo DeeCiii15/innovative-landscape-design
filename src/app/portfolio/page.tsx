@@ -26,8 +26,8 @@ export default function PortfolioPage() {
         <PageHero
           title="Explore our"
           accent="portfolio"
-          image={siteImages.services.hardscapesCover}
-          imageAlt="Brick courtyard with planters, palms, and planting beds"
+          image={siteImages.coitHero}
+          imageAlt="Stepping-stone garden path through lush planting to a white Florence home"
         />
       }
     >

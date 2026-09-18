@@ -12,7 +12,7 @@ export async function HeroPhoto({ src, alt }: { src: string; alt: string }) {
       priority
       fetchPriority="high"
       quality={85}
-      sizes="100vw"
+      sizes="112vw"
       placeholder={blur ? "blur" : "empty"}
       blurDataURL={blur}
       className="hero__image object-cover"

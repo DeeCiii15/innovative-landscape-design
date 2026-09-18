@@ -74,8 +74,8 @@ export const processSteps: ProcessStep[] = [
     metaTitle: "Landscape Design in Florence, SC | 2D & 3D Plans",
     metaDescription:
       "Landscape design in Florence, SC: we evaluate the site, plan plants, hardscape, irrigation, lighting, and drainage, then present 2D and 3D plans before install.",
-    galleryImage: siteImages.services.landscapeCover,
-    galleryImageAlt: "Designed front yard with planting beds and a striped lawn",
+    galleryImage: siteImages.coitHero,
+    galleryImageAlt: "Stepping-stone garden path through lush planting to a white home",
   },
   {
     slug: "installation",
@@ -116,8 +116,8 @@ export const processSteps: ProcessStep[] = [
     metaTitle: "Landscape Installation in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Landscape installation in Florence, SC: site prep, grading, planting, sod, hardscape, irrigation, and lighting—finished with cleanup and care instructions.",
-    galleryImage: siteImages.heroFrontYard,
-    galleryImageAlt: "Finished front lawn with planting beds after landscape installation",
+    galleryImage: siteImages.coitLawnHero,
+    galleryImageAlt: "Finished lawn with planting beds after landscape installation",
   },
   {
     slug: "maintenance",
@@ -186,8 +186,8 @@ export const processSteps: ProcessStep[] = [
     metaTitle: "Landscape Maintenance in Florence, SC | Lawn, Beds & Seasonal Care",
     metaDescription:
       "Landscape maintenance in Florence, SC: mowing, pruning, beds, mulch, seasonal color, and turf care. Custom plans from Innovative Landscape Design.",
-    galleryImage: siteImages.heroFrontYard,
-    galleryImageAlt: "Maintained striped lawn and planting beds in Florence, SC",
+    galleryImage: siteImages.coitLawnAxis,
+    galleryImageAlt: "A maintained striped lawn and planting beds after ongoing care",
     partner: {
       heading: "Elite Turf partnership",
       body: "We have a relationship with Elite Turf that allows our landscape customers access to discounted or preferred pricing on professional lawn applications.",

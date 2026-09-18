@@ -352,8 +352,8 @@ export function getProjectGalleryImages(item: WorkItem, serviceSlug?: string): P
 
 export function getProjectCover(item: WorkItem, serviceSlug?: string): ProjectPhoto {
   if (serviceSlug) {
-    const tagged = getProjectGalleryImages(item, serviceSlug)[0];
-    if (tagged) return tagged;
+    const tagged = item.photos.filter((photo) => photo.serviceSlugs?.includes(serviceSlug));
+    if (tagged[0]) return tagged[0];
   }
   return (
     item.cover.src
@@ -375,8 +375,8 @@ export function getProjectPageHero(item: WorkItem): { src: string; alt: string }
       alt: "A stone waterfall and stream in a planted backyard landscape",
     },
     "florence-sc-residential-landscape-maintenance-coit-street": {
-      src: siteImages.ctaAerial,
-      alt: "Aerial view of a maintained lawn and planting beds",
+      src: siteImages.coitHero,
+      alt: "Stepping-stone garden path through lush planting to a white Florence home",
     },
     "bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church": {
       src: siteImages.services.hardscapesCover,

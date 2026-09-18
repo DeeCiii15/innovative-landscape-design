@@ -22,7 +22,7 @@ const MAX_EDGE = 1400;
 const JPEG_QUALITY = 64;
 const WEBP_QUALITY = 64;
 const MIN_BYTES = 80_000;
-const SKIP_DIRS = new Set(["trusted", "_template"]);
+const SKIP_DIRS = new Set(["trusted", "_template", "site"]);
 const SKIP_NAME = /^(logo|grass-mark)/i;
 const PHOTO_EXT = new Set([".jpg", ".jpeg", ".webp"]);
 

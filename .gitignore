@@ -25,6 +25,8 @@
 *.pem
 tmp-videos/
 /public/images/site/higer res/
+# Raw dumps kept next to a project gallery; marketing copies live in /images/site/
+/public/images/projects/*/site/
 
 # debug
 npm-debug.log*

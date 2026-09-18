@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { WORK_LABEL, WORK_PATH } from "@/lib/siteConstants";
-import { PROJECTS_IMAGES_PATH } from "@/lib/siteImages";
+import { PROJECTS_IMAGES_PATH, siteImages } from "@/lib/siteImages";
 import { Reveal } from "./Reveal";
 
 const MANOR = `${PROJECTS_IMAGES_PATH}/florence-sc-commercial-landscape-the-manor`;
@@ -9,20 +9,20 @@ const BYRNES = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-byrnes
 const COIT = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-maintenance-coit-street`;
 const CHURCH = `${PROJECTS_IMAGES_PATH}/bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church`;
 
-/** Locked Get Inspired strip: 12 photos, no two consecutive from the same job. */
+/** Get Inspired strip: Coit 16 / 8 / 10 lead as left, middle, right, then other jobs. */
 const MARQUEE_PHOTOS: readonly { src: string }[] = [
+  { src: `${COIT}/photo-16.jpg` },
+  { src: siteImages.services.landscapeCover },
+  { src: `${COIT}/photo-10.jpg` },
+  { src: `${CHURCH}/07.jpg` },
   { src: `${MANOR}/DJI_0139.JPG` },
   { src: `${BYRNES}/03.jpg` },
-  { src: `${COIT}/01.jpg` },
-  { src: `${CHURCH}/07.jpg` },
+  { src: `${CHURCH}/01.jpg` },
   { src: `${MANOR}/20200710_102617.jpg` },
   { src: `${BYRNES}/02.jpg` },
-  { src: `${COIT}/08.jpg` },
-  { src: `${CHURCH}/01.jpg` },
+  { src: `${CHURCH}/04.jpg` },
   { src: `${MANOR}/2018-04-28 11.17.28.jpg` },
   { src: `${BYRNES}/05.jpg` },
-  { src: `${COIT}/15.jpg` },
-  { src: `${CHURCH}/04.jpg` },
 ];
 
 export function PortfolioMarquee() {
