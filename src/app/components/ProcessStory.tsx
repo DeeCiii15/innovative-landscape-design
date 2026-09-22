@@ -18,7 +18,7 @@ const processCopy: Record<ProcessStoryFamily, { heading: string; lead: string }>
   },
   maintenance: {
     heading: "How we work",
-    lead: "New work starts with design and install. If the landscape is already in place, we pick up at maintain — on a cadence that fits the property.",
+    lead: "If the landscape is already in place, we pick up at maintain — on a cadence that fits the property.",
   },
 };
 

@@ -9,16 +9,16 @@ export function LogoHomeLink() {
       className="site-logo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] focus-visible:ring-offset-2"
       aria-label={`${siteConfig.name} home`}
     >
-      <span className="site-logo__mark" aria-hidden style={{ filter: "none" }}>
+      <span className="site-logo__mark">
         <Image
-          src="/images/logo-ild-oval.png"
+          src="/images/logo-lockup.png"
           alt=""
-          width={1472}
-          height={848}
-          sizes="88px"
+          width={3917}
+          height={2058}
+          sizes="(min-width: 1100px) 180px, 148px"
+          priority
         />
       </span>
-      <span className="site-logo__name">{siteConfig.name}</span>
     </Link>
   );
 }

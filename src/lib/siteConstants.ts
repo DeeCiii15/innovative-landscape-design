@@ -53,9 +53,11 @@ export const WORK_PATH = "/portfolio";
 export const WORK_LABEL = "Portfolio";
 
 export const CAREERS_PATH = "/careers";
+export const EMPLOYMENT_APPLICATION_HREF =
+  "/documents/innovative-landscape-employment-application.doc";
 
 /** Year the company started — used in schema and llms.txt. */
-export const FOUNDING_YEAR = 2007;
+export const FOUNDING_YEAR = 2005;
 export const LOGIN_PATH = "https://portal.golmn.com/login/4RF8cNCxVzu5-7VdjQqAqg";
 
 /** Google Business Profile for ILD Innovative Landscape Design, 2027 Rosedale St. */

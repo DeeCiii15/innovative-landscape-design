@@ -25,13 +25,13 @@ export const siteConfig = {
   shortName: "ILD",
   tagline: "Beautiful, functional landscapes in Florence, SC",
   description:
-    "Florence, SC landscape company for hardscapes, lighting, water features, irrigation, planting, and lawn care. Serving the Florence area for almost 20 years.",
+    "Florence, SC landscape company for hardscapes, lighting, water features, irrigation, planting, and lawn care. Serving the Florence area for more than 20 years.",
   url: CANONICAL_SITE_URL,
-  logo: "/images/logo-ild-oval.png",
+  logo: "/images/logo-lockup.png",
   heroImage: siteImages.coitSunroomLawn,
   heroImageAlt: "A striped backyard lawn and planting beds in front of a white sunroom",
   phone: "(843) 230-1036",
-  email: "Scott@ildsc.com",
+  email: "service@ildsc.com",
   address: "2027 Rosedale St, Florence, SC 29501",
   social: [
     { name: "Instagram", href: "https://www.instagram.com/ild_innovativelandscapedesign/" },
@@ -39,7 +39,7 @@ export const siteConfig = {
     { name: "LinkedIn", href: "https://www.linkedin.com/company/innovative-landscape-design" },
   ],
   location: "Florence, SC",
-  yearsServing: "almost 20",
+  yearsServing: "more than 20",
   openingHours: "Mon–Sun, 9:00 AM – 5:00 PM",
   heroHeadline: "Landscapes built for Florence",
   heroSubheadline:
@@ -48,7 +48,7 @@ export const siteConfig = {
   aboutWelcome: "Florence's premier landscape design company",
   aboutLead: "Who we are",
   aboutIntro:
-    "For nearly 20 years, we've helped homeowners and businesses throughout the Florence area plan, build, and care for outdoor spaces—from the first design through planting, hardscapes, lighting, and water features.",
+    "For more than 20 years, we've helped homeowners and businesses throughout the Florence area plan, build, and care for outdoor spaces—from the first design through planting, hardscapes, lighting, and water features.",
   aboutBody:
     "We design and build beautiful, functional landscapes with creative solutions and high-quality work. A professional, personal approach grounded in integrity and reliability is how we earn the privilege to be the landscape company you trust—and we aim for results that exceed expectations every time.",
   aboutValues:
@@ -82,7 +82,7 @@ export const siteConfig = {
     },
   ],
   servicesIntro:
-    "Innovative Landscape Design is a Florence, SC company that designs, installs, and maintains landscapes—planting, irrigation, hardscapes, outdoor lighting, and water features. We have served the Florence area for almost 20 years.",
+    "Innovative Landscape Design is a Florence, SC company that designs, installs, and maintains landscapes—planting, irrigation, hardscapes, outdoor lighting, and water features. We have served the Florence area for more than 20 years.",
   /** Compatibility shape for existing UI — prefer `services` from servicesData for new pages */
   services: services.map((s) => ({
     id: s.slug,

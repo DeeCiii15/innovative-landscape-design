@@ -5,6 +5,7 @@ import {
   FOUNDING_YEAR,
   GOOGLE_MAPS_URL,
   getSiteUrl,
+  LOGIN_PATH,
   SERVICE_AREAS,
   WORK_PATH,
 } from "@/lib/siteConstants";
@@ -38,6 +39,7 @@ function buildLlmsTxt() {
     `- Email: ${siteConfig.email}`,
     `- Address: ${siteConfig.address}`,
     `- Hours: ${siteConfig.openingHours}`,
+    `- Customer portal: ${LOGIN_PATH}`,
     `- Google Business Profile: ${GOOGLE_MAPS_URL}`,
     "",
     "## Service area",
@@ -67,7 +69,7 @@ function buildLlmsTxt() {
     `- [Home](${href("/")})`,
     `- [Contact](${href("/contact")})`,
     `- [Portfolio](${href(WORK_PATH)})`,
-    `- [Careers](${href(CAREERS_PATH)})`,
+    `- [Careers](${href(CAREERS_PATH)}): Download the employment application and email it to ${siteConfig.email}.`,
     "",
   ];
 

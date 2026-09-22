@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CtaSection } from "@/app/components/CtaSection";
+import { CustomerPortalNote } from "@/app/components/CustomerPortalNote";
 import { HubFeaturedWork } from "@/app/components/HubFeaturedWork";
 import { InnerPage } from "@/app/components/InnerPage";
 import { PageHero } from "@/app/components/PageHero";
@@ -68,6 +69,8 @@ export function AudienceHubPage({ hubId }: { hubId: string }) {
       {featured ? <HubFeaturedWork heading={hub.workHeading} item={featured} /> : null}
 
       <ProcessStory family={hub.family} />
+
+      <CustomerPortalNote />
 
       <CtaSection headline={ctaHeadline} />
     </InnerPage>

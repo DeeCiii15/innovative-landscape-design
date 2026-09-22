@@ -46,7 +46,7 @@ const SKIP =
   ".hero, .page-hero, .project-hero, .home-aerial, .site-header, .process-story, .photo-collage, .welcome-line-wrap, .service-split, .reveal, .nav-mega, .reviews__actions, .reviews__grid, .reviews__arrow, .trusted-by__item, .trusted-by__row, .trusted-by__viewport, .portfolio-marquee, .portfolio-marquee__band, .portfolio-marquee__head";
 
 const NO_TRANSFORM =
-  ".cta__panel, .cta-section, .reviews__window, .footer, .reviews--aerial";
+  ".cta__panel, .cta-section, .reviews__window, .footer, .reviews--aerial, .portal-note";
 
 function skipped(el: Element) {
   return Boolean(el.closest(SKIP));

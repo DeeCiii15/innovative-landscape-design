@@ -49,12 +49,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   icons: {
     icon: [
-      { url: "/brand/v9/icon-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/brand/v9/icon-48.png", type: "image/png", sizes: "48x48" },
-      { url: "/brand/v9/icon-512.png", type: "image/png", sizes: "512x512" },
-      { url: "/brand/v9/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/brand/v17/icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/v17/icon-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/brand/v17/icon-512.png", type: "image/png", sizes: "512x512" },
+      { url: "/brand/v17/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
     ],
-    apple: { url: "/brand/v9/apple-180.png", sizes: "180x180" },
+    apple: { url: "/brand/v17/apple-180.png", sizes: "180x180" },
   },
   openGraph: {
     ...homeSocial.openGraph,

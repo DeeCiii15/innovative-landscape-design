@@ -1,6 +1,7 @@
 import { AboutSection } from "./components/AboutSection";
 import { AudienceSplit } from "./components/AudienceSplit";
 import { CtaSection } from "./components/CtaSection";
+import { CustomerPortalNote } from "./components/CustomerPortalNote";
 import { Hero } from "./components/Hero";
 import { PortfolioMarquee } from "./components/PortfolioMarquee";
 import { ProcessStory } from "./components/ProcessStory";
@@ -14,6 +15,7 @@ export default function Home() {
       <AboutSection />
       <AudienceSplit />
       <ProcessStory family="company" />
+      <CustomerPortalNote compact />
       <PortfolioMarquee />
       <ReviewsSection />
       <CtaSection

@@ -212,8 +212,8 @@ export function SiteHeader() {
           <a
             href={LOGIN_PATH}
             className="nav-account"
-            aria-label="Log in"
-            title="Log in"
+            aria-label="Customer portal"
+            title="Customer portal"
             rel="noopener noreferrer"
           >
             <AccountIcon />
@@ -230,8 +230,8 @@ export function SiteHeader() {
           <a
             href={LOGIN_PATH}
             className="nav-account"
-            aria-label="Log in"
-            title="Log in"
+            aria-label="Customer portal"
+            title="Customer portal"
             rel="noopener noreferrer"
           >
             <AccountIcon />
@@ -309,6 +309,9 @@ export function SiteHeader() {
             </nav>
 
             <div className="mobile-nav__actions">
+              <a href={LOGIN_PATH} className="btn-secondary w-full py-3.5 text-base" rel="noopener noreferrer">
+                Customer portal
+              </a>
               <a href={`tel:${phoneDigits}`} className="btn-secondary w-full py-3.5 text-base" onClick={() => setMenuOpen(false)}>
                 <PhoneIcon />
                 {siteConfig.phone}

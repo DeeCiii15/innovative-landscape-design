@@ -2,10 +2,11 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { siteConfig } from "@/lib/siteConfig";
+import { FOUNDING_YEAR } from "@/lib/siteConstants";
 import { elementVisible, watchEnter } from "./enterView";
 
 const LETTER_STAGGER_MS = 42;
-const SINCE_TEXT = "Since 2007";
+const SINCE_TEXT = `Since ${FOUNDING_YEAR}`;
 
 function WriteInChars({ text, delay = 0 }: { text: string; delay?: number }) {
   let index = 0;

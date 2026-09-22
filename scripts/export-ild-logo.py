@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recolor the ILD Illustrator lockup to site greens and export web assets."""
+"""Export the original burgundy/tan ILD lockup and oval from the Illustrator raster."""
 
 from pathlib import Path
 
@@ -8,22 +8,15 @@ from PIL import Image, ImageDraw
 SRC = Path("/tmp/new logo 2022.ai.png")
 OUT_DIR = Path(__file__).resolve().parents[1] / "public" / "images"
 
-# Sampled from the raster
-BURGUNDY = (96.0, 33.0, 29.0)
-TAN = (227.0, 204.0, 176.0)
 WHITE = (255.0, 255.0, 255.0)
-
-# Site tokens: forest #0a3d10, gold-light #f1e5d9
-FOREST = (10.0, 61.0, 16.0)
-CREAM = (241.0, 229.0, 217.0)
-EPS = 8.0
 
 
 def dist2(p, q):
     return (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 + (p[2] - q[2]) ** 2
 
 
-def recolor_image(src: Image.Image) -> Image.Image:
+def knockout_white(src: Image.Image) -> Image.Image:
+    """Keep original burgundy/tan; make near-white pixels transparent."""
     src = src.convert("RGBA")
     pixels = src.load()
     w, h = src.size
@@ -32,23 +25,10 @@ def recolor_image(src: Image.Image) -> Image.Image:
 
     for y in range(h):
         for x in range(w):
-            r, g, b, _a = pixels[x, y]
-            p = (r, g, b)
-            d_b = dist2(p, BURGUNDY) ** 0.5
-            d_t = dist2(p, TAN) ** 0.5
-            d_w = dist2(p, WHITE) ** 0.5
-            w_b = 1.0 / (d_b + EPS)
-            w_t = 1.0 / (d_t + EPS)
-            w_w = 1.0 / (d_w + EPS)
-            total = w_b + w_t + w_w
-            nb, nt, nw = w_b / total, w_t / total, w_w / total
-            nr = nb * FOREST[0] + nt * CREAM[0] + nw * WHITE[0]
-            ng = nb * FOREST[1] + nt * CREAM[1] + nw * WHITE[1]
-            nb_ = nb * FOREST[2] + nt * CREAM[2] + nw * WHITE[2]
-            alpha = (1.0 - nw) * 255.0
-            if d_w < 18:
-                alpha *= d_w / 18.0
-            dest[x, y] = (int(nr), int(ng), int(nb_), int(max(0, min(255, alpha))))
+            r, g, b, a = pixels[x, y]
+            d_w = dist2((r, g, b), WHITE) ** 0.5
+            alpha = int(a * (d_w / 18.0)) if d_w < 18 else a
+            dest[x, y] = (r, g, b, max(0, min(255, alpha)))
     return out
 
 
@@ -70,7 +50,7 @@ def crop_ild_oval(lockup: Image.Image) -> Image.Image:
     w, h = lockup.size
     minx, miny, maxx, maxy = w, h, 0, 0
     found = False
-    # Cream fill lives in the top medallion. Ignore the main oval's cream
+    # Tan fill lives in the top medallion. Ignore the main oval's tan
     # stroke, which is much wider once the two shapes meet.
     scan_bottom = int(h * 0.36)
     max_span = int(w * 0.40)
@@ -80,7 +60,7 @@ def crop_ild_oval(lockup: Image.Image) -> Image.Image:
             r, g, b, a = px[x, y]
             if a < 40:
                 continue
-            if r > 200 and g > 188 and b > 165 and (r + g + b) > 590:
+            if r > 190 and g > 165 and b > 140 and (r + g + b) > 540:
                 cream_xs.append(x)
         if len(cream_xs) < 8:
             continue
@@ -93,7 +73,7 @@ def crop_ild_oval(lockup: Image.Image) -> Image.Image:
         miny = min(miny, y)
         maxy = max(maxy, y)
     if not found or maxx <= minx:
-        raise SystemExit("Could not locate cream ILD oval")
+        raise SystemExit("Could not locate tan ILD oval")
 
     # Lower rows overlap the main badge, so cream-span filtering stops
     # at the letter midline. Extend to the full medallion height.
@@ -125,7 +105,7 @@ def crop_ild_oval(lockup: Image.Image) -> Image.Image:
 
 
 def square_icon(mark: Image.Image, size: int = 512) -> Image.Image:
-    canvas = Image.new("RGBA", (size, size), (241, 229, 217, 255))
+    canvas = Image.new("RGBA", (size, size), (227, 204, 176, 255))
     pad = int(size * 0.08)
     inner = size - pad * 2
     ratio = mark.width / mark.height
@@ -141,19 +121,18 @@ def square_icon(mark: Image.Image, size: int = 512) -> Image.Image:
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     lockup_path = OUT_DIR / "logo-lockup.png"
-    if lockup_path.exists():
-        print("using existing lockup")
-        lockup = Image.open(lockup_path).convert("RGBA")
-    else:
-        print("recoloring…")
-        lockup = trim_transparent(recolor_image(Image.open(SRC)), pad=16)
-        lockup.save(lockup_path, "PNG", optimize=True)
+    print("exporting original burgundy lockup…")
+    lockup = trim_transparent(knockout_white(Image.open(SRC)), pad=16)
+    lockup.save(lockup_path, "PNG", optimize=True)
     print("lockup", lockup.size, lockup_path)
 
     mark = crop_ild_oval(lockup)
     mark_path = OUT_DIR / "logo-ild-mark.png"
     mark.save(mark_path, "PNG", optimize=True)
     print("mark", mark.size, mark_path)
+    oval_path = OUT_DIR / "logo-ild-oval.png"
+    mark.save(oval_path, "PNG", optimize=True)
+    print("oval", mark.size, oval_path)
 
     icon = square_icon(mark)
     icon_path = OUT_DIR / "logo-ild-icon.png"
