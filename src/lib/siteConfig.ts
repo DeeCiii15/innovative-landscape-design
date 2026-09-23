@@ -36,7 +36,6 @@ export const siteConfig = {
   social: [
     { name: "Instagram", href: "https://www.instagram.com/ild_innovativelandscapedesign/" },
     { name: "Facebook", href: "https://www.facebook.com/InnovativeLandscapeDesignLLC/" },
-    { name: "LinkedIn", href: "https://www.linkedin.com/company/innovative-landscape-design" },
   ],
   location: "Florence, SC",
   yearsServing: "more than 20",

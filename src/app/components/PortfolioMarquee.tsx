@@ -9,7 +9,7 @@ const BYRNES = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-byrnes
 const COIT = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-maintenance-coit-street`;
 const CHURCH = `${PROJECTS_IMAGES_PATH}/bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church`;
 
-/** Get Inspired strip: Coit 16 / 8 / 10 lead as left, middle, right, then other jobs. */
+/** Get Inspired strip: Coit 16 / landscape cover / 10 lead, then other jobs. */
 const MARQUEE_PHOTOS: readonly { src: string }[] = [
   { src: `${COIT}/photo-16.jpg` },
   { src: siteImages.services.landscapeCover },

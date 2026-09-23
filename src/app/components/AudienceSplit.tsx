@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { getHubsForAudience, type Audience } from "@/lib/audienceHubs";
-import { siteImages } from "@/lib/siteImages";
+import { projectImages, siteImages } from "@/lib/siteImages";
 import { elementVisible } from "./enterView";
 
 function canHoverOpen() {
@@ -32,8 +32,8 @@ const panes: {
     label: "Commercial services",
     prompt: "For businesses and HOAs",
     blurb: "Landscape project work and ongoing property care for offices, retail, HOAs, and other managed sites.",
-    image: siteImages.coitCourtyard,
-    imageAlt: "A brick courtyard with a stacked planter, palms, and seasonal color",
+    image: projectImages.manorAerial,
+    imageAlt: "Overhead view of The Manor putting greens, gazebo, and planted beds",
   },
 ];
 

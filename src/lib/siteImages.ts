@@ -33,6 +33,7 @@ export const siteImages = {
   coitPorchOverview: `${SITE_IMAGES_PATH}/coit-porch-overview.jpg`,
   coitLawnWalk: `${SITE_IMAGES_PATH}/coit-lawn-walk.jpg`,
   coitGardenLawn: `${SITE_IMAGES_PATH}/coit-garden-lawn.jpg`,
+  colorLawnFront: `${SITE_IMAGES_PATH}/color-lawn-front.jpg`,
   bedAerial: `${SITE_IMAGES_PATH}/bed-aerial.jpg`,
   services: {
     landscapeCover: `${SITE_IMAGES_PATH}/services/landscape-cover.jpg`,
@@ -63,6 +64,7 @@ export const projectImages = {
   manorCourtyard: `${MANOR}/2018-04-28 11.17.19.jpg`,
   manorPergola: `${MANOR}/2018-04-28 11.17.28.jpg`,
   manorGazebo: `${MANOR}/20200731_115952.jpg`,
+  manorGazeboWalk: `${MANOR}/Resized_20200623_151102.jpeg`,
   manorPuttingGarden: `${MANOR}/20200731_120008.jpg`,
   manorPatio: `${MANOR}/20200827_193300.jpg`,
   byrnesFountain: `${BYRNES}/03.jpg`,
@@ -76,4 +78,5 @@ export const projectImages = {
   coitAnnuals: `${COIT}/photo-03.jpg`,
   coitLawn: `${COIT}/photo-18.jpg`,
   churchWalks: `${CHURCH}/08.jpg`,
+  churchCourtyard: `${CHURCH}/07.jpg`,
 } as const;

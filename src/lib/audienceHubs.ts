@@ -1,5 +1,5 @@
 import { getServiceBySlug, type ServiceDef, type ServiceFamily } from "./servicesData";
-import { siteImages } from "./siteImages";
+import { projectImages, siteImages } from "./siteImages";
 
 export type Audience = "residential" | "commercial";
 export type HubFamily = "construction" | "maintenance";
@@ -208,8 +208,8 @@ export const audienceHubs: readonly AudienceHub[] = [
     metaTitle: "Commercial Landscape Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Commercial landscape services in Florence, SC for businesses, HOAs, and property managers—hardscapes, lighting, irrigation, planting, and drainage.",
-    galleryImage: siteImages.coitDriveIsland,
-    galleryImageAlt: "A planted island with seasonal color beside a brick drive",
+    galleryImage: projectImages.churchCourtyard,
+    galleryImageAlt: "A curved paver walk through mulched beds at a commercial courtyard",
     aboutImage: siteImages.coitCourtyard,
     aboutImageAlt: "A brick courtyard with a stone planter, palms, and seasonal color",
     serviceSlugs: CONSTRUCTION_SERVICE_SLUGS,
@@ -250,8 +250,8 @@ export const audienceHubs: readonly AudienceHub[] = [
     metaTitle: "Property Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Commercial landscape maintenance in Florence, SC for businesses and HOAs: lawn maintenance, garden care, seasonal cleanup, and seasonal color.",
-    galleryImage: siteImages.coitLawnFramed,
-    galleryImageAlt: "A striped lawn framed by trees, shrubs, and a crepe myrtle",
+    galleryImage: projectImages.manorGazeboWalk,
+    galleryImageAlt: "A maintained garden walk beside a gazebo and putting green",
     aboutImage: siteImages.coitSunroomLawn,
     aboutImageAlt: "A maintained lawn and planting beds in front of a white sunroom",
     serviceSlugs: MAINTENANCE_SERVICE_SLUGS,

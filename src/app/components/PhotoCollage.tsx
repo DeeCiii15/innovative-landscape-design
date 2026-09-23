@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { PROJECTS_IMAGES_PATH } from "@/lib/siteImages";
+import { PROJECTS_IMAGES_PATH, siteImages } from "@/lib/siteImages";
 
 const COIT = `${PROJECTS_IMAGES_PATH}/florence-sc-residential-landscape-maintenance-coit-street`;
 
@@ -20,8 +20,8 @@ const stills = [
   },
   {
     id: "mid",
-    src: `${COIT}/photo-08.jpg`,
-    alt: "A garden path and flowering beds opening onto a lawn",
+    src: siteImages.colorLawnFront,
+    alt: "A striped front lawn with colorful planting beds in front of a brick home",
     role: "middle" as const,
     rotate: 0,
     delay: "0.06s",

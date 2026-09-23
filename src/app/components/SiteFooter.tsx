@@ -39,18 +39,9 @@ function FacebookIcon() {
   );
 }
 
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="size-5" aria-hidden>
-      <path d="M6.5 9.5H3.8V20h2.7V9.5zM5.15 4A1.6 1.6 0 1 0 5.16 7.2 1.6 1.6 0 0 0 5.15 4zM20.2 13.3c0-3.1-1.7-4.6-3.9-4.6-1.8 0-2.6 1-3.05 1.7V9.5H10.6c0 1.8 0 10.5 0 10.5h2.65v-5.9c0-.3 0-.6.1-.86.25-.6.82-1.22 1.78-1.22 1.25 0 1.75.95 1.75 2.35V20H20.2v-6.7z" />
-    </svg>
-  );
-}
-
 const socialIcons = {
   Instagram: InstagramIcon,
   Facebook: FacebookIcon,
-  LinkedIn: LinkedInIcon,
 } as const;
 
 export function SiteFooter() {
