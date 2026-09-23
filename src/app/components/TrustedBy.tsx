@@ -2,7 +2,7 @@ const companies = [
   { name: "Raldex Hospitality Inc.", src: "/images/trusted/raldex.png", variant: "mark" },
   { name: "Hilton Hotels", src: "/images/trusted/hilton.svg", variant: "stacked" },
   { name: "Jiffy Lube", src: "/images/trusted/jiffy-lube.png", variant: "jiffy" },
-  { name: "Olive Garden", src: "/images/trusted/olive-garden.svg", variant: "stacked" },
+  { name: "Lifetime Hearing Services", src: "/images/trusted/lifetime-hearing.png", variant: "stacked" },
   { name: "CVS", src: "/images/trusted/cvs.svg", variant: "wide" },
   { name: "Chick-fil-A", src: "/images/trusted/chick-fil-a.svg", variant: "stacked" },
   { name: "First Bank", src: "/images/trusted/first-bank.png", variant: "stacked" },
