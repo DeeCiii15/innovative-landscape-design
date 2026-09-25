@@ -62,10 +62,9 @@ export const LOGIN_PATH = "https://portal.golmn.com/login/4RF8cNCxVzu5-7VdjQqAqg
 
 /** Google Business Profile for ILD Innovative Landscape Design, 2027 Rosedale St. */
 export const GOOGLE_PLACE_CID = "11877035272279370657";
-export const GOOGLE_FEATURE_ID = "0x88556134f75ee591:0xa4d3b4a724ff2ba1";
 export const GOOGLE_MAPS_URL = `https://www.google.com/maps?cid=${GOOGLE_PLACE_CID}`;
 export const GOOGLE_REVIEWS_URL = GOOGLE_MAPS_URL;
-export const GOOGLE_WRITE_REVIEW_URL = `https://www.google.com/search?q=ILD+Innovative+Landscape+Design+Florence&lrd=${GOOGLE_FEATURE_ID},3`;
+export const GOOGLE_WRITE_REVIEW_URL = "https://g.page/r/CaEr_ySntNOkEBM/review";
 
 export const SERVICE_AREAS = [
   "Florence",
