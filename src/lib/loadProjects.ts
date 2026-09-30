@@ -11,7 +11,7 @@ import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { isServiceSlug, services } from "./servicesData";
-import { siteImages } from "./siteImages";
+import { projectImages, siteImages } from "./siteImages";
 import type { WorkItem } from "./workData";
 import type { ProjectPhoto, PropertyType } from "@/projects/types";
 
@@ -379,8 +379,8 @@ export function getProjectPageHero(item: WorkItem): { src: string; alt: string }
       alt: "Stepping-stone garden path through lush planting to a white Florence home",
     },
     "bennettsville-sc-commercial-landscape-bennettsville-first-presbyterian-church": {
-      src: siteImages.services.hardscapesCover,
-      alt: "A brick courtyard with planters and planting beds",
+      src: projectImages.churchCourtyard,
+      alt: "The front lawn and curved walk in front of a stone church",
     },
     "florence-sc-commercial-landscape-the-manor": {
       src: siteImages.gardenEstate,

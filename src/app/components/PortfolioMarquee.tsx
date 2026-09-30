@@ -14,7 +14,7 @@ const MARQUEE_PHOTOS: readonly { src: string }[] = [
   { src: `${COIT}/photo-16.jpg` },
   { src: siteImages.services.landscapeCover },
   { src: `${COIT}/photo-10.jpg` },
-  { src: `${CHURCH}/07.jpg` },
+  { src: `${CHURCH}/02.jpg` },
   { src: `${MANOR}/DJI_0139.JPG` },
   { src: `${BYRNES}/03.jpg` },
   { src: `${CHURCH}/01.jpg` },

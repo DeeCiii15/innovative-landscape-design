@@ -209,7 +209,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     metaDescription:
       "Commercial landscape services in Florence, SC for businesses, HOAs, and property managers—hardscapes, lighting, irrigation, planting, and drainage.",
     galleryImage: projectImages.churchCourtyard,
-    galleryImageAlt: "A curved paver walk through mulched beds at a commercial courtyard",
+    galleryImageAlt: "The front lawn and curved walk in front of a stone church",
     aboutImage: siteImages.coitCourtyard,
     aboutImageAlt: "A brick courtyard with a stone planter, palms, and seasonal color",
     serviceSlugs: CONSTRUCTION_SERVICE_SLUGS,
@@ -250,8 +250,8 @@ export const audienceHubs: readonly AudienceHub[] = [
     metaTitle: "Property Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "Commercial landscape maintenance in Florence, SC for businesses and HOAs: lawn maintenance, garden care, seasonal cleanup, and seasonal color.",
-    galleryImage: projectImages.manorGazeboWalk,
-    galleryImageAlt: "A maintained garden walk beside a gazebo and putting green",
+    galleryImage: projectImages.churchCommercialAerial,
+    galleryImageAlt: "Overhead view of maintained church grounds with curved walks and lawn panels",
     aboutImage: siteImages.coitSunroomLawn,
     aboutImageAlt: "A maintained lawn and planting beds in front of a white sunroom",
     serviceSlugs: MAINTENANCE_SERVICE_SLUGS,

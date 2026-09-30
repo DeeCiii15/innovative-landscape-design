@@ -77,6 +77,7 @@ export const projectImages = {
   coitIsland: `${COIT}/photo-27.jpg`,
   coitAnnuals: `${COIT}/photo-03.jpg`,
   coitLawn: `${COIT}/photo-18.jpg`,
-  churchWalks: `${CHURCH}/08.jpg`,
-  churchCourtyard: `${CHURCH}/07.jpg`,
+  churchWalks: `${CHURCH}/07.jpg`,
+  churchCourtyard: "/images/site/church-landscape-hero.jpg",
+  churchCommercialAerial: "/images/site/church-commercial-aerial.jpg",
 } as const;

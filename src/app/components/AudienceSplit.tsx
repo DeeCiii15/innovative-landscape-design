@@ -32,8 +32,8 @@ const panes: {
     label: "Commercial services",
     prompt: "For businesses and HOAs",
     blurb: "Landscape project work and ongoing property care for offices, retail, HOAs, and other managed sites.",
-    image: projectImages.manorAerial,
-    imageAlt: "Overhead view of The Manor putting greens, gazebo, and planted beds",
+    image: projectImages.churchCommercialAerial,
+    imageAlt: "Overhead view of a church courtyard with curved walks and lawn panels",
   },
 ];
 
