@@ -4,6 +4,7 @@
  * 2. Drop jpg/png/webp files (`01.jpg`, `02.jpg`, or `cover.jpg`). Large photos are
  *    compressed automatically (`npm run optimize-images`, also on `npm run dev` / `npm run build`).
  * 3. Tag `serviceSlugs` with the service pages this job should appear on.
+ *    Optional `serviceCovers` picks the tile photo on a service page.
  *    Residential jobs need `neighborhood`. Commercial jobs need `businessName`.
  * Folders that start with `_` are ignored.
  */
@@ -55,6 +56,7 @@ type ProjectJson = {
   serviceSlugs: string[];
   featuredServiceSlug?: string;
   cover?: string;
+  serviceCovers?: Record<string, string>;
   description: string;
   metaDescription?: string;
   story?: string;
@@ -121,6 +123,29 @@ function listImageFiles(dir: string): string[] {
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
+function parseServiceCovers(
+  value: unknown,
+  serviceSlugs: string[],
+  folder: string,
+): Record<string, string> | undefined {
+  if (value === undefined) return undefined;
+  if (!isRecord(value)) {
+    throw new Error(`Invalid project.json in ${folder}: serviceCovers must be an object`);
+  }
+  const covers: Record<string, string> = {};
+  for (const [slug, file] of Object.entries(value)) {
+    if (!isServiceSlug(slug) || !serviceSlugs.includes(slug)) {
+      throw new Error(`Invalid project.json in ${folder}: serviceCovers key "${slug}" must be one of serviceSlugs`);
+    }
+    const name = asString(file);
+    if (!name) {
+      throw new Error(`Invalid project.json in ${folder}: serviceCovers.${slug} must be a photo filename`);
+    }
+    covers[slug] = name;
+  }
+  return Object.keys(covers).length > 0 ? covers : undefined;
+}
+
 function parseProjectJson(raw: unknown, folder: string): ProjectJson {
   if (!isRecord(raw)) throw new Error(`Invalid project.json in ${folder}: expected an object`);
 
@@ -144,6 +169,8 @@ function parseProjectJson(raw: unknown, folder: string): ProjectJson {
   if (unknownSlugs.length > 0) {
     throw new Error(`Invalid project.json in ${folder}: unknown serviceSlugs (${unknownSlugs.join(", ")})`);
   }
+
+  const serviceCovers = parseServiceCovers(raw.serviceCovers, serviceSlugs, folder);
 
   const slug = asString(raw.slug) ?? folder;
   if (slug !== folder) {
@@ -179,6 +206,7 @@ function parseProjectJson(raw: unknown, folder: string): ProjectJson {
     serviceSlugs,
     featuredServiceSlug: asString(raw.featuredServiceSlug),
     cover: asString(raw.cover),
+    serviceCovers,
     description,
     metaDescription: asString(raw.metaDescription),
     story: asString(raw.story),
@@ -249,6 +277,11 @@ function loadProjectFolder(folder: string): WorkItem {
     console.warn(`Cover ${json.cover} is missing in ${folder}; using the first available photo`);
   }
   const cover = photos.find((photo) => photo.file === coverFile) ?? photos[0];
+  for (const [serviceSlug, file] of Object.entries(json.serviceCovers ?? {})) {
+    if (!photos.some((photo) => photo.file === file)) {
+      console.warn(`serviceCovers.${serviceSlug} file ${file} is missing in ${folder}`);
+    }
+  }
 
   const featuredServiceSlug = json.featuredServiceSlug ?? json.serviceSlugs[0];
   if (!json.serviceSlugs.includes(featuredServiceSlug)) {
@@ -274,6 +307,7 @@ function loadProjectFolder(folder: string): WorkItem {
     serviceSlugs: json.serviceSlugs,
     featuredServiceSlug,
     photos,
+    serviceCovers: json.serviceCovers,
     cover: cover ?? {
       file: "",
       src: "",
@@ -352,6 +386,9 @@ export function getProjectGalleryImages(item: WorkItem, serviceSlug?: string): P
 
 export function getProjectCover(item: WorkItem, serviceSlug?: string): ProjectPhoto {
   if (serviceSlug) {
+    const coverFile = item.serviceCovers?.[serviceSlug];
+    const serviceCover = coverFile ? item.photos.find((photo) => photo.file === coverFile) : undefined;
+    if (serviceCover) return serviceCover;
     const tagged = item.photos.filter((photo) => photo.serviceSlugs?.includes(serviceSlug));
     if (tagged[0]) return tagged[0];
   }

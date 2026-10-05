@@ -20,6 +20,8 @@ export type WorkItem = {
   featuredServiceSlug: string;
   photos: ProjectPhoto[];
   cover: ProjectPhoto;
+  /** Tile photo to use on a service page, keyed by service slug. */
+  serviceCovers?: Readonly<Record<string, string>>;
   /** Display label for cards (neighborhood or business name). */
   locationLabel: string;
   type: string;
