@@ -386,6 +386,10 @@ export function getProjectPageHero(item: WorkItem): { src: string; alt: string }
       src: siteImages.gardenEstate,
       alt: "Estate garden with seasonal color, palms, and a brick walk",
     },
+    "florence-sc-residential-landscape-brigadoone": {
+      src: siteImages.brigadooneHero,
+      alt: "A brick home at night with landscape lighting on the facade, entry, and front lawn in Brigadoone",
+    },
   };
 
   return (

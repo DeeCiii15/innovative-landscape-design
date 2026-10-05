@@ -35,6 +35,7 @@ export const siteImages = {
   coitGardenLawn: `${SITE_IMAGES_PATH}/coit-garden-lawn.jpg`,
   colorLawnFront: `${SITE_IMAGES_PATH}/color-lawn-front.jpg`,
   bedAerial: `${SITE_IMAGES_PATH}/bed-aerial.jpg`,
+  brigadooneHero: `${SITE_IMAGES_PATH}/brigadoone-hero.jpg`,
   services: {
     landscapeCover: `${SITE_IMAGES_PATH}/services/landscape-cover.jpg`,
     hardscapesCover: `${SITE_IMAGES_PATH}/services/hardscapes-cover.jpg`,
