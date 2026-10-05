@@ -39,6 +39,7 @@ export const siteImages = {
     landscapeCover: `${SITE_IMAGES_PATH}/services/landscape-cover.jpg`,
     hardscapesCover: `${SITE_IMAGES_PATH}/services/hardscapes-cover.jpg`,
     lightingCover: `${SITE_IMAGES_PATH}/services/lighting-cover.jpg`,
+    lightingHero: `${SITE_IMAGES_PATH}/services/lighting-house-hero.jpg`,
     waterFeaturesCover: `${SITE_IMAGES_PATH}/services/water-features-cover.jpg`,
     hardscapes: `${SITE_IMAGES_PATH}/services/hardscapes.jpg`,
     lighting: `${SITE_IMAGES_PATH}/services/lighting.jpg`,

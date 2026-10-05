@@ -27,8 +27,8 @@ export const SERVICE_HIGHLIGHTS = {
     body: "We install smart irrigation controllers based on the needs of each client. These allow remote control and adjustment of watering schedules and can make it easier for us to help customers manage irrigation settings.",
   },
   castLighting: {
-    heading: "CAST landscape lighting",
-    body: "We are certified installers for CAST Landscape Lighting systems and typically install CAST systems because of their quality, durability, and professional-grade construction.",
+    heading: "Do you install low-voltage CAST lighting?",
+    body: "We are certified CAST Landscape Lighting installers and typically install their low-voltage systems for the quality and durability of the fixtures. Wiring, the transformer, and the controls are part of that system.",
   },
   clifRock: {
     heading: "ClifRock certified installer",
@@ -58,6 +58,8 @@ export type ServiceDef = {
   /** Second paragraph: why the service matters on the property. */
   benefits?: string;
   sections: readonly ServiceSection[];
+  /** Label above the included-work list. Defaults to "What's included". */
+  includesHeading?: string;
   bullets: readonly string[];
   tagline: string;
   ctaHeadline: string;
@@ -289,31 +291,44 @@ export const services: ServiceDef[] = [
     family: "construction",
     workCategory: "outdoor-lighting",
     eyebrow: "CAST certified",
-    headline: "Light architecture,",
-    headlineAccent: "paths, and trees",
+    headline: "Landscape lighting in",
+    headlineAccent: "Florence",
     intro:
       "Landscape lighting is designed for how the property should look and feel after dark—architecture, plantings, walkways, trees, and outdoor living areas.",
-    body: "Landscape lighting in Florence, SC is designed for how the property should look and feel after dark—architecture, trees, walkways, and outdoor living areas. We evaluate the site, place fixtures, install wiring and controls, then aim everything so the light shows the landscape instead of washing the windows.",
+    body: "Landscape lighting in Florence, SC is outdoor lighting designed for how the property should look and feel after dark—architecture, trees, walkways, and outdoor living areas. We evaluate the site and place fixtures so the light shows the landscape instead of washing the windows.",
     benefits:
-      "The property is safer to walk at night, easier to welcome guests, and more useful after sunset. Aimed lighting also adds curb appeal without the glare of generic flood lights.",
+      "The property is safer to walk at night, easier to welcome guests, and more useful after sunset. Shorter days are when that matters. A permanent system is what you use after dark through the holidays, without the glare of generic flood lights.",
+    includesHeading: "Frequently asked questions",
     sections: [
       {
-        title: "Walkways and safety",
-        body: "Path and entrance lighting so residents and visitors can navigate the property after dark.",
+        title: "What do you light along paths and at the entrance?",
+        body: "Fixtures along walks and at the entrance so residents and visitors can navigate the property after dark.",
       },
       {
-        title: "Architecture and trees",
-        body: "Uplighting and accent fixtures aimed to show the house, canopy, and structure—not a glare in the windows.",
+        title: "How do you light the house and trees?",
+        body: "Accent fixtures aimed at the architecture and canopy, so the light shows the structure instead of glaring in the windows.",
       },
       {
-        title: "Outdoor living areas",
-        body: "Lighting for patios, kitchens, and gathering spaces so the landscape you built is usable at night.",
+        title: "Do you light patios and gathering areas?",
+        body: "Lighting for patios, kitchens, and the places you sit, so the landscape is usable at night.",
+      },
+      {
+        title: "How are the fixtures wired and aimed?",
+        body: "The fixtures go in as one system. After they are installed, we aim them so the light falls on the architecture, trees, and walks instead of washing the windows.",
+      },
+      {
+        title: "Where do you install landscape lighting?",
+        body: "We install landscape lighting in Florence, Quinby, Effingham, Timmonsville, Darlington, and Lake City.",
+      },
+      {
+        title: "Why is fall a good time to install landscape lighting?",
+        body: "The days get shorter, and the yard is used after dark. Installing in the fall puts a permanent system in place for evenings and gatherings through the holidays.",
       },
     ],
     bullets: [
       "Certified CAST Landscape Lighting installer.",
-      "Wiring, fixtures, transformers, and controls installed as a system.",
-      "Fixtures aimed and adjusted after install.",
+      "Path lights, uplighting, and patio lighting planned as one system.",
+      "Wiring, transformer, and controls installed, then fixtures aimed.",
     ],
     tagline: "Professional-grade lighting, aimed correctly.",
     ctaHeadline: "Want your landscape to work after dark?",
@@ -321,10 +336,10 @@ export const services: ServiceDef[] = [
     metaTitle: "Landscape Lighting in Florence, SC | Innovative Landscape Design",
     metaDescription:
       "CAST certified landscape lighting in Florence, SC. Fixture design, wiring, and aiming for architecture, walkways, trees, and outdoor living.",
-    galleryImage: siteImages.services.lightingNight,
-    galleryImageAlt: "Landscape lighting on trees, walks, and a stone water feature at night",
-    heroImage: siteImages.gardenPath,
-    heroImageAlt: "A garden path through trees and planting beds after the landscape is in",
+    galleryImage: siteImages.services.lightingHero,
+    galleryImageAlt: "A brick home at night with landscape lighting on the lawn, entry, and trees",
+    heroImage: siteImages.services.lightingHero,
+    heroImageAlt: "A brick home at night with landscape lighting on the lawn, entry, and trees",
     aboutImage: siteImages.services.lightingNight,
     aboutImageAlt: "Uplighted trees and a lit water feature in a courtyard after dark",
     icon: "lighting",

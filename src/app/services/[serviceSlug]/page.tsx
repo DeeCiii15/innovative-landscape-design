@@ -157,6 +157,12 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
   const hubLink = getServiceHubLink(service.family, from);
   const fromHubId = typeof from === "string" ? from : from?.[0];
   const hero = serviceHero(service);
+  const scrollPhoto = service.slug === "outdoor-lighting";
+  const moduleMedia = (
+    <div className="service-module__media relative">
+      <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 900px) 44vw, 100vw" className="object-cover" />
+    </div>
+  );
 
   return (
     <InnerPage
@@ -169,7 +175,7 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
         />
       }
     >
-      <section className="service-module">
+      <section className={scrollPhoto ? "service-module service-module--scroll-photo" : "service-module"}>
         <div className="container-main">
           <div className="service-module__grid">
             <div className="service-module__copy">
@@ -179,7 +185,7 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
 
               {included.length > 0 ? (
                 <div className="service-module__includes">
-                  <h3 className="service-module__includes-heading">What's included</h3>
+                  <h3 className="service-module__includes-heading">{service.includesHeading ?? "What's included"}</h3>
                   <ul className="service-module__list">
                     {included.map((item) => (
                       <IncludeItem
@@ -207,15 +213,7 @@ export default async function ServicePage({ params, searchParams }: ServicePageP
               </nav>
             </div>
 
-            <div className="service-module__media relative">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(min-width: 900px) 44vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+            {scrollPhoto ? <div className="service-module__media-frame">{moduleMedia}</div> : moduleMedia}
           </div>
         </div>
       </section>
