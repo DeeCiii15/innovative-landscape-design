@@ -93,6 +93,20 @@ export function ContactForm() {
       </div>
 
       <div>
+        <label htmlFor="address" className="mb-1.5 block text-sm font-semibold text-[var(--color-ink)]">
+          Address
+        </label>
+        <input
+          id="address"
+          name="address"
+          type="text"
+          autoComplete="street-address"
+          placeholder="Street, city"
+          className={inputClass}
+        />
+      </div>
+
+      <div>
         <label htmlFor="message" className="mb-1.5 block text-sm font-semibold text-[var(--color-ink)]">
           Message
         </label>
