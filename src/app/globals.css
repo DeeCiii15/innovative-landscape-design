@@ -4977,9 +4977,14 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
+  margin: 0;
+  font: inherit;
+  letter-spacing: normal;
+  color: inherit;
 }
 
 .welcome-line {
+  display: block;
   margin: 0 auto;
   max-width: 12em;
   text-align: center;
@@ -4992,6 +4997,7 @@ body {
 }
 
 .welcome-line__since {
+  display: block;
   margin: 0;
   text-align: center;
   font-family: var(--font-serif-face), ui-serif, Georgia, "Times New Roman", serif;

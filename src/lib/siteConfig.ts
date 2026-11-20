@@ -44,7 +44,7 @@ export const siteConfig = {
   heroSubheadline:
     "We design, install, and maintain landscapes in Florence—planting, hardscapes, lighting, water features, and irrigation.",
   featuredBeforeAfterId: "yard-redesign",
-  aboutWelcome: "Florence's premier landscape design company",
+  aboutWelcome: "Florence's premier landscaper",
   aboutLead: "Who we are",
   aboutIntro:
     "For more than 20 years, we've helped homeowners and businesses throughout the Florence area plan, build, and care for outdoor spaces—from the first design through planting, hardscapes, lighting, and water features.",

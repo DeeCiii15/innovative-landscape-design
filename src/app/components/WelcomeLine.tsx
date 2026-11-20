@@ -46,7 +46,7 @@ function WriteInChars({ text, delay = 0 }: { text: string; delay?: number }) {
 }
 
 export function WelcomeLine() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLHeadingElement>(null);
   const [phase, setPhase] = useState<"idle" | "waiting" | "inview">("idle");
   const title = siteConfig.aboutWelcome;
   const sinceDelay = title.length * LETTER_STAGGER_MS + 120;
@@ -66,19 +66,20 @@ export function WelcomeLine() {
 
   return (
     <div className="welcome-line-wrap">
-      <div
+      <h1
         ref={ref}
         className={`welcome-line-block${phase === "waiting" ? " is-waiting" : ""}${phase === "inview" ? " is-inview" : ""}`}
       >
-        <p className="welcome-line">
-          <span className="sr-only">{title}</span>
+        <span className="sr-only">
+          {title} {SINCE_TEXT}
+        </span>
+        <span className="welcome-line">
           <WriteInChars text={title} />
-        </p>
-        <p className="welcome-line__since">
-          <span className="sr-only">{SINCE_TEXT}</span>
+        </span>
+        <span className="welcome-line__since">
           <WriteInChars text={SINCE_TEXT} delay={sinceDelay} />
-        </p>
-      </div>
+        </span>
+      </h1>
     </div>
   );
 }

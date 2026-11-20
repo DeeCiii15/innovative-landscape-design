@@ -12,9 +12,9 @@ export function Hero() {
 
       <div className="container-main hero__inner">
         <div className="section-reveal flex flex-1 flex-col items-center justify-center text-center">
-          <h1 className="heading-hero hero__headline">
+          <p className="heading-hero hero__headline">
             Landscapes built for <em className="hero__place">Florence</em>
-          </h1>
+          </p>
         </div>
       </div>
     </section>
