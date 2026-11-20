@@ -40,7 +40,7 @@ export function JsonLdLocalBusiness() {
       "@type": "City",
       name: city,
     })),
-    openingHours: "Mo-Su 09:00-17:00",
+    openingHours: "Mo-Fr 09:00-17:00",
     sameAs: [GOOGLE_MAPS_URL, ...siteConfig.social.map((profile) => profile.href)],
     hasOfferCatalog: {
       "@type": "OfferCatalog",

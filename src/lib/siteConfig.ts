@@ -39,7 +39,7 @@ export const siteConfig = {
   ],
   location: "Florence, SC",
   yearsServing: "more than 20",
-  openingHours: "Mon–Sun, 9:00 AM – 5:00 PM",
+  openingHours: "Mon–Fri, 9:00 AM – 5:00 PM",
   heroHeadline: "Landscapes built for Florence",
   heroSubheadline:
     "We design, install, and maintain landscapes in Florence—planting, hardscapes, lighting, water features, and irrigation.",

@@ -103,18 +103,26 @@ export const services: ServiceDef[] = [
     headline: "Improve the landscape",
     headlineAccent: "you already have",
     intro:
-      "Landscape enhancements improve what is already there—beds, trees, shrubs, edging, and planting—without requiring a full-yard renovation.",
-    body: "Landscape enhancements in Florence, SC improve the planting you already have—beds, trees, shrubs, edging, and new plants—without tearing out a finished yard. We look at what is working, what is tired, and what the property needs from the street and from the house, then install the plant and bed work as one job. New lawns and tired turf are a separate service: turf renovation and installation.",
+      "Landscape enhancements improve what is already there—beds, trees, shrubs, bed edging, decorative rock, and planting—without requiring a full-yard renovation.",
+    body: "Landscape enhancements in Florence, SC improve the planting you already have—beds, trees, shrubs, bed edging, decorative rock, and new plants—without tearing out a finished yard. We look at what is working, what is tired, and what the property needs from the street and from the house, then install the plant and bed work as one job. New lawns and tired turf are a separate service: turf renovation and installation.",
     benefits:
       "The result is a landscape that looks more complete and is easier to live with: stronger curb appeal, healthier plants in soil that can actually support them, and updates you can enjoy without the cost or disruption of a full-yard rebuild.",
     sections: [
       {
         title: "Flower beds and planting",
-        body: "We lay out and install beds, plants, and shrubs—including soil prep, edging, and mulch so new planting looks settled in from day one.",
+        body: "We lay out and install beds, plants, and shrubs, with soil prep and mulch so new planting looks settled in from day one.",
+      },
+      {
+        title: "Bed edging",
+        body: "Landscape bed edging separates the bed from the lawn or walk and keeps mulch in place. We set the edge as part of the planting job, or redefine an existing edge when the bed is already there.",
       },
       {
         title: "Trees and shrubs",
         body: "New trees and shrubs are placed for scale, screening, and long-term health—not just for how they look on install day.",
+      },
+      {
+        title: "Decorative rock",
+        body: "Rock landscaping uses decorative rock in beds and around planting where mulch is not the right finish. We place it so the bed still reads as part of the yard.",
       },
       {
         title: "Updates without a teardown",
@@ -131,7 +139,7 @@ export const services: ServiceDef[] = [
     ctaButton: "Request a free estimate",
     metaTitle: "Landscape Enhancements in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Landscape enhancements in Florence, SC: flower beds, trees, shrubs, and planting updates without a full renovation, from Innovative Landscape Design.",
+      "Landscape enhancements in Florence, SC: flower beds, bed edging, decorative rock, trees, shrubs, and planting updates without a full renovation.",
     galleryImage: siteImages.coitLawnFramed,
     galleryImageAlt: "A striped lawn framed by trees, shrubs, and a crepe myrtle",
     icon: "landscaping",
@@ -149,8 +157,8 @@ export const services: ServiceDef[] = [
     headline: "New turf,",
     headlineAccent: "installed to last",
     intro:
-      "Turf renovation and installation is the lawn-build side of the work: evaluate the existing turf, correct the soil and grade, install sod, and check irrigation so the new lawn can establish.",
-    body: "Turf renovation and sod installation in Florence, SC is the lawn-build side of the landscape: we evaluate the existing turf and soil, correct grade issues that keep grass from taking, then install sod so the new lawn has a fair start. Ongoing mowing and turf treatments after install are lawn maintenance and turf care, not this service.",
+      "Turf renovation and installation is the lawn-build side of the work, including lawn replacement: evaluate the existing turf, correct the soil and grade, install sod, and check irrigation so the new lawn can establish.",
+    body: "Turf renovation and sod installation in Florence, SC is the lawn-build side of the landscape. Lawn replacement starts when the existing turf has to come out: we evaluate the soil, correct grade issues that keep grass from taking, then install sod so the new lawn has a fair start. Ongoing mowing and turf treatments after install are lawn maintenance and turf care, not this service.",
     benefits:
       "A rebuilt lawn changes how the whole property looks and how it holds up in the Pee Dee heat. Even coverage, a grade that sheds water, and irrigation that can actually reach the turf mean you are not fighting bare spots and runoff after the crew leaves.",
     sections: [
@@ -159,8 +167,8 @@ export const services: ServiceDef[] = [
         body: "We prep the soil, set the grade, and install sod so the new lawn sits on a surface that can hold it. Irrigation is checked so the turf can take after install.",
       },
       {
-        title: "Turf renovation",
-        body: "When a lawn is failing, we remove the tired turf, correct the grade, and rebuild it with soil prep, sod, and irrigation—rather than asking worn grass to recover on its own.",
+        title: "Lawn replacement",
+        body: "Lawn replacement is for a lawn that is failing. We remove the tired turf, correct the grade, and rebuild it with soil prep, sod, and an irrigation check, rather than asking worn grass to recover on its own.",
       },
       {
         title: "Establishment",
@@ -177,7 +185,7 @@ export const services: ServiceDef[] = [
     ctaButton: "Request a free estimate",
     metaTitle: "Turf Renovation and Installation in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Turf renovation and sod installation in Florence, SC. Soil prep, grading, sod, and irrigation checks from Innovative Landscape Design.",
+      "Turf renovation, lawn replacement, and sod installation in Florence, SC. Soil prep, grading, sod, and irrigation checks from Innovative Landscape Design.",
     galleryImage: siteImages.coitSunroomLawn,
     galleryImageAlt: "A striped lawn after turf work, with planting beds and a white sunroom",
     icon: "landscaping",
@@ -195,18 +203,30 @@ export const services: ServiceDef[] = [
     headline: "Patios, walks, walls,",
     headlineAccent: "and fire features",
     intro:
-      "Hardscapes are the built outdoor rooms—patios, walkways, steps, walls, and fire features set on a properly prepared base so they drain and last.",
-    body: "Hardscapes in Florence, SC are the built outdoor rooms—patios, walkways, steps, walls, and fire features—set on a prepared base so they drain and last in local weather. We plan layout and elevations first, then excavate, compact the base, and install pavers, natural stone, or walls as part of the same job. Outdoor kitchens are a related build when you want cooking and gathering in the same space.",
+      "Hardscapes are the built outdoor rooms—patio design, walkways, steps, retaining walls, and fire features—set on a prepared base so they drain and last.",
+    body: "Hardscapes in Florence, SC are the built outdoor rooms—patios, walkways, steps, walls, and fire features—set on a prepared base so they drain and last in local weather. Patio design and the wall layout come first. Then we excavate, compact the base, and install pavers, natural stone, outdoor steps, seating walls, or retaining walls as part of the same job. Outdoor kitchens are a related build when you want cooking and gathering in the same space.",
     benefits:
       "A well-built hardscape gives you usable outdoor living, cleaner circulation through the yard, and a surface that does not heave or pond after storms. It also ties the house to the planting so the property reads as one landscape, not a patio dropped on the lawn.",
     sections: [
       {
-        title: "Patios, walkways, and steps",
-        body: "Paver and natural-stone surfaces laid on a compacted base, with joints and edges finished and the surrounding planting tied in.",
+        title: "Patios and walkways",
+        body: "Patio design comes first: layout, elevations, and how you will use the space. We then lay paver surfaces on a compacted base, with joints and edges finished and the surrounding planting tied in. Walkway landscaping uses that same base so the path drains with the patio.",
       },
       {
-        title: "Walls",
-        body: "Seating walls, retaining walls, and landscape walls designed for the grade and how you use the yard.",
+        title: "Natural stone",
+        body: "Stone landscaping is natural stone on patios, walks, and walls, set on the same prepared base as the rest of the hardscape so the stone drains and stays put.",
+      },
+      {
+        title: "Outdoor steps",
+        body: "Outdoor step construction ties a change in grade to the patio or walk. We build the steps on a compacted base, with the rise and run set so they are comfortable to use and drain with the rest of the hardscape.",
+      },
+      {
+        title: "Retaining walls",
+        body: "Retaining wall design starts with the grade and how water moves. We design the wall for that slope, then build it so the yard can step down and the soil stays where it belongs.",
+      },
+      {
+        title: "Seating walls",
+        body: "Seating wall construction adds a low wall you can sit on, usually at the edge of a patio or fire feature. The wall is part of the hardscape, built on the same base as the surface it borders.",
       },
       {
         title: "Fire features",
@@ -228,7 +248,7 @@ export const services: ServiceDef[] = [
     ctaButton: "Request a free estimate",
     metaTitle: "Hardscapes in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Hardscape patios, walkways, walls, steps, and fire features in Florence, SC. Proper base, drainage, and finish from Innovative Landscape Design.",
+      "Hardscape patio design, walkways, natural stone, outdoor steps, retaining walls, and fire features in Florence, SC from Innovative Landscape Design.",
     galleryImage: siteImages.services.hardscapesCover,
     galleryImageAlt: "Herringbone brick courtyard with stone edging, planters, and planting beds",
     icon: "hardscapes",
@@ -404,13 +424,13 @@ export const services: ServiceDef[] = [
     headlineAccent: "and smart control",
     intro:
       "Irrigation and water management is designed around watering needs, the water source, and the landscape—then installed, tested, and programmed so coverage is even and water is not wasted.",
-    body: "Irrigation and water management in Florence, SC is designed around the landscape, the water source, and how the property actually dries out in summer. We design or repair systems, install heads, valves, piping, drip, and controllers, then test coverage so turf and planting get water without wasting it.",
+    body: "Irrigation and water management in Florence, SC is designed around the landscape, the water source, and how the property actually dries out in summer. We install new sprinkler systems and handle irrigation system repair and maintenance, including heads, valves, piping, drip, and controllers, then test coverage so turf and planting get water without wasting it.",
     benefits:
       "Even coverage keeps new planting and turf alive through heat, protects the investment in the landscape, and cuts down on dry spots, runoff, and overwatering. A system matched to the site is easier to live with than a one-zone timer fighting the whole yard.",
     sections: [
       {
-        title: "New systems and repairs",
-        body: "Design and install of new systems, or modify and repair what is already in the ground.",
+        title: "New systems",
+        body: "Sprinkler system installation starts with the landscape and the water source. We install the system and test coverage before we leave.",
       },
       {
         title: "Heads, valves, piping, and drip",
@@ -419,6 +439,10 @@ export const services: ServiceDef[] = [
       {
         title: "Smart controllers",
         body: "Smart controllers sized to the client, with remote schedule control and the ability for us to help manage settings after install. Many jobs use Orbit B-hyve with weather-based adjustment.",
+      },
+      {
+        title: "Repair and maintenance",
+        body: "Irrigation system repair and maintenance covers heads, valves, leaks, and controllers on a system that is already in the ground. We find the fault, repair it, and test coverage so the yard is watering evenly again.",
       },
     ],
     bullets: [
@@ -431,7 +455,7 @@ export const services: ServiceDef[] = [
     ctaButton: "Request a free estimate",
     metaTitle: "Irrigation and Water Management in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Irrigation and water management in Florence, SC. Sprinklers, drip, and smart controllers for efficient watering from Innovative Landscape Design.",
+      "Irrigation and water management in Florence, SC. Sprinkler installation, drip, smart controllers, and irrigation system repair from Innovative Landscape Design.",
     galleryImage: siteImages.coitDripUrn,
     galleryImageAlt: "Drip irrigation in a stone planter with pots and seasonal plantings",
     heroImage: siteImages.coitDripUrn,
@@ -619,8 +643,8 @@ export const services: ServiceDef[] = [
     headline: "Clear the debris",
     headlineAccent: "for the next season",
     intro:
-      "Seasonal cleanup is the spring and fall reset: leaves, limbs, plant debris, cutback, and bed cleaning so the property is ready for the season ahead.",
-    body: "Seasonal cleanup in Florence, SC is the spring and fall reset: leaves, limbs, plant debris, cutback, and bed cleaning so the property is ready for the season ahead. It is a defined visit, not a substitute for weekly lawn maintenance.",
+      "Seasonal cleanup is the yard cleanup for spring and fall: leaves, limbs, plant debris, cutback, and bed cleaning so the property is ready for the season ahead.",
+    body: "Seasonal cleanup in Florence, SC is the yard cleanup for spring and fall: leaves, limbs, plant debris, cutback, and bed cleaning so the property is ready for the season ahead. It is a defined visit, not a substitute for weekly lawn maintenance.",
     benefits:
       "Clearing debris and cutting back spent growth keeps beds from smothering, reduces hiding places for pests, and gives the lawn and planting a clean start. The property looks tended at the season change instead of carrying last year's mess into the next.",
     sections: [
@@ -647,7 +671,7 @@ export const services: ServiceDef[] = [
     ctaButton: "Request a free estimate",
     metaTitle: "Seasonal Cleanup in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Seasonal landscape cleanup in Florence, SC: leaves, debris, cutback, and bed cleaning for spring and fall on homes and commercial properties.",
+      "Seasonal yard cleanup in Florence, SC: leaves, debris, cutback, and bed cleaning for spring and fall on homes and commercial properties.",
     galleryImage: siteImages.heroFrontYard,
     galleryImageAlt: "Maintained striped lawn and planting beds after seasonal cleanup",
     icon: "seasonal",
@@ -850,8 +874,8 @@ export const services: ServiceDef[] = [
     headline: "Prune for health",
     headlineAccent: "and shape",
     intro:
-      "Pruning and cleanup is selective work on trees and shrubs: cut for appearance, size, structure, and plant health, then haul the debris and leave the property clean.",
-    body: "Pruning and cleanup in Florence, SC is selective work on trees and shrubs: we evaluate what the plant needs, prune for appearance, size, structure, and health, then haul the debris and leave the property clean.",
+      "Pruning and cleanup is shrub trimming and selective tree work: cut for appearance, size, structure, and plant health, then haul the debris and leave the property clean.",
+    body: "Pruning and cleanup in Florence, SC is shrub trimming and selective work on trees. We evaluate what the plant needs, prune for appearance, size, structure, and health, then haul the debris and leave the property clean.",
     benefits:
       "The right cuts keep plants in scale with the house, improve health, and open up sight lines without the one-shape shear that weakens shrubs. You get a cleaner landscape and plants that can keep growing well after we leave.",
     sections: [
@@ -860,8 +884,8 @@ export const services: ServiceDef[] = [
         body: "We look at what the plant needs—size, structure, dead wood, and how it sits in the landscape—before making cuts.",
       },
       {
-        title: "Selective pruning",
-        body: "Cuts are made for appearance, size, and plant health, not a one-shape-fits-all shear.",
+        title: "Shrub trimming",
+        body: "Shrub trimming is cut for appearance, size, and plant health. We shape the shrub to the house and the bed, including a hedge that needs a clean line, rather than shearing every plant to one form.",
       },
       {
         title: "Debris and cleanup",
@@ -873,12 +897,12 @@ export const services: ServiceDef[] = [
       "Cuts for appearance, size, structure, and health.",
       "Debris hauled off and the property cleaned after.",
     ],
-    tagline: "Shrubs and trees kept in shape.",
+    tagline: "Shrub trimming and selective tree pruning.",
     ctaHeadline: "Need pruning on the property?",
     ctaButton: "Request a free estimate",
     metaTitle: "Pruning and Cleanup in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Pruning and cleanup in Florence, SC: selective tree and shrub pruning with debris removal for homes and commercial properties.",
+      "Pruning and cleanup in Florence, SC: shrub trimming and selective tree pruning with debris removal for homes and commercial properties.",
     galleryImage: siteImages.coitShapedBed,
     galleryImageAlt: "Shaped hedges and a color bed kept in scale with the walk and lawn",
     aboutImage: siteImages.coitShapedBed,

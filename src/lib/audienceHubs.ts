@@ -232,14 +232,14 @@ export const audienceHubs: readonly AudienceHub[] = [
     navLabel: "Property Maintenance Services",
     name: "Property Maintenance Services",
     navBlurb:
-      "Recurring care so the property looks sharp for customers, tenants, and the board.",
+      "Groundskeeping so the property looks sharp for customers, tenants, and the board.",
     eyebrow: "For businesses and HOAs",
     headline: "Keep the property looking",
     headlineAccent: "sharp",
     intro:
-      "We care for landscapes at businesses and HOAs in Florence, SC—keeping the grounds looking sharp on a schedule the site can actually live with.",
+      "Groundskeeping for businesses and HOAs in Florence, SC keeps the property looking sharp on a schedule the site can actually live with.",
     aboutHeading: "Property maintenance services",
-    body: "Property maintenance is recurring care so a commercial or HOA landscape looks tended on a schedule the site can live with. It is not a redesign. If the planting and turf are already there, we pick up at maintain. If the property needs new landscape work, that is a separate conversation. You can put the whole grounds on one plan, or start with commercial lawn maintenance when turf is the main need.",
+    body: "Groundskeeping here is recurring property maintenance so a commercial or HOA landscape looks tended on a schedule the site can live with. It is not a redesign. If the planting and turf are already there, we pick up at maintain. If the property needs new landscape work, that is a separate conversation. You can put the whole grounds on one plan, or start with commercial lawn maintenance when turf is the main need.",
     benefits: [
       "A property that looks sharp for customers, tenants, and the board",
       "One vendor for lawn, beds, cleanup, and color—or lawn only if that is the need",
@@ -249,7 +249,7 @@ export const audienceHubs: readonly AudienceHub[] = [
     galleryLead: "The care that keeps a commercial landscape looking sharp week to week.",
     metaTitle: "Property Maintenance Services in Florence, SC | Innovative Landscape Design",
     metaDescription:
-      "Commercial landscape maintenance in Florence, SC for businesses and HOAs: lawn maintenance, garden care, seasonal cleanup, and seasonal color.",
+      "Commercial groundskeeping in Florence, SC for businesses and HOAs: lawn maintenance, garden care, seasonal cleanup, and seasonal color.",
     galleryImage: projectImages.churchCommercialAerial,
     galleryImageAlt: "Overhead view of maintained church grounds with curved walks and lawn panels",
     aboutImage: siteImages.coitSunroomLawn,

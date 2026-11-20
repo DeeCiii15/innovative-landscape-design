@@ -1,0 +1,19 @@
+{
+  "slug": "florence-sc-residential-landscape-lighting-westbrook-drive",
+  "name": "Westbrook Drive Landscape Lighting",
+  "propertyType": "residential",
+  "neighborhood": "Westbrook",
+  "city": "Florence",
+  "serviceSlugs": [
+    "outdoor-lighting"
+  ],
+  "featuredServiceSlug": "outdoor-lighting",
+  "cover": "01.jpg",
+  "serviceCovers": {
+    "outdoor-lighting": "05.jpg"
+  },
+  "description": "Landscape lighting for a brick home on Westbrook Drive in Florence. The entry columns, the gate, and the front of the house are lit, and the trees are uplighted along the lawn where the yard meets the golf course.",
+  "metaDescription": "Landscape lighting on Westbrook Drive in Florence: the brick entry, the front of the house, and the trees along the golf course.",
+  "story": "On Westbrook Drive we lit a brick house that backs up to the golf course. The columns and the iron gate at the front walk are uplighted, with a light in the arch over the door and small lights on the steps. The front of the house and the tree in the side yard come up out of the beds. Behind the house, the pines and the smaller trees along the lawn are uplighted toward the course.",
+  
+}
